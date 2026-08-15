@@ -448,6 +448,42 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 .shot img{width:100%;display:block}
 .example{padding:112px 0}
 .example.soft{background:var(--soft)}
+
+/* module detail modal */
+.mod{cursor:pointer;position:relative}
+.mod:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.mgo{position:absolute;right:14px;bottom:11px;font-size:11px;font-weight:800;color:var(--gold);opacity:0;transform:translateX(-3px);transition:.2s;pointer-events:none}
+.mod:hover .mgo,.mod:focus-visible .mgo{opacity:1;transform:none}
+.mdl{position:fixed;inset:0;z-index:200;visibility:hidden;opacity:0;overflow-y:auto;transition:opacity .22s ease,visibility .22s}
+.mdl.open{visibility:visible;opacity:1}
+.mdl-bg{position:fixed;inset:0;background:rgba(17,19,23,.52);backdrop-filter:blur(3px)}
+.mdl-box{position:relative;width:min(620px,calc(100% - 32px));margin:min(9vh,78px) auto 40px;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--sh-lg);padding:34px;transform:translateY(16px) scale(.985);transition:transform .26s cubic-bezier(.2,.7,.3,1)}
+.mdl.open .mdl-box{transform:none}
+.mdl-x{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--gray);font-size:14px;font-weight:700;cursor:pointer;display:grid;place-items:center;transition:.2s}
+.mdl-x:hover{background:var(--soft);color:var(--ink);border-color:var(--line-2)}
+.mdl-head{display:flex;gap:16px;align-items:flex-start;padding-right:44px}
+.mdl-ic{width:58px;height:58px;border-radius:16px;background:var(--yellow);display:grid;place-items:center;font-size:27px;flex:none}
+.mdl-cat{display:block;font-size:11.5px;font-weight:800;letter-spacing:.11em;color:var(--gold);margin-bottom:5px}
+.mdl-head h3{font-size:25px;letter-spacing:-.035em}
+.mdl-head .lead{font-size:13.5px;color:var(--gray);margin-top:5px}
+.mdl-desc{font-size:15px;color:var(--ink-2);line-height:1.72;margin-top:22px;padding-top:22px;border-top:1px solid var(--line)}
+.mdl-sec{margin-top:22px}
+.mdl-sec h5{font-size:12.5px;font-weight:800;letter-spacing:.05em;color:var(--gray);margin-bottom:11px}
+.mdl-sec ul{list-style:none;display:grid;gap:8px}
+.mdl-sec li{position:relative;padding-left:21px;font-size:14px;color:var(--ink-2);line-height:1.6}
+.mdl-sec li:before{content:"";position:absolute;left:5px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--yellow-2)}
+.mdl-sec.use li:before{background:var(--green)}
+.mdl-foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.mdl-foot .btn{font-size:14.5px;padding:13px 22px}
+body.mdl-lock{overflow:hidden}
+@media(max-width:640px){
+  .mdl-box{margin:16px auto 24px;padding:26px 22px}
+  .mdl-head{flex-direction:column;gap:12px;padding-right:38px}
+  .mdl-head h3{font-size:22px}
+  .mdl-ic{width:50px;height:50px;font-size:23px}
+  .mdl-foot .btn{flex:1;justify-content:center}
+  .mgo{display:none}
+}
 </style>
 </head>
 <body>
@@ -466,5 +502,129 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 <button class="totop" id="toTop" aria-label="맨 위로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <script>const header=document.getElementById('header');window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>16));const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');burger.addEventListener('click',()=>navLinks.classList.toggle('open'));navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*55)+'ms';io.observe(el)});const toTop=document.getElementById('toTop');window.addEventListener('scroll',()=>toTop.classList.toggle('show',window.scrollY>420));toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));const pfTabs=document.querySelectorAll('.pf-tab');if(pfTabs.length){const pfCards=document.querySelectorAll('.pf-card');pfTabs.forEach(t=>t.addEventListener('click',()=>{pfTabs.forEach(x=>x.classList.remove('on'));t.classList.add('on');const f=t.dataset.f;pfCards.forEach(c=>{c.style.display=(f==='all'||c.dataset.cat===f)?'':'none';});}));}
 const acBtn=document.getElementById('acBtn');if(acBtn){const acName=document.getElementById('acName'),acResult=document.getElementById('acResult');const PR=[{k:'AI COMMERCE',d:'검색·추천·상담으로 구매 전환',i:'🛍️'},{k:'AI CREATIVE',d:'상세·이미지·영상 자동 생성',i:'🎨'},{k:'AI AGENT',d:'상담·마케팅을 스스로 실행',i:'🤖'},{k:'AI INSIGHT',d:'매출·고객·광고 데이터 분석',i:'📊'},{k:'AI FLOW',d:'콘텐츠·CRM·보고서 자동화',i:'⚡'},{k:'AI GROWTH',d:'광고·SEO·캠페인 최적화',i:'🚀'}];function H(s){let x=0;for(let i=0;i<s.length;i++){x=(x*31+s.charCodeAt(i))>>>0;}return x;}function run(){const name=(acName.value.trim()||'고객사');acResult.className='ac-result show';acResult.innerHTML='<div class="acr-load"><span class="acr-spin"></span> '+name+' 데이터를 분석하고 있어요…</div>';const seed=H(name);const order=[0,1,2,3,4,5].sort((a,b)=>(H(name+a)%997)-(H(name+b)%997));const picks=order.slice(0,3);const conv=10+seed%20,hrs=5+(seed>>2)%12,growth=15+(seed>>4)%30;setTimeout(function(){const recs=picks.map(function(pi,i){var p=PR[pi];return '<div class="acr-rec"><div class="ic">'+p.i+'</div><div><h4>'+p.k+'</h4><p>'+p.d+'</p></div><span class="rank">추천 '+(i+1)+'</span></div>';}).join('');acResult.innerHTML='<div class="acr"><div class="acr-h"><b>'+name+'</b>님을 위한 AI 진단 결과</div><div class="acr-sub">입력하신 기업을 바탕으로 우선 도입 제품과 기대 효과를 분석했습니다.</div><div class="acr-metrics"><div class="acr-m"><div class="v up">▲ '+conv+'%</div><div class="l">예상 전환율 개선</div></div><div class="acr-m"><div class="v">'+hrs+'h</div><div class="l">주간 절감 시간</div></div><div class="acr-m"><div class="v up">▲ '+growth+'%</div><div class="l">기대 매출 성장</div></div></div><div class="acr-recs">'+recs+'</div><a href="#apply" class="btn btn-dark">정식 진단·상담 신청 →</a><div class="acr-note">* 즉시 진단은 참고용 예측입니다. 정식 진단에서 실제 데이터로 정밀 분석해 드립니다.</div></div>';},1400);}acBtn.addEventListener('click',run);acName.addEventListener('keydown',function(e){if(e.key==='Enter')run();});}</script>
+<div class="mdl" id="modModal" role="dialog" aria-modal="true" aria-labelledby="mdlTitle" aria-hidden="true">
+  <div class="mdl-bg" data-mdl-close></div>
+  <div class="mdl-box" id="mdlBox">
+    <button type="button" class="mdl-x" id="mdlX" aria-label="닫기">✕</button>
+    <div class="mdl-head">
+      <div class="mdl-ic" id="mdlIcon" aria-hidden="true">🔍</div>
+      <div>
+        <span class="mdl-cat" id="mdlCat"></span>
+        <h3 id="mdlTitle"></h3>
+        <p class="lead" id="mdlLead"></p>
+      </div>
+    </div>
+    <p class="mdl-desc" id="mdlDesc"></p>
+    <div class="mdl-sec"><h5>주요 기능</h5><ul id="mdlFeat"></ul></div>
+    <div class="mdl-sec use"><h5>이런 경우에 좋아요</h5><ul id="mdlUse"></ul></div>
+    <div class="mdl-foot">
+      <a href="diagnosis.html" class="btn btn-primary">무료 AI 진단 →</a>
+      <a href="pricing.html" class="btn btn-line">요금제 보기</a>
+    </div>
+  </div>
+</div>
+<script>
+const MOD_INFO={
+'자연어 검색':{d:'키워드가 정확히 일치하지 않아도 문장의 의도를 이해해 결과를 찾아줍니다. "선물용 저렴한 견과류"처럼 고객이 실제로 쓰는 표현을 상품 속성으로 해석해 매칭합니다.',f:['의도·문맥 기반 시맨틱 매칭','오타·유사어·초성 검색 보정','가격·용도·대상 등 조건 자동 추출','결과 없는 검색어 리포트'],u:['상품 수가 많아 고객이 원하는 걸 찾기 어려울 때','검색 후 이탈률이 높을 때']},
+'상품 추천':{d:'조회·장바구니·구매 이력을 학습해 고객마다 다른 상품을 노출합니다. 이력이 없는 신규 방문자에게는 인기·연관 상품 기반 추천이 대신 동작합니다.',f:['고객별 개인화 추천','함께 구매한 상품 연관 추천','신규 방문자 콜드스타트 대응','노출 위치별 추천 슬롯 관리'],u:['객단가를 올리고 싶을 때','첫 화면에서 이탈이 많을 때']},
+'핵심 요약':{d:'긴 상세페이지와 수백 개의 리뷰에서 핵심만 뽑아 정리합니다. 고객이 길게 스크롤하지 않고도 장점과 주의점을 파악할 수 있게 만듭니다.',f:['상품 특징 3줄 요약','리뷰 장단점 자동 정리','자주 묻는 질문 추출','모바일 카드형 배치'],u:['상세페이지가 길어 이탈이 생길 때','리뷰가 많아 읽기 부담스러울 때']},
+'AI 상담':{d:'상품·배송·교환 문의에 24시간 대화형으로 응답합니다. 주문 정보와 상품 데이터를 참고하기 때문에 일반적인 안내가 아니라 해당 고객의 상황에 맞는 답변을 만듭니다.',f:['상품·주문 데이터 연동 응답','상담 이력 기반 문맥 유지','처리 불가 건 상담원 전환','문의 유형 자동 분류'],u:['야간·주말 문의 대응이 어려울 때','비슷한 문의가 반복될 때']},
+'리뷰 분석':{d:'리뷰를 감성과 키워드로 분해해 무엇이 좋았고 무엇이 문제였는지 보여줍니다. 상품별·기간별로 반응이 어떻게 달라지는지 추적할 수 있습니다.',f:['긍정·부정 감성 분류','언급 키워드 순위','상품별 불만 유형 집계','이슈 급증 알림'],u:['반품·CS 발생 원인을 찾고 싶을 때','상품 개선 포인트가 필요할 때']},
+'개인화':{d:'고객 세그먼트에 따라 메인 배너, 기획전, 노출 상품을 다르게 구성합니다. 같은 페이지라도 방문자마다 다른 화면을 보게 됩니다.',f:['세그먼트별 배너·기획전 노출','신규·재방문·이탈 고객 분기','노출 규칙 직접 설정','개인화 성과 비교 리포트'],u:['모든 고객에게 같은 화면을 보여주고 있을 때','재방문 고객의 전환을 높이고 싶을 때']},
+'이미지 생성':{d:'촬영본 한 장으로 배경을 바꾼 연출컷과 배경을 지운 누끼컷을 만듭니다. 채널마다 다른 규격에 맞춰 비율까지 함께 정리해 내보냅니다.',f:['배경 제거·교체','연출 컨셉 배경 생성','채널별 비율 일괄 리사이즈','워터마크·로고 삽입'],u:['상품 촬영 비용을 줄이고 싶을 때','신상품 등록이 잦을 때']},
+'상세페이지':{d:'상품 정보와 강점을 입력하면 구성부터 문구까지 상세페이지 초안을 작성합니다. 카테고리별 구성 템플릿을 골라 쓸 수 있습니다.',f:['USP 기반 구성 자동 설계','섹션별 카피 생성','이미지 배치 제안','채널별 규격 변환'],u:['상세 제작 외주 비용이 부담될 때','등록 대기 중인 상품이 밀려 있을 때']},
+'영상 생성':{d:'상품 이미지와 정보를 숏폼 영상으로 구성합니다. 자막·전환·배경음까지 포함해 바로 업로드할 수 있는 형태로 내보냅니다.',f:['숏폼·상품 소개 영상 자동 편집','자막·나레이션 생성','채널별 길이·비율 대응','템플릿 스타일 선택'],u:['릴스·쇼츠를 꾸준히 올려야 할 때','영상 편집 인력이 없을 때']},
+'SNS 콘텐츠':{d:'상품 하나로 인스타그램·블로그·카카오 채널에 맞는 게시물을 각각 만듭니다. 채널별로 어투와 길이를 다르게 적용합니다.',f:['채널별 문체·길이 자동 조정','해시태그 추천','이미지·카드뉴스 동시 생성','발행 일정 초안 제안'],u:['여러 채널을 동시에 운영할 때','콘텐츠 소재가 자주 떨어질 때']},
+'카피라이팅':{d:'상품명, 광고 문구, 이벤트 카피를 여러 안으로 제안합니다. 타겟과 톤을 지정하면 그 결에 맞춰 다시 씁니다.',f:['상품명·타이틀 다중 안 생성','광고 소재 문구 작성','타겟·톤 지정','과장 표현·금지어 점검'],u:['A/B 테스트용 소재가 필요할 때','카피 작성에 시간이 오래 걸릴 때']},
+'배너 디자인':{d:'프로모션 정보를 넣으면 배너 시안을 만들어 줍니다. 사이트 컬러와 폰트를 지정해 브랜드 톤을 유지합니다.',f:['프로모션 배너 시안 생성','브랜드 컬러·폰트 적용','PC·모바일 규격 동시 출력','수정 가능한 레이어 제공'],u:['이벤트가 잦아 배너 요청이 많을 때','디자이너 리소스가 부족할 때']},
+'상담 에이전트':{d:'정해진 시나리오를 일일이 짜지 않아도 반복 문의를 스스로 처리합니다. 처리 가능한 범위를 벗어나면 담당자에게 넘깁니다.',f:['반복 문의 자동 응대','주문·배송 조회 처리','상담원 인계 조건 설정','응대 품질 로그'],u:['CS 인입량이 많을 때','단순 문의가 대부분일 때']},
+'영업 에이전트':{d:'유입된 리드를 정리하고 관심사에 맞는 제안을 만들어 전달합니다. 응답 여부에 따라 후속 조치를 이어갑니다.',f:['리드 수집·우선순위 정리','맞춤 제안서 초안 작성','후속 연락 자동 예약','진행 단계 관리'],u:['B2B 문의 관리가 수기일 때','확보한 리드가 방치될 때']},
+'마케팅 에이전트':{d:'목표와 예산을 주면 캠페인 기획안을 만들고, 승인하면 실행까지 진행합니다. 성과를 보며 소재와 타겟을 조정합니다.',f:['캠페인 기획안 생성','소재·타겟 자동 구성','승인 후 집행','성과 기반 조정 제안'],u:['마케팅 담당자가 1인일 때','캠페인 운영이 산발적일 때']},
+'상품관리 에이전트':{d:'재고와 가격을 지켜보다가 조정이 필요한 상품을 찾아냅니다. 품절 임박, 과잉 재고, 경쟁사 가격 변화를 함께 봅니다.',f:['재고 수준 모니터링','품절·과잉 재고 알림','가격 조정 제안','채널별 상품 정보 동기화'],u:['취급 상품 수가 많을 때','품절·오버셀이 반복될 때']},
+'문제 탐지':{d:'매출·유입·전환 지표가 평소와 다르게 움직이면 감지해 알립니다. 어떤 구간에서 벌어진 변화인지 함께 짚어 줍니다.',f:['이상 지표 자동 감지','원인 구간 추정','알림 채널 연동','임계값 직접 설정'],u:['문제를 뒤늦게 발견하는 일이 잦을 때','지표를 매일 확인할 여력이 없을 때']},
+'실행 자동화':{d:'에이전트가 제안한 작업을 승인하면 실제 시스템에 반영합니다. 무엇이 언제 실행됐는지 기록이 남습니다.',f:['승인 기반 작업 실행','실행 이력·롤백 관리','권한별 승인 단계','예약 실행'],u:['반복 작업을 사람이 직접 처리하고 있을 때','실행 기록을 남겨야 할 때']},
+'매출 분석':{d:'채널·상품·기간별로 매출을 나눠 보고 어디서 늘고 줄었는지 짚어 줍니다. 숫자와 함께 해석 문장을 붙여 보여줍니다.',f:['채널·상품·기간별 분해','증감 요인 설명','목표 대비 진척 확인','기간 비교 뷰'],u:['매출 변동 원인을 찾을 때','채널별 기여도를 알고 싶을 때']},
+'고객 분석':{d:'구매 주기와 행동 패턴으로 고객을 묶고, 이탈 가능성이 높은 그룹을 표시합니다. 만들어진 세그먼트는 캠페인에 바로 연결할 수 있습니다.',f:['자동 세그먼트 생성','이탈 위험 고객 예측','고객 생애가치 추정','세그먼트 캠페인 연동'],u:['재구매율이 낮을 때','고객을 나눠 대응하고 싶을 때']},
+'광고 분석':{d:'채널별 광고비와 성과를 한 화면에 모아 ROAS를 비교합니다. 효율이 낮은 캠페인을 따로 추려 줍니다.',f:['채널 통합 ROAS 비교','캠페인·소재별 성과','비효율 지출 탐지','기여 경로 분석'],u:['광고 채널이 여러 개일 때','예산 배분을 다시 정해야 할 때']},
+'상품 분석':{d:'상품별 판매 추이와 재고 회전을 함께 봅니다. 잘 팔리는 상품과 묶여서 팔리는 조합을 찾아 줍니다.',f:['판매 추이·재고 회전율','연관 구매 조합 분석','카테고리별 비교','부진 상품 추출'],u:['상품 구성을 정리할 때','기획전 상품을 골라야 할 때']},
+'통합 대시보드':{d:'매출·유입·광고·재고 지표를 한 화면에 모읍니다. 보고 싶은 항목만 골라 배치할 수 있습니다.',f:['실시간 핵심 지표','위젯 배치 커스텀','팀·역할별 뷰','기간 필터'],u:['지표가 여러 툴에 흩어져 있을 때','매일 확인할 화면이 필요할 때']},
+'자동 리포트':{d:'주간·월간 리포트를 정해진 시각에 만들어 메일이나 메신저로 보냅니다. 수치 나열이 아니라 요약과 코멘트를 함께 담습니다.',f:['주간·월간 자동 발행','요약 코멘트 생성','메일·메신저 발송','보고 양식 템플릿 관리'],u:['보고서 작성에 시간을 많이 쓸 때','정기 보고가 필요할 때']},
+'콘텐츠 자동화':{d:'생성한 콘텐츠를 검수·승인·발행까지 하나의 흐름으로 처리합니다. 채널별 예약 발행을 지원합니다.',f:['생성→검수→발행 흐름 구성','채널 예약 발행','승인자 지정','발행 이력 관리'],u:['콘텐츠 발행 과정이 수기일 때','운영 채널이 많을 때']},
+'CRM 자동화':{d:'조건에 맞는 고객에게 메시지를 자동으로 보냅니다. 첫 구매, 장바구니 이탈, 재구매 시점 등을 기준으로 동작합니다.',f:['조건 기반 자동 발송','알림톡·문자·메일 연동','발송 시점 최적화','발송 성과 측정'],u:['이탈 고객 회수가 필요할 때','메시지를 수동으로 반복 발송할 때']},
+'보고서 자동화':{d:'정기 보고에 필요한 데이터 수집과 문서 작성을 자동으로 처리합니다. 사내에서 쓰는 양식에 맞춰 채워 넣습니다.',f:['데이터 자동 수집','사내 양식 반영','정기 생성 스케줄','배포 대상 관리'],u:['보고 양식이 정해져 있을 때','여러 곳의 데이터를 취합해야 할 때']},
+'워크플로우 빌더':{d:'코드 없이 조건과 동작을 연결해 자동화를 만듭니다. 만든 흐름은 저장해 다른 상품이나 채널에 재사용할 수 있습니다.',f:['드래그 방식 흐름 설계','조건·분기 설정','템플릿 저장·복제','테스트 실행'],u:['팀마다 업무 흐름이 다를 때','개발 리소스가 없을 때']},
+'알림·트리거':{d:'특정 조건이 충족되면 알림을 보내거나 다음 작업을 실행합니다. 재고·매출·문의량 등 어떤 지표든 기준으로 삼을 수 있습니다.',f:['조건 기반 트리거','슬랙·메일·알림톡 발송','연쇄 작업 실행','중복 알림 억제'],u:['놓치면 안 되는 상황이 있을 때','대응이 늦어지는 일이 잦을 때']},
+'외부 연동':{d:'쇼핑몰, 광고 계정, 메신저, 사내 툴을 API로 연결합니다. 연동된 데이터는 다른 모듈에서 그대로 활용됩니다.',f:['커머스·광고 채널 연동','메신저·메일 연동','웹훅 지원','연동 상태 모니터링'],u:['데이터가 툴마다 흩어져 있을 때','기존 시스템을 그대로 유지해야 할 때']},
+'광고 최적화':{d:'성과를 보면서 예산과 타겟을 조정합니다. 효율이 떨어지는 소재는 비중을 줄이고 반응이 좋은 쪽으로 옮깁니다.',f:['예산 자동 배분','타겟 조정 제안','소재별 성과 비교','집행 규칙 설정'],u:['광고 운영에 손이 많이 갈 때','예산 대비 효율이 낮을 때']},
+'SEO':{d:'상품과 콘텐츠 페이지의 검색 노출 요소를 점검하고 개선안을 제시합니다. 적용한 뒤 순위가 어떻게 변했는지 추적합니다.',f:['키워드 발굴·배치 제안','메타 정보 자동 작성','페이지 진단 리포트','검색 순위 추적'],u:['검색 유입을 늘리고 싶을 때','광고 의존도를 낮추고 싶을 때']},
+'캠페인 관리':{d:'캠페인을 만들고 소재별로 나눠 테스트한 뒤 결과를 정리합니다. 어떤 안이 이겼는지 근거와 함께 보여줍니다.',f:['A/B 테스트 설계·집행','성과 통계 검증','캠페인 일정 관리','결과 리포트'],u:['감으로 소재를 고르고 있을 때','테스트 관리가 번거로울 때']},
+'재구매 유도':{d:'상품별 재구매 주기를 계산해 적절한 시점에 다시 찾아오도록 유도합니다. 쿠폰과 메시지를 함께 설계합니다.',f:['재구매 주기 예측','시점별 캠페인 자동 발송','쿠폰·혜택 설계','회수율 추적'],u:['첫 구매 후 이탈이 많을 때','소모품·정기 구매 상품을 다룰 때']},
+'가격 전략':{d:'수요, 재고, 경쟁 가격을 함께 보고 가격 조정안을 제시합니다. 할인 폭에 따른 예상 영향도 함께 보여줍니다.',f:['수요 기반 가격 제안','경쟁 가격 모니터링','할인 영향 시뮬레이션','마진 하한 설정'],u:['할인 폭을 감으로 정하고 있을 때','경쟁이 심한 카테고리일 때']},
+'성장 리포트':{d:'핵심 지표를 기간에 걸쳐 추적하고 성장이 막힌 지점을 진단합니다. 다음에 무엇을 볼지 함께 제안합니다.',f:['KPI 추적','구간별 성장 진단','병목 지점 지목','다음 액션 제안'],u:['무엇부터 개선할지 모를 때','성장세가 정체됐을 때']}
+};
+(function(){
+  var mdl=document.getElementById('modModal');
+  var mods=document.querySelectorAll('.mod');
+  if(!mdl||!mods.length)return;
+  var box=document.getElementById('mdlBox'),xBtn=document.getElementById('mdlX');
+  var elIcon=document.getElementById('mdlIcon'),elCat=document.getElementById('mdlCat'),elTitle=document.getElementById('mdlTitle'),elLead=document.getElementById('mdlLead'),elDesc=document.getElementById('mdlDesc'),elFeat=document.getElementById('mdlFeat'),elUse=document.getElementById('mdlUse');
+  var lastFocus=null;
+  function fill(ul,items){
+    ul.textContent='';
+    items.forEach(function(t){var li=document.createElement('li');li.textContent=t;ul.appendChild(li);});
+  }
+  function open(card,key){
+    var info=MOD_INFO[key];if(!info)return;
+    var cat=card.closest('.mod-cat'),catName=cat?cat.querySelector('.mch h3').textContent:'';
+    var icon=card.querySelector('.mic'),lead=card.querySelector('p');
+    elIcon.textContent=icon?icon.textContent:'';
+    elCat.textContent=catName;
+    elTitle.textContent=key;
+    elLead.textContent=lead?lead.textContent:'';
+    elDesc.textContent=info.d;
+    fill(elFeat,info.f);
+    fill(elUse,info.u);
+    lastFocus=card;
+    mdl.classList.add('open');
+    mdl.setAttribute('aria-hidden','false');
+    document.body.classList.add('mdl-lock');
+    mdl.scrollTop=0;
+    xBtn.focus();
+  }
+  function close(){
+    if(!mdl.classList.contains('open'))return;
+    mdl.classList.remove('open');
+    mdl.setAttribute('aria-hidden','true');
+    document.body.classList.remove('mdl-lock');
+    if(lastFocus){lastFocus.focus();lastFocus=null;}
+  }
+  mods.forEach(function(card){
+    var h=card.querySelector('h4');if(!h)return;
+    var key=h.textContent.trim();if(!MOD_INFO[key])return;
+    card.setAttribute('role','button');
+    card.setAttribute('tabindex','0');
+    card.setAttribute('aria-haspopup','dialog');
+    card.setAttribute('aria-label',key+' 모듈 설명 보기');
+    var go=document.createElement('span');go.className='mgo';go.textContent='자세히 →';card.appendChild(go);
+    card.addEventListener('click',function(){open(card,key);});
+    card.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '||e.key==='Spacebar'){e.preventDefault();open(card,key);}
+    });
+  });
+  xBtn.addEventListener('click',close);
+  mdl.addEventListener('click',function(e){if(e.target.hasAttribute('data-mdl-close'))close();});
+  document.addEventListener('keydown',function(e){
+    if(!mdl.classList.contains('open'))return;
+    if(e.key==='Escape'){close();return;}
+    if(e.key!=='Tab')return;
+    var f=box.querySelectorAll('button,a[href]');
+    if(!f.length)return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    else if(!box.contains(document.activeElement)){e.preventDefault();first.focus();}
+  });
+})();
+</script>
 </body>
 </html>
