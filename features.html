@@ -985,7 +985,7 @@ function renderInfo(){
   var h='';
   if(saved){var cnt=Object.keys(saved.answers||{}).length;h+='<div class="dx-resume" role="status"><b>이전에 진행하던 진단이 있어요.</b> ('+cnt+'개 문항 응답)<div class="row"><button type="button" class="btn btn-dark" id="dxResume">이어서 진단하기</button><button type="button" class="btn btn-line" id="dxDiscard">새로 시작</button></div></div>';}
   var M=I.meta;
-  if(M)h+='<div class="dx-cocard"><div class="t"><b>'+esc(M.name)+'</b>'+esc([M.category,M.address].filter(Boolean).join(' · '))+(M.url?'<br><a href="'+esc(M.url)+'" target="_blank" rel="noopener">'+esc(M.url)+'</a>':'')+'</div><button type="button" id="dxReSearch">다른 기업 찾기</button></div>';
+  if(M)h+='<div class="dx-cocard"><div class="t"><b>'+esc(M.name)+'</b>'+esc([M.category,M.address].filter(Boolean).join(' · '))+(M.summary?'<br><span style="color:var(--ink-2)">'+esc(M.summary)+'</span>':'')+(M.source?'<br><small>출처: '+esc(M.source)+'</small>':'')+(M.url?'<br><a href="'+esc(M.url)+'" target="_blank" rel="noopener">'+esc(M.url)+'</a>':'')+'</div><button type="button" id="dxReSearch">다른 기업 찾기</button></div>';
   h+='<h2>기본 정보를 확인해주세요</h2><p class="dx-lead">'+(I.auto&&I.auto.length?'검색한 기업 정보로 기본 항목을 자동으로 골라두었어요. 맞지 않으면 눌러서 바꿔주세요.':'현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.')+'</p>';
   h+='<form id="dxInfo" novalidate>';
   h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적'+autoTag('purpose')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
@@ -1271,8 +1271,11 @@ function start(opener){
   openPanel(null,opener);
 }
 /* ===== 기업 검색 ===== */
-var IND_RULES=[['식품',/식품|농산|수산|축산|음료|제과|떡|김치|건강식/],['화장품',/화장품|뷰티|코스메틱/],['생활용품',/생활용품|가구|인테리어|주방|잡화/],['숙박',/숙박|호텔|펜션|리조트|모텔|게스트하우스/],['관광',/관광|여행|체험|레저/],['외식',/음식점|카페|레스토랑|한식|양식|중식|일식|베이커리|주점/],['유통',/유통|도매|소매|쇼핑|마트|상사/],['IT',/소프트웨어|IT|정보통신|플랫폼|웹|앱/],['제조',/제조|공업|산업|공장|기계|부품|화학/],['서비스',/서비스|컨설팅|교육|병원|의원|미용|광고|디자인/]];
-function guessIndustry(cat){if(!cat)return [];for(var i=0;i<IND_RULES.length;i++){if(IND_RULES[i][1].test(cat))return [IND_RULES[i][0]];}return [];}
+var IND_RULES=[['식품',/식품|농산|수산|축산|음료|제과|과자|라면|주류|커피|차류|떡|김치|건강식|건강기능|유제품|육가공|농업|과수/g],['화장품',/화장품|뷰티|코스메틱|스킨케어|미용/g],['생활용품',/생활용품|가구|인테리어|주방|잡화|생활가전|침구|문구|완구|패션|의류/g],['숙박',/숙박|호텔|펜션|리조트|모텔|게스트하우스|한옥스테이|캠핑|글램핑/g],['관광',/관광|여행|체험|레저|테마파크|항공사|여행사/g],['외식',/음식점|카페|레스토랑|한식|양식|중식|일식|베이커리|주점|외식|프랜차이즈|치킨|피자/g],['유통',/유통|도매|소매|쇼핑|마트|백화점|편의점|이커머스|전자상거래|오픈마켓|상사/g],['IT',/소프트웨어|정보통신|인터넷|플랫폼|게임|IT|앱|웹|클라우드|인공지능|포털/g],['제조',/제조|공업|산업|공장|기계|부품|화학|전자|반도체|자동차|철강|조선|소재|장비|중공업|제약/g],['서비스',/서비스|컨설팅|교육|병원|의원|광고|디자인|은행|증권|보험|금융|물류|운송|통신사/g]];
+// 분류(가중치 3)와 웹문서 본문(가중치 1)에서 키워드가 많이 나온 순으로 고른다.
+function scoreRules(rules,cat,text,max){var sc=rules.map(function(r,i){var re=r[1];re.lastIndex=0;var a=((cat||'').match(re)||[]).length;re.lastIndex=0;var b=((text||'').match(re)||[]).length;re.lastIndex=0;return {k:r[0],s:a*3+b,i:i};}).filter(function(x){return x.s>0;});
+  sc.sort(function(x,y){return y.s-x.s||x.i-y.i;});if(!sc.length)return [];var top=sc[0].s;return sc.filter(function(x){return x.s*2>=top;}).slice(0,max).map(function(x){return x.k;});}
+function guessIndustry(cat,text){return scoreRules(IND_RULES,cat,text,2);}
 var found=$('#dxFound'),searchForm=$('#dxSearch'),queryInput=$('#dxQuery'),searchSeq=0,foundList=[];
 function focusSearch(){if(!queryInput)return;window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){queryInput.focus();},300);}
 function withTimeout(p,ms){return new Promise(function(res,rej){var t=setTimeout(function(){rej(new Error('timeout'));},ms);p.then(function(v){clearTimeout(t);res(v);},function(e){clearTimeout(t);rej(e);});});}
@@ -1282,14 +1285,16 @@ function fromEndpoint(q){
     .then(function(d){return {companies:d.companies||[],documents:d.documents||[]};});
 }
 // 위키백과 웹문서 검색 (키 불필요). 설명에 기업·업종을 뜻하는 말이 있는 문서만 기업 후보로 쓴다.
+function firstSentence(t){t=String(t||'').trim();var i=t.indexOf('다. ');return (i>-1?t.slice(0,i+2):t).slice(0,140);}
 var WIKI_COMPANY=/기업|회사|주식회사|브랜드|제조|업체|그룹|쇼핑|호텔|리조트|식품|화장품|프랜차이즈|유통|스타트업|은행|증권|제약|게임|항공|자동차|전자|건설|통신/;
 function fromWiki(q){
-  var u='https://ko.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=0&gsrlimit=10&prop=description|info&inprop=url&gsrsearch='+encodeURIComponent(q);
+  var u='https://ko.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=0&gsrlimit=10&prop=description|info|extracts|categories&inprop=url&exintro=1&explaintext=1&exsentences=3&exlimit=max&cllimit=max&clshow=!hidden&gsrsearch='+encodeURIComponent(q);
   return withTimeout(fetch(u),8000).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){
     var pages=d.query&&d.query.pages?Object.keys(d.query.pages).map(function(k){return d.query.pages[k];}):[];
     pages.sort(function(a,b){return (a.index||0)-(b.index||0);});
     return pages.filter(function(p){return p.description&&WIKI_COMPANY.test(p.description);}).map(function(p){
-      return {name:p.title.replace(/\s*\(.+\)$/,''),category:p.description,address:'',url:p.fullurl||'',source:'위키백과'};});
+      var cats=(p.categories||[]).map(function(x){return x.title.replace(/^분류:/,'');}).join(' ');
+      return {name:p.title.replace(/\s*\(.+\)$/,''),category:p.description,address:'',url:p.fullurl||'',source:'위키백과',text:(p.extract||'')+' '+cats,summary:firstSentence(p.extract)};});
   });
 }
 // 카카오 지도 장소 검색 (JS 키 필요). SDK는 처음 검색할 때 불러온다.
@@ -1342,15 +1347,14 @@ function runSearch(q){
   });
 }
 /* 검색으로 고른 기업 정보로 기본 정보 버튼을 미리 선택 */
-var PURPOSE_RULES=[['visit',/음식점|카페|레스토랑|숙박|호텔|펜션|리조트|관광|여행|체험|레저|공연|전시|캠핑|글램핑/],['sale',/식품|화장품|뷰티|생활용품|쇼핑|소매|온라인|몰|농산|수산|축산|제과|건강식/],['b2b',/제조|공업|부품|기계|도매|산업|화학|소재|장비|납품/],['brand',/서비스|컨설팅|교육|디자인|소프트웨어|IT|정보통신|에이전시/]];
+var PURPOSE_RULES=[['visit',/음식점|카페|레스토랑|숙박|호텔|펜션|리조트|관광|여행|체험|레저|공연|전시|캠핑|글램핑|테마파크|매장 방문|예약/g],['sale',/식품|화장품|뷰티|생활용품|쇼핑|소매|온라인|몰|농산|수산|축산|제과|건강식|소비자|판매|브랜드 제품|이커머스/g],['b2b',/제조|공업|부품|기계|도매|산업|화학|소재|장비|납품|반도체|철강|조선|기업 간|B2B|수출/g],['brand',/서비스|컨설팅|교육|디자인|소프트웨어|IT|정보통신|에이전시|플랫폼/g]];
 var PHOTO_IND=['식품','화장품','생활용품','관광','숙박','외식','유통'];
 function inferInfo(c){
-  var cat=c.category||'',ch=c.channels||[],purpose=[];
-  PURPOSE_RULES.forEach(function(r){if(r[1].test(cat))purpose.push(r[0]);});
+  var cat=c.category||'',text=c.text||'',ch=c.channels||[],purpose=scoreRules(PURPOSE_RULES,cat,text,2);
   if(ch.indexOf('store')>-1&&purpose.indexOf('sale')<0)purpose.push('sale');
   if(ch.indexOf('booking')>-1&&purpose.indexOf('visit')<0)purpose.push('visit');
   if(purpose.length>1&&purpose.indexOf('brand')>-1)purpose.splice(purpose.indexOf('brand'),1);
-  var industry=guessIndustry(cat),out={purpose:purpose,industry:industry,auto:[]};
+  var industry=guessIndustry(cat,text),out={purpose:purpose,industry:industry,auto:[]};
   if(purpose.length)out.auto.push('purpose');if(industry.length)out.auto.push('industry');
   var visual=purpose.indexOf('sale')>-1||purpose.indexOf('visit')>-1||industry.some(function(v){return PHOTO_IND.indexOf(v)>-1;});
   if(visual){out.photoNeed='yes';out.auto.push('photoNeed');}
@@ -1360,7 +1364,7 @@ function inferInfo(c){
 function pickCompany(c,opener){
   S=fresh();lastResult=null;interests=null;
   S.info.company=String(c.name||'').slice(0,50);
-  if(!c.manual){S.info.meta={name:c.name,category:c.category||'',address:c.address||'',url:c.url||'',source:c.source||'',channels:c.channels||[]};var inf=inferInfo(c);S.info.purpose=inf.purpose;S.info.industry=inf.industry;S.info.photoNeed=inf.photoNeed||'';S.info.detailNeed=inf.detailNeed||'';S.info.auto=inf.auto;}
+  if(!c.manual){S.info.meta={name:c.name,category:c.category||'',address:c.address||'',url:c.url||'',source:c.source||'',channels:c.channels||[],summary:c.summary||''};var inf=inferInfo(c);S.info.purpose=inf.purpose;S.info.industry=inf.industry;S.info.photoNeed=inf.photoNeed||'';S.info.detailNeed=inf.detailNeed||'';S.info.auto=inf.auto;}
   track('company_select',{manual:!!c.manual});
   track('diagnosis_start',{});
   save();openPanel('info',opener);
