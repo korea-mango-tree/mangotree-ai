@@ -621,14 +621,17 @@ body.dx-open{overflow:hidden}
 .dx-score.pending .v{font-size:20px;color:var(--ink-2)}
 .dx-sec-t{font-size:15px;font-weight:800;margin:24px 0 10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .dx-sec-t small{font-size:12px;color:var(--gray);font-weight:600}
-.dx-bars{display:flex;flex-direction:column;gap:9px}
-.dx-bar{display:grid;grid-template-columns:96px 1fr 168px;gap:12px;align-items:center;font-size:13.5px}
-.dx-bar .n{font-weight:700}
+.dx-bars{display:flex;flex-direction:column;gap:8px}
+.dx-bar{display:grid;grid-template-columns:52px 104px 1fr 168px;gap:12px;align-items:center;font-size:13.5px;padding:8px 12px 8px 8px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);transition:.18s}
+a.dx-bar:hover,a.dx-bar:focus-visible{border-color:var(--ink);box-shadow:var(--sh-sm);transform:translateY(-1px);outline:none}
+.dx-bar .th{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--soft);border:1px solid var(--line)}
+.dx-bar .n{font-weight:700;line-height:1.3}
+.dx-bar .n small{display:block;font-size:11.5px;font-weight:700;color:var(--gold);margin-top:2px}
 .dx-bar .track{height:10px;background:var(--soft);border-radius:10px;overflow:hidden}
 .dx-bar .track i{display:block;height:100%;background:var(--need);border-radius:10px}
 .dx-bar .s{font-size:12.5px;font-weight:700;min-width:118px;text-align:right}
 .dx-bar .s.hi{color:var(--need)}.dx-bar .s.mid{color:#B7791F}.dx-bar .s.lo{color:var(--ok)}.dx-bar .s.na{color:var(--gray-2)}
-@media(max-width:480px){.dx-bar{grid-template-columns:78px 1fr}.dx-bar .s{grid-column:1/-1;text-align:left;min-width:0;margin-top:-4px}}
+@media(max-width:560px){.dx-bar{grid-template-columns:48px 1fr;row-gap:6px}.dx-bar .th{width:48px;height:48px;grid-row:span 2}.dx-bar .n{display:flex;justify-content:space-between;gap:8px}.dx-bar .track{grid-column:2}.dx-bar .s{grid-column:2;text-align:left;min-width:0;margin-top:-2px}}
 .dx-summary{background:var(--soft-2);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-size:14.5px;color:var(--ink-2);word-break:keep-all}
 .dx-recs{display:flex;flex-direction:column;gap:12px}
 .dx-rec{border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;background:#fff}
@@ -823,6 +826,9 @@ var QBY={};Q.forEach(function(q){QBY[q.id]=q;});
 
 var SCOPE={D:'상품정보 정리 · 구매 이유 카피 · 디자인 · 모바일 구성',W:'정보 구조와 메뉴 설계 · 반응형 화면 · 문의·구매 동선',P:'기본 컷 · 사용 및 연출 컷 · 매체별 활용 규격',B:'로고·색상·글꼴 기준 · 패키지·카탈로그 · 광고 소재',M:'검색·채널 정보 정비 · 콘텐츠 운영 계획 · 유입·전환 측정 설정',A:'반복 업무 정리 · AI 콘텐츠·상담 자동화 시범 적용'};
 var PREP={D:['대표 상품 목록','제품 정보(성분·규격·가격 등)','기존 상세페이지 주소','보유 사진'],W:['홈페이지 목적과 원하는 메뉴','회사소개 자료','참고 사이트'],P:['촬영 대상 목록','샘플 준비 가능 여부','촬영 용도와 원하는 분위기'],B:['기존 로고·디자인 원본','사용 중인 매체 목록','참고 브랜드'],M:['운영 중인 채널 목록','최근 홍보 내역','문의·주문 경로'],A:['반복 업무 목록','업무 자료 저장 위치','운영 담당자']};
+// 영역별 대표 이미지와 연결 페이지 (포트폴리오는 #카테고리로 해당 탭이 열림)
+var SHOWCASE={D:['assets/pf_detail1.jpg','portfolio.html#detail','상세페이지 포트폴리오'],W:['assets/pf_home1.jpg','portfolio.html#home','홈페이지 포트폴리오'],P:['assets/pf_shoot2.jpg','portfolio.html#shoot','촬영 포트폴리오'],B:['assets/pf_print1.jpg','portfolio.html#print','브랜드·패키지 포트폴리오'],M:['assets/work_01.jpg','portfolio.html','전체 포트폴리오'],A:['assets/section01_1.png','products.html','AI 제품 소개']};
+function barOpen(d){var x=SHOWCASE[d];return '<a class="dx-bar" href="'+x[1]+'" target="_blank" rel="noopener" aria-label="'+DOM_LABEL[d]+' 개선 필요도, '+x[2]+' 새 창에서 보기"><img class="th" src="'+x[0]+'" alt="" loading="lazy"><span class="n">'+DOM_LABEL[d]+'<small>'+(d==='A'?'AI 제품 보기 →':'사례 보기 →')+'</small></span>';}
 var PHRASE={D:'상품 소개',W:'홈페이지',P:'사진 자료',B:'브랜드 표현',M:'온라인 홍보',A:'반복 업무 자동화'};
 
 /* ===== 유틸 ===== */
@@ -1093,12 +1099,12 @@ function renderResult(){
   var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2>'+(I.meta&&!shared&&(I.meta.category||I.meta.address)?'<p class="dx-lead" style="margin:0 0 6px">'+esc([I.meta.category,I.meta.address].filter(Boolean).join(' · '))+'</p>':'')+'<p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
   if(R.status!==null)h+='<div class="dx-score"><div class="v">'+rnd(R.status)+'<small>점</small></div><div class="l"><b>판매 기반 현황점수</b><span>높을수록 판매 기반이 잘 갖춰진 상태예요. 응답에 따른 내부 지표이며 기업 간 공식 평가가 아닙니다.</span></div></div>';
   else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>답하지 않았거나 ‘잘 모르겠음’을 고른 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
-  h+='<div class="dx-sec-t">영역별 개선 필요도<small>높을수록 개선이 필요해요</small></div><div class="dx-bars">';
+  h+='<div class="dx-sec-t">영역별 개선 필요도<small>높을수록 개선이 필요해요 · 누르면 관련 작업 사례를 볼 수 있어요</small></div><div class="dx-bars">';
   ['D','W','P','B','M'].forEach(function(d){var x=R.dom[d],s,w=0,c='na';
     if(x.state==='na')s='해당 없음';else if(x.state==='insufficient')s='확인 필요';else{var lv=level(x.value);c=lv[0];w=x.value;s=fmt(x.value)+' · '+lv[1];if(d==='M'&&x.value>=40&&R.top.some(function(t){return BASE.indexOf(t)>-1;}))s=fmt(x.value)+' · 제작 이후 개선';}
-    h+='<div class="dx-bar"><span class="n">'+DOM_LABEL[d]+'</span><span class="track" aria-hidden="true"><i style="width:'+w+'%"></i></span><span class="s '+c+'">'+s+'</span></div>';});
+    h+=barOpen(d)+'<span class="track" aria-hidden="true"><i style="width:'+w+'%"></i></span><span class="s '+c+'">'+s+'</span></a>';});
   var ax=R.dom.A;
-  h+='<div class="dx-bar"><span class="n">업무 효율화</span><span class="track" aria-hidden="true"><i style="width:'+(ax.value||0)+'%;background:#5B6B8C"></i></span><span class="s '+(ax.rec?'mid':'na')+'">'+(ax.value===null?'':'기회 '+fmt(ax.value)+' · ')+esc(ax.label)+'</span></div></div>';
+  h+=barOpen('A')+'<span class="track" aria-hidden="true"><i style="width:'+(ax.value||0)+'%;background:#5B6B8C"></i></span><span class="s '+(ax.rec?'mid':'na')+'">'+(ax.value===null?'':'기회 '+fmt(ax.value)+' · ')+esc(ax.label)+'</span></a></div>';
   h+='<div class="dx-sec-t">핵심 요약</div><div class="dx-summary">'+esc(narrative(I,R))+'</div>';
   if(R.top.length){
     h+='<div class="dx-sec-t">우선 추천 서비스<small>실행 단계 순 · 최대 3개</small></div><div class="dx-recs">';
