@@ -511,6 +511,31 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 
 .dx-final{text-align:center}
 .dx-final .dx-ctas{justify-content:center}
+.dx-search{display:flex;gap:10px;max-width:540px;margin-bottom:12px}
+.dx-search input{flex:1;min-width:0;padding:16px 20px;border:1.5px solid var(--line-2);border-radius:100px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink)}
+.dx-search input:focus{outline:none;border-color:var(--ink)}
+.dx-search .btn{flex:none}
+.dx-sub-cta{font-size:14px;font-weight:700;color:var(--ink-2);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px 0;margin-bottom:18px;font-family:inherit}
+.dx-found{max-width:540px;margin-bottom:20px}
+.dx-found:empty{display:none}
+.dx-found .hd{font-size:13px;font-weight:800;color:var(--gray);margin-bottom:8px}
+.dx-co-list{display:flex;flex-direction:column;gap:8px;list-style:none}
+.dx-co{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:13px 15px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;cursor:pointer;font-family:inherit;color:var(--ink);transition:.15s}
+.dx-co:hover,.dx-co:focus-visible{border-color:var(--ink);background:var(--yellow-tint);outline:none}
+.dx-co .t{flex:1;min-width:0}
+.dx-co b{display:block;font-size:15px;letter-spacing:-.02em}
+.dx-co small{display:block;font-size:12.5px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dx-co .go{flex:none;font-size:13px;font-weight:800;color:var(--gold)}
+.dx-co.manual{border-style:dashed}
+.dx-found .note{font-size:12.5px;color:var(--gray);margin-top:8px}
+.dx-found .acr-load{justify-content:flex-start;padding:12px 0}
+.dx-cocard{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);background:var(--soft-2);border-radius:14px;padding:14px 16px;margin-bottom:20px}
+.dx-cocard .t{flex:1;min-width:0;font-size:13px;color:var(--gray)}
+.dx-cocard b{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
+.dx-cocard a{color:var(--gold);font-weight:700;word-break:break-all}
+.dx-cocard button{flex:none;font-size:13px;font-weight:700;background:#fff;border:1px solid var(--line-2);border-radius:100px;padding:7px 12px;cursor:pointer;font-family:inherit}
+.dx-skipall{display:block;margin:18px auto 0;background:none;border:0;color:var(--gray);font-size:13.5px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-family:inherit}
+@media(max-width:480px){.dx-search{flex-direction:column}.dx-search .btn{justify-content:center}}
 .dx-privacy{max-width:760px;margin:22px auto 0;text-align:left;font-size:13px;color:var(--gray)}
 .dx-privacy summary{cursor:pointer;font-weight:700;color:var(--ink-2);text-align:center}
 .dx-privacy div{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
@@ -519,6 +544,7 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 .dx-sticky .btn{width:100%;justify-content:center}
 @media(max-width:760px){.dx-sticky{display:block}body.dx-has-sticky .kakao,body.dx-has-sticky .totop{bottom:86px}}
 body.dx-open .dx-sticky{display:none}
+body.dx-search-in .dx-sticky{display:none}
 
 /* panel */
 .dx-panel{position:fixed;inset:0;z-index:300;background:rgba(17,19,23,.5);display:none;align-items:center;justify-content:center;padding:24px}
@@ -647,8 +673,10 @@ body.dx-open{overflow:hidden}
           <span class="eyebrow">Free Business Diagnosis</span>
           <h1>우리 회사에 지금<br><span class="hl">가장 필요한 것</span>은 무엇일까요</h1>
           <p class="sub">상세페이지부터 홈페이지, 제품촬영, 온라인 마케팅까지 현재 상태를 분석해 개선 순서를 알려드립니다.</p>
-          <div class="dx-ctas"><button type="button" class="btn btn-primary" data-dx-start>기업진단 시작하기 →</button><button type="button" class="btn btn-line" data-dx-consult>바로 제작 상담하기</button></div>
-          <div class="dx-meta"><span>무료</span><span>약 2분 · 12문항</span><span>결과 보기에 연락처 불필요</span></div>
+          <form class="dx-search" id="dxSearch" role="search" novalidate><label for="dxQuery" class="sr-only">기업명</label><input id="dxQuery" type="search" maxlength="50" placeholder="기업명을 입력하세요 (예: 망고트리)" autocomplete="organization" enterkeyhint="search"><button type="submit" class="btn btn-primary">기업 찾기 →</button></form>
+          <div class="dx-found" id="dxFound" aria-live="polite"></div>
+          <button type="button" class="dx-sub-cta" data-dx-consult>진단 없이 바로 제작 상담하기</button>
+          <div class="dx-meta"><span>무료</span><span>기업명 검색으로 시작</span><span>상세 설문은 선택 · 최대 12문항</span><span>결과 보기에 연락처 불필요</span></div>
         </div>
         <div class="dx-works" aria-label="망고트리 작업 사례">
           <figure><img src="assets/pf_detail1.jpg" alt="상세페이지 제작 사례" loading="eager"><figcaption>상세페이지</figcaption></figure>
@@ -671,10 +699,10 @@ body.dx-open{overflow:hidden}
   </section>
   <section class="block">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>진단은 이렇게 진행돼요</h2><p>응답 기반 진단 · 무료 · 약 2분</p></div>
+      <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>진단은 이렇게 진행돼요</h2><p>기업명 검색 · 선택 설문 · 무료</p></div>
       <ol class="dx-flow reveal">
-        <li><h3>현황 입력</h3><p>진단 목적과 업종을 알려주세요.</p></li>
-        <li><h3>간단한 질문</h3><p>목적에 맞는 8–12개 질문에 답합니다. 잘 모르는 항목은 ‘잘 모르겠음’을 고르면 됩니다.</p></li>
+        <li><h3>기업명 검색</h3><p>기업명을 입력하면 웹 검색으로 찾은 기업 목록에서 우리 회사를 고릅니다.</p></li>
+        <li><h3>필요한 만큼 설문</h3><p>진단 목적과 업종을 확인한 뒤 최대 12개 질문에 답합니다. 언제든 남은 질문을 건너뛰고 결과를 볼 수 있어요.</p></li>
         <li><h3>개선 순서 확인</h3><p>영역별 현황과 우선 추천 서비스, 제작 실행 순서를 바로 확인합니다.</p></li>
       </ol>
     </div>
@@ -728,7 +756,7 @@ body.dx-open{overflow:hidden}
   <section class="block soft dx-final">
     <div class="wrap">
       <div class="sec-head reveal"><h2>지금 우리 회사의 개선 순서를 확인해보세요</h2><p>질문에 답하면 바로 결과를 볼 수 있어요.</p></div>
-      <div class="dx-ctas reveal"><button type="button" class="btn btn-primary" data-dx-start>기업진단 시작하기 →</button><button type="button" class="btn btn-line" data-dx-consult>바로 제작 상담하기</button></div>
+      <div class="dx-ctas reveal"><button type="button" class="btn btn-primary" data-dx-start>기업명으로 진단 시작 →</button><button type="button" class="btn btn-line" data-dx-consult>바로 제작 상담하기</button></div>
       <details class="dx-privacy" id="privacy"><summary>회사 정보 및 개인정보 처리 안내</summary><div>
         <p><b>망고트리</b> · 문의 mtree712@gmail.com</p>
         <p>진단 응답은 결과 계산을 위해 사용하며, 진행 중인 응답은 이어하기를 위해 이 기기의 브라우저에만 최대 7일간 임시 저장됩니다. 연락처는 브라우저에 저장하지 않습니다.</p>
@@ -736,7 +764,7 @@ body.dx-open{overflow:hidden}
       </div></details>
     </div>
   </section>
-  <div class="dx-sticky"><button type="button" class="btn btn-primary" data-dx-start>기업진단 시작하기 →</button></div>
+  <div class="dx-sticky"><button type="button" class="btn btn-primary" data-dx-start>기업명으로 진단 시작 →</button></div>
 
   <div class="dx-panel" id="dxPanel" role="dialog" aria-modal="true" aria-labelledby="dxTitle">
     <div class="dx-box">
@@ -758,6 +786,8 @@ body.dx-open{overflow:hidden}
 // 상담 접수 API 주소. 비워두면 메일 앱으로 신청 내용을 보냅니다.
 var LEAD_ENDPOINT='';
 var LEAD_EMAIL='mtree712@gmail.com';
+// 기업 검색 API 주소 (api/company-search.js 배포 주소). 비워두면 입력한 이름으로만 진행합니다.
+var COMPANY_SEARCH_ENDPOINT='';
 var RULE_VERSION='2026-10-07.r2';
 var QUESTION_VERSION='2026-10-07.q2';
 var CONSENT_VERSION='2026-10-07.c1';
@@ -907,7 +937,7 @@ function followUps(info,R,answers){
   var out=[];
   if(detailAsked(info)&&info.detailNeed==='unk')out.push('상품·서비스별 상세 소개 페이지가 필요한지');
   if(info.photoNeed==='unk')out.push('판매·홍보에 사진과 영상이 필요한지');
-  activeQs(info).forEach(function(q){if(answers[q.id]==='u')out.push(q.t.replace(/\?$/,''));});
+  activeQs(info).forEach(function(q){if(answers[q.id]==='u'||answers[q.id]===undefined)out.push(q.t.replace(/\?$/,''));});
   return out.slice(0,3);
 }
 function preparation(R){var out=[];R.top.forEach(function(d){PREP[d].forEach(function(p){if(out.indexOf(p)<0)out.push(p);});});return out.slice(0,5);}
@@ -944,7 +974,9 @@ function renderInfo(){
   title.textContent='망고트리 기업진단 · 기본 정보';setProg(0);
   var h='';
   if(saved){var cnt=Object.keys(saved.answers||{}).length;h+='<div class="dx-resume" role="status"><b>이전에 진행하던 진단이 있어요.</b> ('+cnt+'개 문항 응답)<div class="row"><button type="button" class="btn btn-dark" id="dxResume">이어서 진단하기</button><button type="button" class="btn btn-line" id="dxDiscard">새로 시작</button></div></div>';}
-  h+='<h2>기본 정보를 알려주세요</h2><p class="dx-lead">현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.</p>';
+  var M=I.meta;
+  if(M)h+='<div class="dx-cocard"><div class="t"><b>'+esc(M.name)+'</b>'+esc([M.category,M.address].filter(Boolean).join(' · '))+(M.url?'<br><a href="'+esc(M.url)+'" target="_blank" rel="noopener">'+esc(M.url)+'</a>':'')+'</div><button type="button" id="dxReSearch">다른 기업 찾기</button></div>';
+  h+='<h2>기본 정보를 확인해주세요</h2><p class="dx-lead">'+(M&&M.category?'검색 정보로 업종을 미리 골라두었어요. 맞지 않으면 바꿔주세요.':'현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.')+'</p>';
   h+='<form id="dxInfo" novalidate>';
   h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
   h+='<fieldset class="dx-field" id="f-industry"><legend>업종<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+INDUSTRIES.map(function(v){return chip('industry','checkbox',v,v,toArr(I.industry).indexOf(v)>-1);}).join('')+'</div><div class="dx-err" id="e-industry">업종을 1개 이상 선택해주세요.</div></fieldset>';
@@ -953,7 +985,8 @@ function renderInfo(){
   h+='<div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
   h+='</form>';
   body.innerHTML=h;
-  setNav('<button type="button" class="btn btn-line" id="dxCancel">닫기</button><button type="button" class="btn btn-primary" id="dxNext">질문 시작 →</button>');
+  setNav('<button type="button" class="btn btn-line" id="dxCancel">닫기</button><button type="button" class="btn btn-primary" id="dxNext">상세 설문 시작 →</button>');
+  var rs=$('#dxReSearch');if(rs)rs.addEventListener('click',function(){closePanel();focusSearch();});
   var form=$('#dxInfo');
   function sync(){
     var fd=readInfo(form);
@@ -1001,7 +1034,9 @@ function renderQ(){
   h+='<div class="dx-opts" role="radiogroup" aria-labelledby="dxQ">';
   q.o.forEach(function(o,i){h+='<label class="dx-opt"><input type="radio" name="ans" value="'+i+'"'+(cur===i?' checked':'')+'><span>'+esc(o)+'</span></label>';});
   h+='<label class="dx-opt unk"><input type="radio" name="ans" value="u"'+(cur==='u'?' checked':'')+'><span>잘 모르겠음</span></label></div>';
+  if(S.qi<total-1)h+='<button type="button" class="dx-skipall" id="dxSkipAll">남은 질문 건너뛰고 결과 보기</button>';
   body.innerHTML=h;renderedQ=q.id;
+  var sk=$('#dxSkipAll');if(sk)sk.addEventListener('click',function(){track('survey_skip_rest',{question_id:q.id});finish();});
   var last=S.qi===total-1;
   setNav('<button type="button" class="btn btn-line" id="dxPrev">← 이전</button><button type="button" class="btn btn-primary" id="dxNext"'+(cur===undefined?' disabled':'')+'>'+(last?'결과 보기':'다음 →')+'</button>');
   track('question_view',{question_id:q.id});
@@ -1053,9 +1088,9 @@ function renderResult(){
   var who=I.company||'우리 기업',purpose=purposeLabel(I);
   title.textContent='진단 결과';setProg(1);
   track('result_view',{rule_version:RULE_VERSION});
-  var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2><p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
+  var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2>'+(I.meta&&!shared&&(I.meta.category||I.meta.address)?'<p class="dx-lead" style="margin:0 0 6px">'+esc([I.meta.category,I.meta.address].filter(Boolean).join(' · '))+'</p>':'')+'<p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
   if(R.status!==null)h+='<div class="dx-score"><div class="v">'+rnd(R.status)+'<small>점</small></div><div class="l"><b>판매 기반 현황점수</b><span>높을수록 판매 기반이 잘 갖춰진 상태예요. 응답에 따른 내부 지표이며 기업 간 공식 평가가 아닙니다.</span></div></div>';
-  else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>‘잘 모르겠음’ 응답이 많은 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
+  else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>답하지 않았거나 ‘잘 모르겠음’을 고른 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
   h+='<div class="dx-sec-t">영역별 개선 필요도<small>높을수록 개선이 필요해요</small></div><div class="dx-bars">';
   ['D','W','P','B','M'].forEach(function(d){var x=R.dom[d],s,w=0,c='na';
     if(x.state==='na')s='해당 없음';else if(x.state==='insufficient')s='확인 필요';else{var lv=level(x.value);c=lv[0];w=x.value;s=fmt(x.value)+' · '+lv[1];if(d==='M'&&x.value>=40&&R.top.some(function(t){return BASE.indexOf(t)>-1;}))s=fmt(x.value)+' · 제작 이후 개선';}
@@ -1197,6 +1232,8 @@ function mailBody(p,labels){
       '필요도 D/W/P/B/M: '+['D','W','P','B','M'].map(function(k){return s[k]==null?'-':fmt(s[k]);}).join(' / ')+' · AI 기회: '+(s.A==null?'-':fmt(s.A)),
       '추천: '+(d.recommendations.map(function(k){return N[k];}).join(' > ')||'없음'),'실행 순서: '+(d.execution_order.map(function(k){return N[k];}).join(' → ')||'-'),
       '원응답: '+Object.keys(d.answers).map(function(k){return k+'='+d.answers[k];}).join(' '));}
+  var meta=p.diagnosis&&p.diagnosis.info.meta;
+  if(meta)L.push('','── 검색으로 선택한 기업','이름: '+meta.name,'업종(검색): '+(meta.category||'-'),'주소: '+(meta.address||'-'),'홈페이지: '+(meta.url||'-'),'출처: '+(meta.source||'-'));
   L.push('','신청 ID: '+p.submission_id);
   return L.join('\n');
 }
@@ -1223,9 +1260,55 @@ function start(opener){
   if(S.screen==='info'||S.screen==='done'){var sv=loadSaved();S._resume=(sv&&Object.keys(sv.answers||{}).length&&!S.info.purpose.length)?sv:null;if(S.screen==='done')S.screen='info';}
   openPanel(null,opener);
 }
-$$('[data-dx-start]').forEach(function(b){b.addEventListener('click',function(){start(b);});});
+/* ===== 기업 검색 ===== */
+var IND_RULES=[['식품',/식품|농산|수산|축산|음료|제과|떡|김치|건강식/],['화장품',/화장품|뷰티|코스메틱/],['생활용품',/생활용품|가구|인테리어|주방|잡화/],['숙박',/숙박|호텔|펜션|리조트|모텔|게스트하우스/],['관광',/관광|여행|체험|레저/],['외식',/음식점|카페|레스토랑|한식|양식|중식|일식|베이커리|주점/],['유통',/유통|도매|소매|쇼핑|마트|상사/],['IT',/소프트웨어|IT|정보통신|플랫폼|웹|앱/],['제조',/제조|공업|산업|공장|기계|부품|화학/],['서비스',/서비스|컨설팅|교육|병원|의원|미용|광고|디자인/]];
+function guessIndustry(cat){if(!cat)return [];for(var i=0;i<IND_RULES.length;i++){if(IND_RULES[i][1].test(cat))return [IND_RULES[i][0]];}return [];}
+var found=$('#dxFound'),searchForm=$('#dxSearch'),queryInput=$('#dxQuery'),searchSeq=0,foundList=[];
+function focusSearch(){if(!queryInput)return;window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){queryInput.focus();},300);}
+function searchCompanies(q){
+  if(!COMPANY_SEARCH_ENDPOINT)return Promise.resolve({configured:false,companies:[]});
+  var ctl=window.AbortController?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort();},8000);
+  return fetch(COMPANY_SEARCH_ENDPOINT+(COMPANY_SEARCH_ENDPOINT.indexOf('?')>-1?'&':'?')+'q='+encodeURIComponent(q),{signal:ctl?ctl.signal:undefined})
+    .then(function(r){clearTimeout(timer);if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(function(d){return {configured:true,companies:d.companies||[],documents:d.documents||[]};});
+}
+function coBtn(i,c){return '<li><button type="button" class="dx-co" data-co="'+i+'"><span class="t"><b>'+esc(c.name)+'</b><small>'+esc([c.category,c.address].filter(Boolean).join(' · ')||c.url||'')+'</small></span><span class="go">선택 →</span></button></li>';}
+function runSearch(q){
+  var seq=++searchSeq;
+  found.innerHTML='<div class="acr-load"><span class="acr-spin"></span> ‘'+esc(q)+'’ 기업 정보를 찾고 있어요…</div>';
+  track('company_search',{});
+  searchCompanies(q).then(function(d){
+    if(seq!==searchSeq)return;
+    foundList=d.companies.slice(0,8);
+    if(!foundList.length&&d.documents&&d.documents.length)foundList=d.documents.slice(0,5).map(function(x){return {name:q,category:'',address:x.host,url:x.url,source:'네이버 웹문서'};});
+    var h='';
+    if(foundList.length)h+='<div class="hd">검색된 기업 '+foundList.length+'곳 · 우리 회사를 선택하세요</div>';
+    else if(d.configured)h+='<div class="hd">검색된 기업이 없어요</div>';
+    h+='<ul class="dx-co-list">'+foundList.map(function(c,i){return coBtn(i,c);}).join('');
+    h+='<li><button type="button" class="dx-co manual" data-co="manual"><span class="t"><b>‘'+esc(q)+'’'+(foundList.length?' 목록에 없어요':'')+'</b><small>입력한 이름으로 진단 시작</small></span><span class="go">진행 →</span></button></li></ul>';
+    if(!d.configured)h+='<p class="note">기업 검색 서버가 아직 연결되지 않아 입력한 이름으로 진단을 시작합니다.</p>';
+    found.innerHTML=h;
+    $$('[data-co]',found).forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-co');pickCompany(k==='manual'?{name:q,manual:true}:foundList[+k],b);});});
+  }).catch(function(){
+    if(seq!==searchSeq)return;
+    foundList=[];
+    found.innerHTML='<div class="hd">기업 정보를 불러오지 못했어요</div><ul class="dx-co-list"><li><button type="button" class="dx-co manual" data-co="manual"><span class="t"><b>‘'+esc(q)+'’</b><small>입력한 이름으로 진단 시작</small></span><span class="go">진행 →</span></button></li></ul>';
+    $('[data-co]',found).addEventListener('click',function(e){pickCompany({name:q,manual:true},e.currentTarget);});
+  });
+}
+function pickCompany(c,opener){
+  S=fresh();lastResult=null;interests=null;
+  S.info.company=String(c.name||'').slice(0,50);
+  if(!c.manual){S.info.meta={name:c.name,category:c.category||'',address:c.address||'',url:c.url||'',source:c.source||''};S.info.industry=guessIndustry(c.category);}
+  track('company_select',{manual:!!c.manual});
+  track('diagnosis_start',{});
+  save();openPanel('info',opener);
+}
+if(searchForm)searchForm.addEventListener('submit',function(e){e.preventDefault();var q=queryInput.value.trim();if(q.length<2){found.innerHTML='<div class="hd">기업명을 2자 이상 입력해주세요.</div>';queryInput.focus();return;}runSearch(q);});
+$$('[data-dx-start]').forEach(function(b){b.addEventListener('click',function(){if(queryInput){focusSearch();}else start(b);});});
 $$('[data-dx-consult]').forEach(function(b){b.addEventListener('click',function(){if(!lastResult)interests=interests||[];openPanel('consult',b);});});
 document.body.classList.add('dx-has-sticky');
+if(searchForm&&window.IntersectionObserver){new IntersectionObserver(function(es){document.body.classList.toggle('dx-search-in',es[0].isIntersecting);}).observe($('.dx-hero'));}
 track('landing_view',{});
 var m=location.hash.match(/^#r=([A-Za-z0-9_-]+)/);
 if(m){var sh=decodeShare(m[1]);if(sh){shared=true;lastResult={R:compute(sh.info,sh.answers),info:sh.info,answers:pickActive(sh.info,sh.answers),version:0};S.screen='result';openPanel('result');}}
