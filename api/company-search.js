@@ -21,6 +21,17 @@ function host(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch (_) { return ''; }
 }
 
+// 웹문서 주소로 판매·예약·SNS 채널을 구분한다. 진단 기본 정보 자동 선택에 쓰인다.
+const CHANNEL_HOSTS = [
+  ['store', /(^|\.)(smartstore\.naver\.com|brand\.naver\.com|coupang\.com|11st\.co\.kr|gmarket\.co\.kr|auction\.co\.kr|ssg\.com|kurly\.com|cafe24\.com|imweb\.me)$/],
+  ['booking', /(^|\.)(booking\.naver\.com|yanolja\.com|yeogi\.com|goodchoice\.kr|airbnb\.co\.kr|airbnb\.com|booking\.com|catchtable\.co\.kr|myrealtrip\.com)$/],
+  ['sns', /(^|\.)(instagram\.com|blog\.naver\.com|facebook\.com|youtube\.com|tiktok\.com)$/],
+];
+function channelOf(h) {
+  const hit = CHANNEL_HOSTS.find(([, re]) => re.test(h));
+  return hit ? hit[0] : '';
+}
+
 async function naver(kind, q, display) {
   const url = NAVER + kind + '.json?display=' + display + '&query=' + encodeURIComponent(q);
   const res = await fetch(url, {
@@ -72,17 +83,20 @@ module.exports = async function handler(req, res) {
     });
   });
 
-  // 업체 정보에 홈페이지가 없으면, 웹문서 중 이름이 일치하는 첫 사이트를 홈페이지 후보로 붙인다.
+  // 이름이 일치하는 웹문서로 판매·예약·SNS 채널을 찾고, 홈페이지가 없으면 일반 사이트를 홈페이지 후보로 붙인다.
   const documents = (web.status === 'fulfilled' ? web.value : []).map((it) => ({
     title: strip(it.title),
     url: it.link,
     host: host(it.link),
+    channel: channelOf(host(it.link)),
     description: strip(it.description).slice(0, 160),
   }));
   companies.forEach((c) => {
+    const related = documents.filter((d) => d.title.includes(c.name));
+    c.channels = [...new Set(related.map((d) => d.channel).filter(Boolean))];
     if (c.url) return;
-    const doc = documents.find((d) => d.title.includes(c.name));
-    if (doc) c.url = doc.url;
+    const site = related.find((d) => !d.channel);
+    if (site) c.url = site.url;
   });
 
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate=604800');

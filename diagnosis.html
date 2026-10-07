@@ -545,6 +545,7 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 @media(max-width:760px){.dx-sticky{display:block}body.dx-has-sticky .kakao,body.dx-has-sticky .totop{bottom:86px}}
 body.dx-open .dx-sticky{display:none}
 body.dx-search-in .dx-sticky{display:none}
+.dx-auto{display:inline-block;margin-left:8px;font-size:11.5px;font-weight:800;color:var(--ok);background:var(--ok-soft);padding:2px 8px;border-radius:100px;vertical-align:1px}
 
 /* panel */
 .dx-panel{position:fixed;inset:0;z-index:300;background:rgba(17,19,23,.5);display:none;align-items:center;justify-content:center;padding:24px}
@@ -969,6 +970,7 @@ function render(){
 
 /* S02 기본정보 */
 function chip(name,type,val,label,checked){return '<label class="dx-chip"><input type="'+type+'" name="'+name+'" value="'+esc(val)+'"'+(checked?' checked':'')+'><span>'+esc(label)+'</span></label>';}
+function autoTag(k){return S.info.auto&&S.info.auto.indexOf(k)>-1?'<span class="dx-auto">자동 선택</span>':'';}
 function renderInfo(){
   var I=S.info,saved=S._resume;
   title.textContent='망고트리 기업진단 · 기본 정보';setProg(0);
@@ -976,12 +978,12 @@ function renderInfo(){
   if(saved){var cnt=Object.keys(saved.answers||{}).length;h+='<div class="dx-resume" role="status"><b>이전에 진행하던 진단이 있어요.</b> ('+cnt+'개 문항 응답)<div class="row"><button type="button" class="btn btn-dark" id="dxResume">이어서 진단하기</button><button type="button" class="btn btn-line" id="dxDiscard">새로 시작</button></div></div>';}
   var M=I.meta;
   if(M)h+='<div class="dx-cocard"><div class="t"><b>'+esc(M.name)+'</b>'+esc([M.category,M.address].filter(Boolean).join(' · '))+(M.url?'<br><a href="'+esc(M.url)+'" target="_blank" rel="noopener">'+esc(M.url)+'</a>':'')+'</div><button type="button" id="dxReSearch">다른 기업 찾기</button></div>';
-  h+='<h2>기본 정보를 확인해주세요</h2><p class="dx-lead">'+(M&&M.category?'검색 정보로 업종을 미리 골라두었어요. 맞지 않으면 바꿔주세요.':'현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.')+'</p>';
+  h+='<h2>기본 정보를 확인해주세요</h2><p class="dx-lead">'+(I.auto&&I.auto.length?'검색한 기업 정보로 기본 항목을 자동으로 골라두었어요. 맞지 않으면 눌러서 바꿔주세요.':'현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.')+'</p>';
   h+='<form id="dxInfo" novalidate>';
-  h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-industry"><legend>업종<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+INDUSTRIES.map(function(v){return chip('industry','checkbox',v,v,toArr(I.industry).indexOf(v)>-1);}).join('')+'</div><div class="dx-err" id="e-industry">업종을 1개 이상 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적'+autoTag('purpose')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-industry"><legend>업종'+autoTag('industry')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+INDUSTRIES.map(function(v){return chip('industry','checkbox',v,v,toArr(I.industry).indexOf(v)>-1);}).join('')+'</div><div class="dx-err" id="e-industry">업종을 1개 이상 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?'+autoTag('detailNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?'+autoTag('photoNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
   h+='<div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
   h+='</form>';
   body.innerHTML=h;
@@ -994,7 +996,7 @@ function renderInfo(){
     return fd;
   }
   form.addEventListener('change',function(e){
-    var fd=sync();var fld=e.target.closest('.dx-field');if(fld)fld.classList.remove('invalid');
+    var fd=sync();var fld=e.target.closest('.dx-field');if(fld){fld.classList.remove('invalid');var tg=fld.querySelector('.dx-auto');if(tg)tg.remove();S.info.auto=(S.info.auto||[]).filter(function(k){return 'f-'+k!==fld.id;});}
     Object.assign(S.info,fd);save();
   });
   form.addEventListener('submit',function(e){e.preventDefault();});
@@ -1280,7 +1282,7 @@ function runSearch(q){
   searchCompanies(q).then(function(d){
     if(seq!==searchSeq)return;
     foundList=d.companies.slice(0,8);
-    if(!foundList.length&&d.documents&&d.documents.length)foundList=d.documents.slice(0,5).map(function(x){return {name:q,category:'',address:x.host,url:x.url,source:'네이버 웹문서'};});
+    if(!foundList.length&&d.documents&&d.documents.length)foundList=d.documents.slice(0,5).map(function(x){return {name:q,category:'',address:x.host,url:x.url,source:'네이버 웹문서',channels:x.channel?[x.channel]:[]};});
     var h='';
     if(foundList.length)h+='<div class="hd">검색된 기업 '+foundList.length+'곳 · 우리 회사를 선택하세요</div>';
     else if(d.configured)h+='<div class="hd">검색된 기업이 없어요</div>';
@@ -1296,10 +1298,26 @@ function runSearch(q){
     $('[data-co]',found).addEventListener('click',function(e){pickCompany({name:q,manual:true},e.currentTarget);});
   });
 }
+/* 검색으로 고른 기업 정보로 기본 정보 버튼을 미리 선택 */
+var PURPOSE_RULES=[['visit',/음식점|카페|레스토랑|숙박|호텔|펜션|리조트|관광|여행|체험|레저|공연|전시|캠핑|글램핑/],['sale',/식품|화장품|뷰티|생활용품|쇼핑|소매|온라인|몰|농산|수산|축산|제과|건강식/],['b2b',/제조|공업|부품|기계|도매|산업|화학|소재|장비|납품/],['brand',/서비스|컨설팅|교육|디자인|소프트웨어|IT|정보통신|에이전시/]];
+var PHOTO_IND=['식품','화장품','생활용품','관광','숙박','외식','유통'];
+function inferInfo(c){
+  var cat=c.category||'',ch=c.channels||[],purpose=[];
+  PURPOSE_RULES.forEach(function(r){if(r[1].test(cat))purpose.push(r[0]);});
+  if(ch.indexOf('store')>-1&&purpose.indexOf('sale')<0)purpose.push('sale');
+  if(ch.indexOf('booking')>-1&&purpose.indexOf('visit')<0)purpose.push('visit');
+  if(purpose.length>1&&purpose.indexOf('brand')>-1)purpose.splice(purpose.indexOf('brand'),1);
+  var industry=guessIndustry(cat),out={purpose:purpose,industry:industry,auto:[]};
+  if(purpose.length)out.auto.push('purpose');if(industry.length)out.auto.push('industry');
+  var visual=purpose.indexOf('sale')>-1||purpose.indexOf('visit')>-1||industry.some(function(v){return PHOTO_IND.indexOf(v)>-1;});
+  if(visual){out.photoNeed='yes';out.auto.push('photoNeed');}
+  if(purpose.indexOf('b2b')>-1&&industry.indexOf('제조')>-1&&purpose.indexOf('sale')<0&&purpose.indexOf('visit')<0){out.detailNeed='yes';out.auto.push('detailNeed');}
+  return out;
+}
 function pickCompany(c,opener){
   S=fresh();lastResult=null;interests=null;
   S.info.company=String(c.name||'').slice(0,50);
-  if(!c.manual){S.info.meta={name:c.name,category:c.category||'',address:c.address||'',url:c.url||'',source:c.source||''};S.info.industry=guessIndustry(c.category);}
+  if(!c.manual){S.info.meta={name:c.name,category:c.category||'',address:c.address||'',url:c.url||'',source:c.source||'',channels:c.channels||[]};var inf=inferInfo(c);S.info.purpose=inf.purpose;S.info.industry=inf.industry;S.info.photoNeed=inf.photoNeed||'';S.info.detailNeed=inf.detailNeed||'';S.info.auto=inf.auto;}
   track('company_select',{manual:!!c.manual});
   track('diagnosis_start',{});
   save();openPanel('info',opener);
