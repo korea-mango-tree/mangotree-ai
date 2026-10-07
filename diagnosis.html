@@ -511,6 +511,31 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 
 .dx-final{text-align:center}
 .dx-final .dx-ctas{justify-content:center}
+.dx-search{display:flex;gap:10px;max-width:540px;margin-bottom:12px}
+.dx-search input{flex:1;min-width:0;padding:16px 20px;border:1.5px solid var(--line-2);border-radius:100px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink)}
+.dx-search input:focus{outline:none;border-color:var(--ink)}
+.dx-search .btn{flex:none}
+.dx-sub-cta{font-size:14px;font-weight:700;color:var(--ink-2);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px 0;margin-bottom:18px;font-family:inherit}
+.dx-found{max-width:540px;margin-bottom:20px}
+.dx-found:empty{display:none}
+.dx-found .hd{font-size:13px;font-weight:800;color:var(--gray);margin-bottom:8px}
+.dx-co-list{display:flex;flex-direction:column;gap:8px;list-style:none}
+.dx-co{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:13px 15px;border:1.5px solid var(--line-2);border-radius:14px;background:#fff;cursor:pointer;font-family:inherit;color:var(--ink);transition:.15s}
+.dx-co:hover,.dx-co:focus-visible{border-color:var(--ink);background:var(--yellow-tint);outline:none}
+.dx-co .t{flex:1;min-width:0}
+.dx-co b{display:block;font-size:15px;letter-spacing:-.02em}
+.dx-co small{display:block;font-size:12.5px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dx-co .go{flex:none;font-size:13px;font-weight:800;color:var(--gold)}
+.dx-co.manual{border-style:dashed}
+.dx-found .note{font-size:12.5px;color:var(--gray);margin-top:8px}
+.dx-found .acr-load{justify-content:flex-start;padding:12px 0}
+.dx-cocard{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);background:var(--soft-2);border-radius:14px;padding:14px 16px;margin-bottom:20px}
+.dx-cocard .t{flex:1;min-width:0;font-size:13px;color:var(--gray)}
+.dx-cocard b{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
+.dx-cocard a{color:var(--gold);font-weight:700;word-break:break-all}
+.dx-cocard button{flex:none;font-size:13px;font-weight:700;background:#fff;border:1px solid var(--line-2);border-radius:100px;padding:7px 12px;cursor:pointer;font-family:inherit}
+.dx-skipall{display:block;margin:18px auto 0;background:none;border:0;color:var(--gray);font-size:13.5px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-family:inherit}
+@media(max-width:480px){.dx-search{flex-direction:column}.dx-search .btn{justify-content:center}}
 .dx-privacy{max-width:760px;margin:22px auto 0;text-align:left;font-size:13px;color:var(--gray)}
 .dx-privacy summary{cursor:pointer;font-weight:700;color:var(--ink-2);text-align:center}
 .dx-privacy div{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
@@ -519,6 +544,8 @@ footer{border-top:1px solid var(--line);padding:58px 0 42px}
 .dx-sticky .btn{width:100%;justify-content:center}
 @media(max-width:760px){.dx-sticky{display:block}body.dx-has-sticky .kakao,body.dx-has-sticky .totop{bottom:86px}}
 body.dx-open .dx-sticky{display:none}
+body.dx-search-in .dx-sticky{display:none}
+.dx-auto{display:inline-block;margin-left:8px;font-size:11.5px;font-weight:800;color:var(--ok);background:var(--ok-soft);padding:2px 8px;border-radius:100px;vertical-align:1px}
 
 /* panel */
 .dx-panel{position:fixed;inset:0;z-index:300;background:rgba(17,19,23,.5);display:none;align-items:center;justify-content:center;padding:24px}
@@ -647,8 +674,10 @@ body.dx-open{overflow:hidden}
           <span class="eyebrow">Free Business Diagnosis</span>
           <h1>우리 회사에 지금<br><span class="hl">가장 필요한 것</span>은 무엇일까요</h1>
           <p class="sub">상세페이지부터 홈페이지, 제품촬영, 온라인 마케팅까지 현재 상태를 분석해 개선 순서를 알려드립니다.</p>
-          <div class="dx-ctas"><button type="button" class="btn btn-primary" data-dx-start>기업진단 시작하기 →</button><button type="button" class="btn btn-line" data-dx-consult>바로 제작 상담하기</button></div>
-          <div class="dx-meta"><span>무료</span><span>예상 4–6분</span><span>결과 보기에 연락처 불필요</span></div>
+          <form class="dx-search" id="dxSearch" role="search" novalidate><label for="dxQuery" class="sr-only">기업명</label><input id="dxQuery" type="search" maxlength="50" placeholder="기업명을 입력하세요 (예: 망고트리)" autocomplete="organization" enterkeyhint="search"><button type="submit" class="btn btn-primary">기업 찾기 →</button></form>
+          <div class="dx-found" id="dxFound" aria-live="polite"></div>
+          <button type="button" class="dx-sub-cta" data-dx-consult>진단 없이 바로 제작 상담하기</button>
+          <div class="dx-meta"><span>무료</span><span>기업명 검색으로 시작</span><span>상세 설문은 선택 · 최대 12문항</span><span>결과 보기에 연락처 불필요</span></div>
         </div>
         <div class="dx-works" aria-label="망고트리 작업 사례">
           <figure><img src="assets/pf_detail1.jpg" alt="상세페이지 제작 사례" loading="eager"><figcaption>상세페이지</figcaption></figure>
@@ -671,10 +700,10 @@ body.dx-open{overflow:hidden}
   </section>
   <section class="block">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>진단은 이렇게 진행돼요</h2><p>응답 기반 진단 · 무료 · 예상 4–6분</p></div>
+      <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>진단은 이렇게 진행돼요</h2><p>기업명 검색 · 선택 설문 · 무료</p></div>
       <ol class="dx-flow reveal">
-        <li><h3>현황 입력</h3><p>진단 목적, 업종, 판매·홍보 채널을 알려주세요.</p></li>
-        <li><h3>간단한 질문</h3><p>목적에 맞는 16–24개 질문에 답합니다. 잘 모르는 항목은 ‘잘 모르겠음’을 고르면 됩니다.</p></li>
+        <li><h3>기업명 검색</h3><p>기업명을 입력하면 웹 검색으로 찾은 기업 목록에서 우리 회사를 고릅니다.</p></li>
+        <li><h3>필요한 만큼 설문</h3><p>진단 목적과 업종을 확인한 뒤 최대 12개 질문에 답합니다. 언제든 남은 질문을 건너뛰고 결과를 볼 수 있어요.</p></li>
         <li><h3>개선 순서 확인</h3><p>영역별 현황과 우선 추천 서비스, 제작 실행 순서를 바로 확인합니다.</p></li>
       </ol>
     </div>
@@ -697,13 +726,13 @@ body.dx-open{overflow:hidden}
       <div class="sec-head reveal"><span class="eyebrow">Sample</span><h2>결과는 이렇게 보여드려요</h2></div>
       <div class="dx-sample reveal">
         <span class="dx-badge">예시 데이터 · 가상의 식품 제조기업</span>
-        <h3>판매 기반 현황점수 41점 · 상위 추천 3개</h3>
+        <h3>판매 기반 현황점수 44점 · 상위 추천 3개</h3>
         <ol>
-          <li><b>1. 맞춤형 상세페이지 · 필요도 75</b><small>근거: 상세 소개 자료 없음 · 구매 이유 설명이 모호함</small></li>
-          <li><b>2. 제품 및 브랜드 촬영 · 필요도 75</b><small>근거: 대표 상품 기본 사진 없음 · 사진 품질이 낮음 → 촬영을 상세페이지보다 먼저 진행</small></li>
-          <li><b>3. 브랜드 및 디자인 · 필요도 50</b><small>근거: 로고는 있으나 표현 기준 없음 · 매체 간 브랜드가 일부만 일치</small></li>
+          <li><b>1. 맞춤형 상세페이지 · 필요도 75</b><small>근거: 구매 이유가 거의 드러나지 않음 · 상세페이지가 일부 상품만 있음</small></li>
+          <li><b>2. 제품 및 브랜드 촬영 · 필요도 75</b><small>근거: 대표 상품 사진이 거의 없음 · 사진이 기본 모습만 전달 → 촬영을 상세페이지보다 먼저 진행</small></li>
+          <li><b>3. 브랜드 및 디자인 · 필요도 50</b><small>근거: 브랜드 기준 없이 로고만 있음 · 디자인이 일부만 일치</small></li>
         </ol>
-        <p class="dx-note">온라인 마케팅(필요도 62.5)은 제작을 마친 뒤 개선하도록 안내합니다. 위 내용은 이해를 돕기 위한 예시이며 실제 고객사 결과가 아닙니다.</p>
+        <p class="dx-note">온라인 마케팅(필요도 75)은 제작을 마친 뒤 개선하도록 안내합니다. 위 내용은 이해를 돕기 위한 예시이며 실제 고객사 결과가 아닙니다.</p>
       </div>
     </div>
   </section>
@@ -728,7 +757,7 @@ body.dx-open{overflow:hidden}
   <section class="block soft dx-final">
     <div class="wrap">
       <div class="sec-head reveal"><h2>지금 우리 회사의 개선 순서를 확인해보세요</h2><p>질문에 답하면 바로 결과를 볼 수 있어요.</p></div>
-      <div class="dx-ctas reveal"><button type="button" class="btn btn-primary" data-dx-start>기업진단 시작하기 →</button><button type="button" class="btn btn-line" data-dx-consult>바로 제작 상담하기</button></div>
+      <div class="dx-ctas reveal"><button type="button" class="btn btn-primary" data-dx-start>기업명으로 진단 시작 →</button><button type="button" class="btn btn-line" data-dx-consult>바로 제작 상담하기</button></div>
       <details class="dx-privacy" id="privacy"><summary>회사 정보 및 개인정보 처리 안내</summary><div>
         <p><b>망고트리</b> · 문의 mtree712@gmail.com</p>
         <p>진단 응답은 결과 계산을 위해 사용하며, 진행 중인 응답은 이어하기를 위해 이 기기의 브라우저에만 최대 7일간 임시 저장됩니다. 연락처는 브라우저에 저장하지 않습니다.</p>
@@ -736,7 +765,7 @@ body.dx-open{overflow:hidden}
       </div></details>
     </div>
   </section>
-  <div class="dx-sticky"><button type="button" class="btn btn-primary" data-dx-start>기업진단 시작하기 →</button></div>
+  <div class="dx-sticky"><button type="button" class="btn btn-primary" data-dx-start>기업명으로 진단 시작 →</button></div>
 
   <div class="dx-panel" id="dxPanel" role="dialog" aria-modal="true" aria-labelledby="dxTitle">
     <div class="dx-box">
@@ -747,7 +776,7 @@ body.dx-open{overflow:hidden}
     </div>
   </div>
   <div class="sr-only" aria-live="polite" id="dxLive"></div>
-<footer><div class="wrap"><div class="foot"><div class="fbrand"><a href="index.html" class="logo"><img src="data:image/png;base64,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" alt="MANGOTREE"><span class="plus">AI+</span></a><p>커머스, AI로 자동화하세요.</p></div><div class="foot-cols"><div class="fcol"><h5>Product</h5><a href="products.html">AI 제품</a><a href="features.html">핵심 기능</a><a href="platforms.html">플랫폼</a></div><div class="fcol"><h5>Explore</h5><a href="usecase.html">활용사례</a><a href="pricing.html">요금제</a></div><div class="fcol"><h5>Contact</h5><a href="mailto:mtree712@gmail.com">무료 AI 진단</a><a href="mailto:mtree712@gmail.com">도입 문의</a></div></div></div><div class="foot-bottom"><span>© 2026 MANGOTREE AI+</span><span>Create · Connect · Analyze · Automate · Grow</span></div></div></footer><a class="kakao" href="http://pf.kakao.com/" target="_blank" rel="noopener" aria-label="카카오톡 상담"><span class="klabel">카카오톡 상담</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.86 1.9 5.36 4.76 6.77-.21.76-.76 2.78-.87 3.2-.14.53.2.52.41.38.16-.11 2.65-1.8 3.73-2.52.63.09 1.29.14 1.96.14 5.52 0 10-3.58 10-8S17.52 3 12 3z"/></svg></a>
+<footer><div class="wrap"><div class="foot"><div class="fbrand"><a href="index.html" class="logo"><img src="data:image/png;base64,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" alt="MANGOTREE"><span class="plus">AI+</span></a><p>커머스, AI로 자동화하세요.</p></div><div class="foot-cols"><div class="fcol"><h5>Product</h5><a href="products.html">AI 제품</a><a href="features.html">핵심 기능</a><a href="platforms.html">플랫폼</a></div><div class="fcol"><h5>Explore</h5><a href="usecase.html">활용사례</a><a href="pricing.html">요금제</a></div><div class="fcol"><h5>Contact</h5><a href="diagnosis.html">무료 AI 진단</a><a href="mailto:mtree712@gmail.com">도입 문의</a></div></div></div><div class="foot-bottom"><span>© 2026 MANGOTREE AI+</span><span>Create · Connect · Analyze · Automate · Grow</span></div></div></footer><a class="kakao" href="http://pf.kakao.com/" target="_blank" rel="noopener" aria-label="카카오톡 상담"><span class="klabel">카카오톡 상담</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.86 1.9 5.36 4.76 6.77-.21.76-.76 2.78-.87 3.2-.14.53.2.52.41.38.16-.11 2.65-1.8 3.73-2.52.63.09 1.29.14 1.96.14 5.52 0 10-3.58 10-8S17.52 3 12 3z"/></svg></a>
 <button class="totop" id="toTop" aria-label="맨 위로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <script>const header=document.getElementById('header');window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>16));const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');burger.addEventListener('click',()=>navLinks.classList.toggle('open'));navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*55)+'ms';io.observe(el)});const toTop=document.getElementById('toTop');window.addEventListener('scroll',()=>toTop.classList.toggle('show',window.scrollY>420));toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));const pfTabs=document.querySelectorAll('.pf-tab');if(pfTabs.length){const pfCards=document.querySelectorAll('.pf-card');pfTabs.forEach(t=>t.addEventListener('click',()=>{pfTabs.forEach(x=>x.classList.remove('on'));t.classList.add('on');const f=t.dataset.f;pfCards.forEach(c=>{c.style.display=(f==='all'||c.dataset.cat===f)?'':'none';});}));}
 </script>
@@ -758,51 +787,37 @@ body.dx-open{overflow:hidden}
 // 상담 접수 API 주소. 비워두면 메일 앱으로 신청 내용을 보냅니다.
 var LEAD_ENDPOINT='';
 var LEAD_EMAIL='mtree712@gmail.com';
-var RULE_VERSION='2026-10-07.r1';
-var QUESTION_VERSION='2026-10-07.q1';
+// 기업 검색 API 주소 (api/company-search.js 배포 주소). 비워두면 입력한 이름으로만 진행합니다.
+var COMPANY_SEARCH_ENDPOINT='';
+var RULE_VERSION='2026-10-07.r2';
+var QUESTION_VERSION='2026-10-07.q2';
 var CONSENT_VERSION='2026-10-07.c1';
-var STORE_KEY='mt_dx_session_v1',RESULT_KEY='mt_dx_results_v1',TTL=7*24*3600*1000;
+var STORE_KEY='mt_dx_session_v2',RESULT_KEY='mt_dx_results_v2',TTL=7*24*3600*1000;
 
 /* ===== 기준 데이터 ===== */
 var PURPOSES=[['sale','온라인 판매'],['b2b','B2B 거래처 확보'],['visit','예약·방문 유도'],['brand','브랜드 소개'],['ops','운영 효율화']];
 var INDUSTRIES=['식품','화장품','생활용품','제조','관광','숙박','외식','유통','서비스','IT','기타'];
-var CHANNELS=[['mall','자사몰'],['market','오픈마켓'],['sns','SNS'],['offline','오프라인 매장'],['b2b','B2B 거래'],['booking','예약 플랫폼'],['none','없음']];
 var NEEDS=[['yes','필요'],['no','불필요'],['unk','모름']];
-var REGIONS=['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'];
-var SIZES=['1–4명','5–9명','10–49명','50–99명','100명 이상'];
 var SCHEDULES=['미정','1개월 이내','1–3개월','3개월 이후'];
 // 예산 구간은 운영자 확정 전 임시값입니다.
 var BUDGETS=['미정','500만 원 미만','500만–1,000만 원','1,000만–3,000만 원','3,000만 원 이상'];
 var DOMS=['D','W','P','B','M','A'];
 var BASE=['D','W','P','B'];
 var DOM_LABEL={D:'상세페이지',W:'홈페이지',P:'촬영',B:'브랜드',M:'마케팅',A:'업무 효율화'};
-var CONCERNS=[['D','상세페이지'],['W','홈페이지'],['P','제품·브랜드 촬영'],['B','브랜드·디자인'],['M','온라인 마케팅'],['A','AI·업무 자동화'],['unk','잘 모르겠음']];
 
 var Q=[
- ['Q01','D','상품 또는 서비스의 상세 소개 자료가 있나요?',['없음','간단한 글과 사진만 있음','일부 상품에 있음','주요 상품에 있음','전 상품이 정리됨']],
- ['Q02','D','상세페이지에서 고객이 구매할 이유가 드러나나요?',['차별점 없음','설명이 모호함','특징만 정리됨','대상과 장점이 드러남','근거와 사용 상황까지 명확함']],
- ['Q03','D','가격과 구성 및 이용 안내가 충분한가요?',['거의 없음','빠진 항목이 많음','기본 정보만 있음','대부분 충분함','구성·사용·배송·FAQ까지 충분함']],
- ['Q04','D','모바일에서 읽고 구매하거나 예약하기 쉬운가요?',['열리지 않거나 없음','읽거나 구매하기 어려움','일부 불편함','대체로 편함','읽기와 전환 동선을 확인함']],
- ['Q05','W','홈페이지 또는 기업 소개 랜딩이 있나요?',['없음','임시 소개만 있음','있으나 오래됨','현재 정보로 운영','목적별 안내와 관리가 갖춰짐']],
- ['Q06','W','모바일에서 홈페이지를 사용하기 편한가요?',['없거나 이용 불가','글자·화면이 크게 불편','일부 불편','대체로 편함','주요 기기로 점검하고 개선함']],
- ['Q07','W','홈페이지에서 문의나 구매로 이동하기 쉬운가요?',['연결 없음','연락처만 있음','버튼 있으나 복잡','문의 또는 구매로 쉽게 이동','동선을 점검하고 전환을 측정함']],
- ['Q08','W','기업과 제품 정보가 최신 상태인가요?',['자료 없음','오래된 정보 다수','일부 갱신','주요 정보 최신','담당자가 정기 점검함']],
- ['Q09','P','대표 상품이나 공간의 기본 사진이 있나요?',['없음','임시 촬영만 있음','일부만 충분','주요 대상 사진 충분','전체 핵심 대상이 충분']],
- ['Q10','P','사진이 제품이나 서비스의 장점을 보여주나요?',['장점이 보이지 않음','품질이 낮음','기본 모습만 전달','장점과 사용 상황 전달','용도별 연출까지 갖춤']],
- ['Q11','P','사진을 여러 매체에 활용할 수 있나요?',['원본·권한 확인 불가','저해상도만 있음','일부 원본 있음','주요 원본과 권한 확인','매체별 규격까지 정리']],
- ['Q12','P','현재 필요한 영상이나 체험 장면 자료가 있나요?',['필요하나 없음','매우 부족','일부 있음','필요한 자료 대부분 있음','충분하거나 영상이 필요하지 않음']],
- ['Q13','B','로고와 브랜드 표현 기준이 정리되어 있나요?',['없음','임시 로고만 있음','로고 있으나 기준 없음','기본 색상과 글꼴 정리','매체별 사용 기준까지 정리']],
- ['Q14','B','홈페이지와 상품 콘텐츠의 브랜드가 일관적인가요?',['각각 다름','차이가 큼','일부 일치','대부분 일관됨','모든 주요 매체를 일관되게 관리']],
- ['Q15','B','현재 필요한 패키지나 제품소개서가 준비되어 있나요?',['필요하나 없음','오래되거나 부적합','일부 보완 필요','대부분 준비','충분하거나 해당 제작이 필요 없음']],
- ['Q16','B','배너와 SNS 소재 등 홍보 디자인이 준비되어 있나요?',['없음','비정기 임시 제작','일부 보유','주요 규격 보유','목적별 원본과 템플릿 보유']],
- ['Q17','M','고객이 온라인에서 우리 기업을 찾을 수 있나요?',['검색·채널 정보 없음','정보 부족','기본 정보만 노출','주요 채널에서 발견 가능','발견 경로를 확인하고 관리']],
- ['Q18','M','홍보 채널의 콘텐츠를 정기적으로 운영하나요?',['운영 없음','드물게 운영','가끔 운영','계획에 따라 운영','성과를 보고 운영 개선']],
- ['Q19','M','온라인 홍보 비용과 성과를 확인하나요?',['필요하나 확인 안 함','비용만 확인','유입·반응 확인','문의·구매 성과 확인','성과를 비교해 개선하거나 유료홍보 불필요']],
- ['Q20','M','문의와 주문이 어디에서 발생했는지 알 수 있나요?',['모름','가끔 추정','일부 채널 확인','주요 채널 확인','채널별로 기록하고 개선']],
- ['Q21','A','업무 자료가 정리되어 있나요?',['자료 없음','개인별 흩어짐','일부 공통 자료','공통 저장소와 기준','최신 자료와 접근권한 관리']],
- ['Q22','A','새 도구를 운영할 담당자가 있나요?',['없음','선정 미정','겸임 가능','담당자 지정','담당자와 운영 기준 존재']],
- ['Q23','A','반복 업무에 쓰는 시간이 얼마나 부담되나요?',['거의 없음','적음','보통','큼','매우 큼']],
- ['Q24','A','AI를 실제 업무에 어느 정도 쓰고 있나요?',['사용 안 함','개인 실험','일부 업무','팀 단위 활용','업무 흐름에 연동']]
+ ['Q01','D','상품·서비스를 자세히 소개하는 상세페이지가 있나요?',['없음','일부 상품만 있음','주요 상품에 잘 갖춰짐']],
+ ['Q02','D','상세페이지에 구매 이유와 가격·구성·이용 안내가 잘 드러나나요?',['거의 드러나지 않음','일부만 드러남','충분히 드러남']],
+ ['Q03','W','회사 홈페이지나 기업 소개 페이지가 있나요?',['없음','있지만 오래됨','최신 정보로 운영 중']],
+ ['Q04','W','모바일에서 홈페이지를 보고 문의·구매로 쉽게 이어지나요?',['어려움','일부 불편함','편리함']],
+ ['Q05','P','대표 상품이나 공간의 사진이 충분한가요?',['거의 없음','일부만 있음','충분함']],
+ ['Q06','P','사진이 장점과 사용 장면을 잘 보여주나요?',['보여주지 못함','기본 모습만 전달','잘 보여줌']],
+ ['Q07','B','로고·색상 등 브랜드 기준이 정리되어 있나요?',['없음','로고만 있음','정리되어 있음']],
+ ['Q08','B','홈페이지·상세페이지·홍보물의 디자인이 일관적인가요?',['제각각임','일부만 일치','일관됨']],
+ ['Q09','M','고객이 온라인에서 우리 회사를 찾고 홍보 콘텐츠를 볼 수 있나요?',['거의 없음','가끔 운영','꾸준히 운영']],
+ ['Q10','M','홍보 성과와 문의·주문이 어디서 오는지 확인하나요?',['모름','일부 확인','채널별로 확인']],
+ ['Q11','A','업무 자료와 새 도구를 운영할 담당자가 준비되어 있나요?',['둘 다 없음','일부 준비됨','둘 다 준비됨']],
+ ['Q12','A','반복 업무에 쓰는 시간이 부담되나요?',['거의 없음','보통','큼']]
 ].map(function(r){return {id:r[0],dom:r[1],t:r[2],o:r[3]};});
 var QBY={};Q.forEach(function(q){QBY[q.id]=q;});
 
@@ -825,13 +840,16 @@ function uid(){if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();re
 function opts(list,sel,ph){return (ph?'<option value="">'+ph+'</option>':'')+list.map(function(v){var val=Array.isArray(v)?v[0]:v,l=Array.isArray(v)?v[1]:v;return '<option value="'+esc(val)+'"'+(val===sel?' selected':'')+'>'+esc(l)+'</option>';}).join('');}
 
 /* ===== 상태 ===== */
-function fresh(){return {info:{purpose:'',industry:'',company:'',product:'',channels:[],detailNeed:'',photoNeed:'',url:'',region:'',size:'',concern:''},answers:{},qi:0,screen:'info'};}
+function purposeLabel(info){return PURPOSES.filter(function(p){return has(info,p[0]);}).map(function(p){return p[1];}).join(', ');}
+function toArr(v){return Array.isArray(v)?v:(v?[v]:[]);}
+function has(info,k){return toArr(info.purpose).indexOf(k)>-1;}
+function fresh(){return {info:{purpose:[],industry:[],company:'',detailNeed:'',photoNeed:''},answers:{},qi:0,screen:'info'};}
 var S=fresh(),renderedQ=null,lastResult=null,interests=null,submitId=null,returnFocus=null,shared=false;
 function save(){if(shared)return;lsSet(STORE_KEY,{v:1,savedAt:Date.now(),info:S.info,answers:S.answers,qi:S.qi,screen:S.screen==='q'?'q':'info'});}
 function loadSaved(){var d=lsGet(STORE_KEY);if(!d||!d.savedAt||Date.now()-d.savedAt>TTL){lsDel(STORE_KEY);return null;}return d;}
 
 /* ===== 규칙 엔진 ===== */
-function isOnlineSales(info){return info.purpose==='sale'||info.purpose==='visit'||info.channels.some(function(c){return c==='mall'||c==='market'||c==='booking';});}
+function isOnlineSales(info){return has(info,'sale')||has(info,'visit');}
 function detailAsked(info){return !isOnlineSales(info);}
 function applicable(info){
   var a={D:true,W:true,P:true,B:true,M:true,A:true};
@@ -840,11 +858,11 @@ function applicable(info){
   return a;
 }
 function activeQs(info){var a=applicable(info);return Q.filter(function(q){return a[q.dom];});}
-function qScore(q,idx){return q.dom==='A'?idx:4-idx;}
+function qScore(q,idx){return q.dom==='A'?idx*2:4-idx*2;}
 function names(info){
   var n={D:'맞춤형 상세페이지',W:'홈페이지 및 랜딩',P:'제품 및 브랜드 촬영',B:'브랜드 및 디자인',M:'온라인 마케팅',A:'AI 활용 및 자동화'};
-  if(info.purpose==='b2b'&&!isOnlineSales(info)){n.D='제품소개 페이지';n.W='기업 홈페이지';n.P='제품·납품 사례 촬영';n.B='카탈로그 및 브랜드 디자인';}
-  if(info.purpose==='visit'){n.D='예약·체험 상세페이지';n.W='예약 랜딩 및 홈페이지';n.P='공간 및 체험 촬영';}
+  if(has(info,'b2b')&&!isOnlineSales(info)){n.D='제품소개 페이지';n.W='기업 홈페이지';n.P='제품·납품 사례 촬영';n.B='카탈로그 및 브랜드 디자인';}
+  if(has(info,'visit')&&!has(info,'sale')){n.D='예약·체험 상세페이지';n.W='예약 랜딩 및 홈페이지';n.P='공간 및 체험 촬영';}
   return n;
 }
 function compute(info,answers){
@@ -853,7 +871,7 @@ function compute(info,answers){
     if(!ap[d]){dom[d]={state:'na'};return;}
     var qs=Q.filter(function(q){return q.dom===d;}),valid=[],unknown=[];
     qs.forEach(function(q){var v=answers[q.id];if(v==='u')unknown.push(q.id);else if(typeof v==='number')valid.push({id:q.id,idx:v,score:qScore(q,v)});});
-    if(valid.length<2){dom[d]={state:'insufficient',valid:valid,unknown:unknown};return;}
+    if(!valid.length){dom[d]={state:'insufficient',valid:valid,unknown:unknown};return;}
     var sum=valid.reduce(function(s,x){return s+x.score;},0);
     dom[d]={state:'ok',value:sum/valid.length*25,valid:valid,unknown:unknown};
   });
@@ -866,14 +884,14 @@ function compute(info,answers){
   tier1.sort(function(a,b){return dom[b].value-dom[a].value||BASE.indexOf(a)-BASE.indexOf(b);});
   var mkt=dom.M.state==='ok'&&dom.M.value>=40;
   var n=function(id){var v=answers[id];return typeof v==='number'?v:null;};
-  var q21=n('Q21'),q22=n('Q22'),q23=n('Q23'),q24=n('Q24');
-  var A=(q23!==null&&q24!==null)?(q23+4-q24)/2*25:null;
-  var ready=q21!==null&&q22!==null&&q21>=2&&q22>=2;
+  var ready11=n('Q11'),burden=n('Q12');
+  var A=burden!==null?burden*2*25:null;
+  var ready=ready11!==null&&ready11>=1;
   var baseLow=!anyInsuf&&baseAp.every(function(d){return dom[d].value<40;});
   var aiRec=ready&&baseLow&&A!==null&&A>=40;
   var aiState;
   if(aiRec)aiState='고도화 추천';
-  else if(q21===null||q22===null||A===null)aiState='확인 필요';
+  else if(ready11===null||A===null)aiState='확인 필요';
   else if(anyInsuf)aiState='추가 확인 후 판단';
   else if(!ready)aiState='자료 정리·담당자 확보 후 재검토';
   else if(!baseLow)aiState='기반 개선 후 재검토';
@@ -886,11 +904,11 @@ function compute(info,answers){
   if(photoFirst&&steps.indexOf('D')>-1&&steps.indexOf('P')>-1&&steps.indexOf('P')>steps.indexOf('D')){steps.splice(steps.indexOf('P'),1);steps.splice(steps.indexOf('D'),0,'P');}
   var later=ordered.slice(3);
   return {applicable:ap,dom:dom,status:status,baseInsuf:baseInsuf,top:top,steps:steps,later:later,photoFirst:photoFirst,
-    noHomepageB2B:info.purpose==='b2b'&&answers.Q05===0,rule_version:RULE_VERSION,question_version:QUESTION_VERSION};
+    noHomepageB2B:has(info,'b2b')&&answers.Q03===0,rule_version:RULE_VERSION,question_version:QUESTION_VERSION};
 }
 function level(v){return v>=70?['hi','우선 개선']:v>=40?['mid','개선 권장']:['lo','유지 및 부분 점검'];}
 function evidence(d,R,answers){
-  if(d==='A'){return ['Q23','Q21','Q22'].filter(function(id){return typeof answers[id]==='number';}).slice(0,2).map(function(id){return QBY[id].t+' → '+QBY[id].o[answers[id]];});}
+  if(d==='A'){return ['Q12','Q11'].filter(function(id){return typeof answers[id]==='number';}).slice(0,2).map(function(id){return QBY[id].t+' → '+QBY[id].o[answers[id]];});}
   var v=(R.dom[d].valid||[]).slice().sort(function(a,b){return b.score-a.score||a.id.localeCompare(b.id);});
   return v.slice(0,2).map(function(x){return QBY[x.id].t+' → '+QBY[x.id].o[x.idx];});
 }
@@ -914,15 +932,13 @@ function narrative(info,R){
   if(R.photoFirst&&t.indexOf('D')>-1)out+='상세페이지에 쓸 사진이 부족하므로 촬영을 먼저 진행한 뒤 상세페이지를 제작하는 순서를 제안합니다.';
   else if(R.steps.length>1)out+=R.steps.map(function(d){return N[d];}).join(' → ')+' 순서로 진행하는 것을 제안합니다.';
   if(R.later.indexOf('M')>-1||(t.indexOf('M')===-1&&R.dom.M.state==='ok'&&R.dom.M.value>=40))out+=' 온라인 마케팅은 제작을 마친 뒤 검토하세요.';
-  var c=info.concern;
-  if(c&&c!=='unk'&&t.indexOf(c)===-1){var cl=CONCERNS.filter(function(x){return x[0]===c;})[0][1];out+=' 최우선 고민으로 선택하신 '+cl+josa(cl,'은','는')+' 상담에서 함께 다루겠습니다.';}
   return out;
 }
 function followUps(info,R,answers){
   var out=[];
   if(detailAsked(info)&&info.detailNeed==='unk')out.push('상품·서비스별 상세 소개 페이지가 필요한지');
   if(info.photoNeed==='unk')out.push('판매·홍보에 사진과 영상이 필요한지');
-  activeQs(info).forEach(function(q){if(answers[q.id]==='u')out.push(q.t.replace(/\?$/,''));});
+  activeQs(info).forEach(function(q){if(answers[q.id]==='u'||answers[q.id]===undefined)out.push(q.t.replace(/\?$/,''));});
   return out.slice(0,3);
 }
 function preparation(R){var out=[];R.top.forEach(function(d){PREP[d].forEach(function(p){if(out.indexOf(p)<0)out.push(p);});});return out.slice(0,5);}
@@ -954,27 +970,25 @@ function render(){
 
 /* S02 기본정보 */
 function chip(name,type,val,label,checked){return '<label class="dx-chip"><input type="'+type+'" name="'+name+'" value="'+esc(val)+'"'+(checked?' checked':'')+'><span>'+esc(label)+'</span></label>';}
+function autoTag(k){return S.info.auto&&S.info.auto.indexOf(k)>-1?'<span class="dx-auto">자동 선택</span>':'';}
 function renderInfo(){
   var I=S.info,saved=S._resume;
   title.textContent='망고트리 기업진단 · 기본 정보';setProg(0);
   var h='';
   if(saved){var cnt=Object.keys(saved.answers||{}).length;h+='<div class="dx-resume" role="status"><b>이전에 진행하던 진단이 있어요.</b> ('+cnt+'개 문항 응답)<div class="row"><button type="button" class="btn btn-dark" id="dxResume">이어서 진단하기</button><button type="button" class="btn btn-line" id="dxDiscard">새로 시작</button></div></div>';}
-  h+='<h2>기본 정보를 알려주세요</h2><p class="dx-lead">현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.</p>';
+  var M=I.meta;
+  if(M)h+='<div class="dx-cocard"><div class="t"><b>'+esc(M.name)+'</b>'+esc([M.category,M.address].filter(Boolean).join(' · '))+(M.url?'<br><a href="'+esc(M.url)+'" target="_blank" rel="noopener">'+esc(M.url)+'</a>':'')+'</div><button type="button" id="dxReSearch">다른 기업 찾기</button></div>';
+  h+='<h2>기본 정보를 확인해주세요</h2><p class="dx-lead">'+(I.auto&&I.auto.length?'검색한 기업 정보로 기본 항목을 자동으로 골라두었어요. 맞지 않으면 눌러서 바꿔주세요.':'현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.')+'</p>';
   h+='<form id="dxInfo" novalidate>';
-  h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+PURPOSES.map(function(p){return chip('purpose','radio',p[0],p[1],I.purpose===p[0]);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 선택해주세요.</div></fieldset>';
-  h+='<div class="dx-field" id="f-industry"><label for="dxIndustry">업종<span class="req" aria-hidden="true">*</span></label><select id="dxIndustry" name="industry" aria-describedby="e-industry" required>'+opts(INDUSTRIES,I.industry,'업종 선택')+'</select><div class="dx-err" id="e-industry">업종을 선택해주세요.</div></div>';
-  h+='<fieldset class="dx-field" id="f-channels"><legend>판매 및 홍보 채널<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+CHANNELS.map(function(c){return chip('channels','checkbox',c[0],c[1],I.channels.indexOf(c[0])>-1);}).join('')+'</div><div class="dx-err" id="e-channels">채널을 1개 이상 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-concern"><legend>가장 먼저 해결하고 싶은 고민<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+CONCERNS.map(function(c){return chip('concern','radio',c[0],c[1],I.concern===c[0]);}).join('')+'</div><div class="dx-err" id="e-concern">고민을 1개 선택해주세요.</div></fieldset>';
-  h+='<div class="dx-grid2"><div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
-  h+='<div class="dx-field"><label for="dxUrl">홈페이지·상품 URL<span class="opt">선택</span></label><input type="url" id="dxUrl" name="url" maxlength="300" value="'+esc(I.url)+'" placeholder="https://"><div class="dx-help">상담 참고용이며 자동 분석은 하지 않습니다.</div></div></div>';
-  h+='<div class="dx-field"><label for="dxProduct">주요 제품 및 서비스<span class="opt">선택 · 최대 100자</span></label><input type="text" id="dxProduct" name="product" maxlength="100" value="'+esc(I.product)+'" placeholder="예) 국내산 곶감·건과일 선물세트"></div>';
-  h+='<div class="dx-grid2"><div class="dx-field"><label for="dxRegion">지역<span class="opt">선택</span></label><select id="dxRegion" name="region">'+opts(REGIONS,I.region,'선택 안 함')+'</select></div>';
-  h+='<div class="dx-field"><label for="dxSize">직원 수<span class="opt">선택</span></label><select id="dxSize" name="size">'+opts(SIZES,I.size,'선택 안 함')+'</select></div></div>';
+  h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적'+autoTag('purpose')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-industry"><legend>업종'+autoTag('industry')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+INDUSTRIES.map(function(v){return chip('industry','checkbox',v,v,toArr(I.industry).indexOf(v)>-1);}).join('')+'</div><div class="dx-err" id="e-industry">업종을 1개 이상 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?'+autoTag('detailNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?'+autoTag('photoNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
+  h+='<div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
   h+='</form>';
   body.innerHTML=h;
-  setNav('<button type="button" class="btn btn-line" id="dxCancel">닫기</button><button type="button" class="btn btn-primary" id="dxNext">질문 시작 →</button>');
+  setNav('<button type="button" class="btn btn-line" id="dxCancel">닫기</button><button type="button" class="btn btn-primary" id="dxNext">상세 설문 시작 →</button>');
+  var rs=$('#dxReSearch');if(rs)rs.addEventListener('click',function(){closePanel();focusSearch();});
   var form=$('#dxInfo');
   function sync(){
     var fd=readInfo(form);
@@ -982,10 +996,7 @@ function renderInfo(){
     return fd;
   }
   form.addEventListener('change',function(e){
-    if(e.target.name==='channels'){var none=form.querySelector('input[name=channels][value=none]');
-      if(e.target.value==='none'&&e.target.checked)$$('input[name=channels]',form).forEach(function(x){if(x!==e.target)x.checked=false;});
-      else if(e.target.checked)none.checked=false;}
-    var fd=sync();var fld=e.target.closest('.dx-field');if(fld)fld.classList.remove('invalid');
+    var fd=sync();var fld=e.target.closest('.dx-field');if(fld){fld.classList.remove('invalid');var tg=fld.querySelector('.dx-auto');if(tg)tg.remove();S.info.auto=(S.info.auto||[]).filter(function(k){return 'f-'+k!==fld.id;});}
     Object.assign(S.info,fd);save();
   });
   form.addEventListener('submit',function(e){e.preventDefault();});
@@ -993,27 +1004,26 @@ function renderInfo(){
   $('#dxCancel').addEventListener('click',closePanel);
   $('#dxNext').addEventListener('click',function(){
     var fd=readInfo(form),bad=[];
-    if(!fd.purpose)bad.push('purpose');if(!fd.industry)bad.push('industry');if(!fd.channels.length)bad.push('channels');
-    if(detailAsked(fd)&&!fd.detailNeed)bad.push('detailNeed');if(!fd.photoNeed)bad.push('photoNeed');if(!fd.concern)bad.push('concern');
+    if(!fd.purpose.length)bad.push('purpose');if(!fd.industry.length)bad.push('industry');
+    if(detailAsked(fd)&&!fd.detailNeed)bad.push('detailNeed');if(!fd.photoNeed)bad.push('photoNeed');
     $$('.dx-field',form).forEach(function(f){f.classList.remove('invalid');});
     if(bad.length){bad.forEach(function(k){$('#f-'+k).classList.add('invalid');});var f=$('#f-'+bad[0]);var el=f.querySelector('input,select');f.scrollIntoView({block:'center'});if(el)el.focus();live.textContent='필수 항목 '+bad.length+'개를 입력해주세요.';return;}
     Object.assign(S.info,fd);S._resume=null;
-    track('basic_info_complete',{purpose:fd.purpose,industry:fd.industry});
+    track('basic_info_complete',{purpose:fd.purpose.join(','),industry:fd.industry.join(',')});
     var qs=activeQs(S.info);
     // 첫 미응답 문항부터 이어서 진행
     var first=0;for(var i=0;i<qs.length;i++){if(S.answers[qs[i].id]===undefined){first=i;break;}first=i;}
     S.qi=first;S.screen='q';save();render();
   });
   if(saved){
-    $('#dxResume').addEventListener('click',function(){S.info=Object.assign(fresh().info,saved.info);S.answers=saved.answers||{};S.qi=saved.qi||0;S._resume=null;S.screen=saved.screen==='q'&&S.info.purpose?'q':'info';render();});
+    $('#dxResume').addEventListener('click',function(){S.info=Object.assign(fresh().info,saved.info);S.info.purpose=toArr(S.info.purpose);S.info.industry=toArr(S.info.industry);S.answers=saved.answers||{};S.qi=saved.qi||0;S._resume=null;S.screen=saved.screen==='q'&&S.info.purpose.length?'q':'info';render();});
     $('#dxDiscard').addEventListener('click',function(){lsDel(STORE_KEY);S=fresh();render();});
   }
 }
 function readInfo(form){
   var g=function(n){var el=form.querySelector('[name='+n+']:checked');return el?el.value:'';};
-  return {purpose:g('purpose'),industry:form.industry.value,company:form.company.value.trim().slice(0,50),product:form.product.value.trim().slice(0,100),
-    channels:$$('input[name=channels]:checked',form).map(function(x){return x.value;}),detailNeed:g('detailNeed'),photoNeed:g('photoNeed'),
-    url:form.url.value.trim().slice(0,300),region:form.region.value,size:form.size.value,concern:g('concern')};
+  var all=function(n){return $$('input[name='+n+']:checked',form).map(function(x){return x.value;});};
+  return {purpose:all('purpose'),industry:all('industry'),company:form.company.value.trim().slice(0,50),detailNeed:g('detailNeed'),photoNeed:g('photoNeed')};
 }
 
 /* S03 질문 */
@@ -1026,7 +1036,9 @@ function renderQ(){
   h+='<div class="dx-opts" role="radiogroup" aria-labelledby="dxQ">';
   q.o.forEach(function(o,i){h+='<label class="dx-opt"><input type="radio" name="ans" value="'+i+'"'+(cur===i?' checked':'')+'><span>'+esc(o)+'</span></label>';});
   h+='<label class="dx-opt unk"><input type="radio" name="ans" value="u"'+(cur==='u'?' checked':'')+'><span>잘 모르겠음</span></label></div>';
+  if(S.qi<total-1)h+='<button type="button" class="dx-skipall" id="dxSkipAll">남은 질문 건너뛰고 결과 보기</button>';
   body.innerHTML=h;renderedQ=q.id;
+  var sk=$('#dxSkipAll');if(sk)sk.addEventListener('click',function(){track('survey_skip_rest',{question_id:q.id});finish();});
   var last=S.qi===total-1;
   setNav('<button type="button" class="btn btn-line" id="dxPrev">← 이전</button><button type="button" class="btn btn-primary" id="dxNext"'+(cur===undefined?' disabled':'')+'>'+(last?'결과 보기':'다음 →')+'</button>');
   track('question_view',{question_id:q.id});
@@ -1075,12 +1087,12 @@ function renderAnalyzing(){title.textContent='결과 분석 중';setProg(1);body
 function renderResult(){
   if(!lastResult){S.screen='info';renderInfo();return;}
   var R=lastResult.R,I=lastResult.info,A=lastResult.answers,N=names(I);
-  var who=I.company||'우리 기업',purpose=(PURPOSES.filter(function(p){return p[0]===I.purpose;})[0]||['',''])[1];
+  var who=I.company||'우리 기업',purpose=purposeLabel(I);
   title.textContent='진단 결과';setProg(1);
   track('result_view',{rule_version:RULE_VERSION});
-  var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2><p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
+  var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2>'+(I.meta&&!shared&&(I.meta.category||I.meta.address)?'<p class="dx-lead" style="margin:0 0 6px">'+esc([I.meta.category,I.meta.address].filter(Boolean).join(' · '))+'</p>':'')+'<p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
   if(R.status!==null)h+='<div class="dx-score"><div class="v">'+rnd(R.status)+'<small>점</small></div><div class="l"><b>판매 기반 현황점수</b><span>높을수록 판매 기반이 잘 갖춰진 상태예요. 응답에 따른 내부 지표이며 기업 간 공식 평가가 아닙니다.</span></div></div>';
-  else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>‘잘 모르겠음’ 응답이 많은 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
+  else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>답하지 않았거나 ‘잘 모르겠음’을 고른 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
   h+='<div class="dx-sec-t">영역별 개선 필요도<small>높을수록 개선이 필요해요</small></div><div class="dx-bars">';
   ['D','W','P','B','M'].forEach(function(d){var x=R.dom[d],s,w=0,c='na';
     if(x.state==='na')s='해당 없음';else if(x.state==='insufficient')s='확인 필요';else{var lv=level(x.value);c=lv[0];w=x.value;s=fmt(x.value)+' · '+lv[1];if(d==='M'&&x.value>=40&&R.top.some(function(t){return BASE.indexOf(t)>-1;}))s=fmt(x.value)+' · 제작 이후 개선';}
@@ -1132,14 +1144,14 @@ function renderResult(){
 /* 공유 링크: 기업명·제품명·URL 등 자유 입력과 연락처는 넣지 않습니다. */
 function encodeShare(info,answers){
   var a=Q.map(function(q){var v=answers[q.id];return v===undefined?'-':v==='u'?'u':String(v);}).join('');
-  var o={p:info.purpose,i:info.industry,c:info.channels,d:info.detailNeed,f:info.photoNeed,k:info.concern,a:a,r:RULE_VERSION};
+  var o={p:info.purpose,i:info.industry,d:info.detailNeed,f:info.photoNeed,a:a,r:RULE_VERSION};
   return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 function decodeShare(s){
   try{var o=JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/')))));
-    var info=fresh().info;info.purpose=o.p;info.industry=o.i;info.channels=o.c||[];info.detailNeed=o.d||'';info.photoNeed=o.f||'';info.concern=o.k||'';
+    var info=fresh().info;info.purpose=toArr(o.p);info.industry=toArr(o.i);info.detailNeed=o.d||'';info.photoNeed=o.f||'';
     var ans={};Q.forEach(function(q,i){var ch=(o.a||'')[i];if(ch==='u')ans[q.id]='u';else if(/[0-4]/.test(ch))ans[q.id]=+ch;});
-    if(!PURPOSES.some(function(p){return p[0]===info.purpose;}))return null;
+    if(!info.purpose.length||!info.purpose.every(function(k){return PURPOSES.some(function(p){return p[0]===k;});}))return null;
     return {info:info,answers:ans};}catch(_){return null;}
 }
 
@@ -1217,11 +1229,13 @@ function submitLead(f,btn){
 function mailBody(p,labels){
   var L=['접수번호: '+p.receipt_no,'회사명: '+p.company,'담당자: '+p.contact_name,'전화: '+(p.phone||'-'),'이메일: '+(p.email||'-'),'관심 서비스: '+labels.join(', '),'희망 일정: '+p.schedule,'예산 구간: '+(p.budget||'선택 안 함'),'홍보 수신: '+(p.marketing_opt_in?'동의':'미동의'),'접수 동의: '+p.consent.version+' / '+p.consent.agreed_at,'','추가 문의:',p.memo||'-'];
   if(p.diagnosis){var d=p.diagnosis,N=names(d.info),s=d.scores;
-    L.push('','── 진단 결과 (규칙 '+d.rule_version+', 결과 버전 '+d.version+')','목적: '+d.info.purpose+' / 업종: '+d.info.industry+' / 채널: '+d.info.channels.join(','),
+    L.push('','── 진단 결과 (규칙 '+d.rule_version+', 결과 버전 '+d.version+')','목적: '+purposeLabel(d.info)+' / 업종: '+toArr(d.info.industry).join(', '),
       '판매 기반 현황점수: '+(s.status===null?'추가 확인 필요':Math.round(s.status)),
       '필요도 D/W/P/B/M: '+['D','W','P','B','M'].map(function(k){return s[k]==null?'-':fmt(s[k]);}).join(' / ')+' · AI 기회: '+(s.A==null?'-':fmt(s.A)),
       '추천: '+(d.recommendations.map(function(k){return N[k];}).join(' > ')||'없음'),'실행 순서: '+(d.execution_order.map(function(k){return N[k];}).join(' → ')||'-'),
       '원응답: '+Object.keys(d.answers).map(function(k){return k+'='+d.answers[k];}).join(' '));}
+  var meta=p.diagnosis&&p.diagnosis.info.meta;
+  if(meta)L.push('','── 검색으로 선택한 기업','이름: '+meta.name,'업종(검색): '+(meta.category||'-'),'주소: '+(meta.address||'-'),'홈페이지: '+(meta.url||'-'),'출처: '+(meta.source||'-'));
   L.push('','신청 ID: '+p.submission_id);
   return L.join('\n');
 }
@@ -1245,12 +1259,74 @@ function start(opener){
   track('diagnosis_start',{});
   if(lastResult&&!shared&&(S.screen==='result'||S.screen==='consult'||S.screen==='done')){openPanel('result',opener);return;}
   if(!lastResult&&(S.screen==='result'||S.screen==='consult'||S.screen==='done'||S.screen==='analyzing'))S.screen='info';
-  if(S.screen==='info'||S.screen==='done'){var sv=loadSaved();S._resume=(sv&&Object.keys(sv.answers||{}).length&&!S.info.purpose)?sv:null;if(S.screen==='done')S.screen='info';}
+  if(S.screen==='info'||S.screen==='done'){var sv=loadSaved();S._resume=(sv&&Object.keys(sv.answers||{}).length&&!S.info.purpose.length)?sv:null;if(S.screen==='done')S.screen='info';}
   openPanel(null,opener);
 }
-$$('[data-dx-start]').forEach(function(b){b.addEventListener('click',function(){start(b);});});
+/* ===== 기업 검색 ===== */
+var IND_RULES=[['식품',/식품|농산|수산|축산|음료|제과|떡|김치|건강식/],['화장품',/화장품|뷰티|코스메틱/],['생활용품',/생활용품|가구|인테리어|주방|잡화/],['숙박',/숙박|호텔|펜션|리조트|모텔|게스트하우스/],['관광',/관광|여행|체험|레저/],['외식',/음식점|카페|레스토랑|한식|양식|중식|일식|베이커리|주점/],['유통',/유통|도매|소매|쇼핑|마트|상사/],['IT',/소프트웨어|IT|정보통신|플랫폼|웹|앱/],['제조',/제조|공업|산업|공장|기계|부품|화학/],['서비스',/서비스|컨설팅|교육|병원|의원|미용|광고|디자인/]];
+function guessIndustry(cat){if(!cat)return [];for(var i=0;i<IND_RULES.length;i++){if(IND_RULES[i][1].test(cat))return [IND_RULES[i][0]];}return [];}
+var found=$('#dxFound'),searchForm=$('#dxSearch'),queryInput=$('#dxQuery'),searchSeq=0,foundList=[];
+function focusSearch(){if(!queryInput)return;window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){queryInput.focus();},300);}
+function searchCompanies(q){
+  if(!COMPANY_SEARCH_ENDPOINT)return Promise.resolve({configured:false,companies:[]});
+  var ctl=window.AbortController?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort();},8000);
+  return fetch(COMPANY_SEARCH_ENDPOINT+(COMPANY_SEARCH_ENDPOINT.indexOf('?')>-1?'&':'?')+'q='+encodeURIComponent(q),{signal:ctl?ctl.signal:undefined})
+    .then(function(r){clearTimeout(timer);if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(function(d){return {configured:true,companies:d.companies||[],documents:d.documents||[]};});
+}
+function coBtn(i,c){return '<li><button type="button" class="dx-co" data-co="'+i+'"><span class="t"><b>'+esc(c.name)+'</b><small>'+esc([c.category,c.address].filter(Boolean).join(' · ')||c.url||'')+'</small></span><span class="go">선택 →</span></button></li>';}
+function runSearch(q){
+  var seq=++searchSeq;
+  found.innerHTML='<div class="acr-load"><span class="acr-spin"></span> ‘'+esc(q)+'’ 기업 정보를 찾고 있어요…</div>';
+  track('company_search',{});
+  searchCompanies(q).then(function(d){
+    if(seq!==searchSeq)return;
+    foundList=d.companies.slice(0,8);
+    if(!foundList.length&&d.documents&&d.documents.length)foundList=d.documents.slice(0,5).map(function(x){return {name:q,category:'',address:x.host,url:x.url,source:'네이버 웹문서',channels:x.channel?[x.channel]:[]};});
+    var h='';
+    if(foundList.length)h+='<div class="hd">검색된 기업 '+foundList.length+'곳 · 우리 회사를 선택하세요</div>';
+    else if(d.configured)h+='<div class="hd">검색된 기업이 없어요</div>';
+    h+='<ul class="dx-co-list">'+foundList.map(function(c,i){return coBtn(i,c);}).join('');
+    h+='<li><button type="button" class="dx-co manual" data-co="manual"><span class="t"><b>‘'+esc(q)+'’'+(foundList.length?' 목록에 없어요':'')+'</b><small>입력한 이름으로 진단 시작</small></span><span class="go">진행 →</span></button></li></ul>';
+    if(!d.configured)h+='<p class="note">기업 검색 서버가 아직 연결되지 않아 입력한 이름으로 진단을 시작합니다.</p>';
+    found.innerHTML=h;
+    $$('[data-co]',found).forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-co');pickCompany(k==='manual'?{name:q,manual:true}:foundList[+k],b);});});
+  }).catch(function(){
+    if(seq!==searchSeq)return;
+    foundList=[];
+    found.innerHTML='<div class="hd">기업 정보를 불러오지 못했어요</div><ul class="dx-co-list"><li><button type="button" class="dx-co manual" data-co="manual"><span class="t"><b>‘'+esc(q)+'’</b><small>입력한 이름으로 진단 시작</small></span><span class="go">진행 →</span></button></li></ul>';
+    $('[data-co]',found).addEventListener('click',function(e){pickCompany({name:q,manual:true},e.currentTarget);});
+  });
+}
+/* 검색으로 고른 기업 정보로 기본 정보 버튼을 미리 선택 */
+var PURPOSE_RULES=[['visit',/음식점|카페|레스토랑|숙박|호텔|펜션|리조트|관광|여행|체험|레저|공연|전시|캠핑|글램핑/],['sale',/식품|화장품|뷰티|생활용품|쇼핑|소매|온라인|몰|농산|수산|축산|제과|건강식/],['b2b',/제조|공업|부품|기계|도매|산업|화학|소재|장비|납품/],['brand',/서비스|컨설팅|교육|디자인|소프트웨어|IT|정보통신|에이전시/]];
+var PHOTO_IND=['식품','화장품','생활용품','관광','숙박','외식','유통'];
+function inferInfo(c){
+  var cat=c.category||'',ch=c.channels||[],purpose=[];
+  PURPOSE_RULES.forEach(function(r){if(r[1].test(cat))purpose.push(r[0]);});
+  if(ch.indexOf('store')>-1&&purpose.indexOf('sale')<0)purpose.push('sale');
+  if(ch.indexOf('booking')>-1&&purpose.indexOf('visit')<0)purpose.push('visit');
+  if(purpose.length>1&&purpose.indexOf('brand')>-1)purpose.splice(purpose.indexOf('brand'),1);
+  var industry=guessIndustry(cat),out={purpose:purpose,industry:industry,auto:[]};
+  if(purpose.length)out.auto.push('purpose');if(industry.length)out.auto.push('industry');
+  var visual=purpose.indexOf('sale')>-1||purpose.indexOf('visit')>-1||industry.some(function(v){return PHOTO_IND.indexOf(v)>-1;});
+  if(visual){out.photoNeed='yes';out.auto.push('photoNeed');}
+  if(purpose.indexOf('b2b')>-1&&industry.indexOf('제조')>-1&&purpose.indexOf('sale')<0&&purpose.indexOf('visit')<0){out.detailNeed='yes';out.auto.push('detailNeed');}
+  return out;
+}
+function pickCompany(c,opener){
+  S=fresh();lastResult=null;interests=null;
+  S.info.company=String(c.name||'').slice(0,50);
+  if(!c.manual){S.info.meta={name:c.name,category:c.category||'',address:c.address||'',url:c.url||'',source:c.source||'',channels:c.channels||[]};var inf=inferInfo(c);S.info.purpose=inf.purpose;S.info.industry=inf.industry;S.info.photoNeed=inf.photoNeed||'';S.info.detailNeed=inf.detailNeed||'';S.info.auto=inf.auto;}
+  track('company_select',{manual:!!c.manual});
+  track('diagnosis_start',{});
+  save();openPanel('info',opener);
+}
+if(searchForm)searchForm.addEventListener('submit',function(e){e.preventDefault();var q=queryInput.value.trim();if(q.length<2){found.innerHTML='<div class="hd">기업명을 2자 이상 입력해주세요.</div>';queryInput.focus();return;}runSearch(q);});
+$$('[data-dx-start]').forEach(function(b){b.addEventListener('click',function(){if(queryInput){focusSearch();}else start(b);});});
 $$('[data-dx-consult]').forEach(function(b){b.addEventListener('click',function(){if(!lastResult)interests=interests||[];openPanel('consult',b);});});
 document.body.classList.add('dx-has-sticky');
+if(searchForm&&window.IntersectionObserver){new IntersectionObserver(function(es){document.body.classList.toggle('dx-search-in',es[0].isIntersecting);}).observe($('.dx-hero'));}
 track('landing_view',{});
 var m=location.hash.match(/^#r=([A-Za-z0-9_-]+)/);
 if(m){var sh=decodeShare(m[1]);if(sh){shared=true;lastResult={R:compute(sh.info,sh.answers),info:sh.info,answers:pickActive(sh.info,sh.answers),version:0};S.screen='result';openPanel('result');}}
