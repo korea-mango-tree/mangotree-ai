@@ -809,13 +809,16 @@ function uid(){if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();re
 function opts(list,sel,ph){return (ph?'<option value="">'+ph+'</option>':'')+list.map(function(v){var val=Array.isArray(v)?v[0]:v,l=Array.isArray(v)?v[1]:v;return '<option value="'+esc(val)+'"'+(val===sel?' selected':'')+'>'+esc(l)+'</option>';}).join('');}
 
 /* ===== 상태 ===== */
-function fresh(){return {info:{purpose:'',industry:'',company:'',detailNeed:'',photoNeed:''},answers:{},qi:0,screen:'info'};}
+function purposeLabel(info){return PURPOSES.filter(function(p){return has(info,p[0]);}).map(function(p){return p[1];}).join(', ');}
+function toArr(v){return Array.isArray(v)?v:(v?[v]:[]);}
+function has(info,k){return toArr(info.purpose).indexOf(k)>-1;}
+function fresh(){return {info:{purpose:[],industry:[],company:'',detailNeed:'',photoNeed:''},answers:{},qi:0,screen:'info'};}
 var S=fresh(),renderedQ=null,lastResult=null,interests=null,submitId=null,returnFocus=null,shared=false;
 function save(){if(shared)return;lsSet(STORE_KEY,{v:1,savedAt:Date.now(),info:S.info,answers:S.answers,qi:S.qi,screen:S.screen==='q'?'q':'info'});}
 function loadSaved(){var d=lsGet(STORE_KEY);if(!d||!d.savedAt||Date.now()-d.savedAt>TTL){lsDel(STORE_KEY);return null;}return d;}
 
 /* ===== 규칙 엔진 ===== */
-function isOnlineSales(info){return info.purpose==='sale'||info.purpose==='visit';}
+function isOnlineSales(info){return has(info,'sale')||has(info,'visit');}
 function detailAsked(info){return !isOnlineSales(info);}
 function applicable(info){
   var a={D:true,W:true,P:true,B:true,M:true,A:true};
@@ -827,8 +830,8 @@ function activeQs(info){var a=applicable(info);return Q.filter(function(q){retur
 function qScore(q,idx){return q.dom==='A'?idx*2:4-idx*2;}
 function names(info){
   var n={D:'맞춤형 상세페이지',W:'홈페이지 및 랜딩',P:'제품 및 브랜드 촬영',B:'브랜드 및 디자인',M:'온라인 마케팅',A:'AI 활용 및 자동화'};
-  if(info.purpose==='b2b'&&!isOnlineSales(info)){n.D='제품소개 페이지';n.W='기업 홈페이지';n.P='제품·납품 사례 촬영';n.B='카탈로그 및 브랜드 디자인';}
-  if(info.purpose==='visit'){n.D='예약·체험 상세페이지';n.W='예약 랜딩 및 홈페이지';n.P='공간 및 체험 촬영';}
+  if(has(info,'b2b')&&!isOnlineSales(info)){n.D='제품소개 페이지';n.W='기업 홈페이지';n.P='제품·납품 사례 촬영';n.B='카탈로그 및 브랜드 디자인';}
+  if(has(info,'visit')&&!has(info,'sale')){n.D='예약·체험 상세페이지';n.W='예약 랜딩 및 홈페이지';n.P='공간 및 체험 촬영';}
   return n;
 }
 function compute(info,answers){
@@ -870,7 +873,7 @@ function compute(info,answers){
   if(photoFirst&&steps.indexOf('D')>-1&&steps.indexOf('P')>-1&&steps.indexOf('P')>steps.indexOf('D')){steps.splice(steps.indexOf('P'),1);steps.splice(steps.indexOf('D'),0,'P');}
   var later=ordered.slice(3);
   return {applicable:ap,dom:dom,status:status,baseInsuf:baseInsuf,top:top,steps:steps,later:later,photoFirst:photoFirst,
-    noHomepageB2B:info.purpose==='b2b'&&answers.Q03===0,rule_version:RULE_VERSION,question_version:QUESTION_VERSION};
+    noHomepageB2B:has(info,'b2b')&&answers.Q03===0,rule_version:RULE_VERSION,question_version:QUESTION_VERSION};
 }
 function level(v){return v>=70?['hi','우선 개선']:v>=40?['mid','개선 권장']:['lo','유지 및 부분 점검'];}
 function evidence(d,R,answers){
@@ -943,8 +946,8 @@ function renderInfo(){
   if(saved){var cnt=Object.keys(saved.answers||{}).length;h+='<div class="dx-resume" role="status"><b>이전에 진행하던 진단이 있어요.</b> ('+cnt+'개 문항 응답)<div class="row"><button type="button" class="btn btn-dark" id="dxResume">이어서 진단하기</button><button type="button" class="btn btn-line" id="dxDiscard">새로 시작</button></div></div>';}
   h+='<h2>기본 정보를 알려주세요</h2><p class="dx-lead">현재 상태에 가장 가까운 답을 선택해주세요. 잘 모르는 항목은 모름을 선택할 수 있습니다.</p>';
   h+='<form id="dxInfo" novalidate>';
-  h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+PURPOSES.map(function(p){return chip('purpose','radio',p[0],p[1],I.purpose===p[0]);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 선택해주세요.</div></fieldset>';
-  h+='<div class="dx-field" id="f-industry"><label for="dxIndustry">업종<span class="req" aria-hidden="true">*</span></label><select id="dxIndustry" name="industry" aria-describedby="e-industry" required>'+opts(INDUSTRIES,I.industry,'업종 선택')+'</select><div class="dx-err" id="e-industry">업종을 선택해주세요.</div></div>';
+  h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-industry"><legend>업종<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+INDUSTRIES.map(function(v){return chip('industry','checkbox',v,v,toArr(I.industry).indexOf(v)>-1);}).join('')+'</div><div class="dx-err" id="e-industry">업종을 1개 이상 선택해주세요.</div></fieldset>';
   h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
   h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
   h+='<div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
@@ -966,25 +969,26 @@ function renderInfo(){
   $('#dxCancel').addEventListener('click',closePanel);
   $('#dxNext').addEventListener('click',function(){
     var fd=readInfo(form),bad=[];
-    if(!fd.purpose)bad.push('purpose');if(!fd.industry)bad.push('industry');
+    if(!fd.purpose.length)bad.push('purpose');if(!fd.industry.length)bad.push('industry');
     if(detailAsked(fd)&&!fd.detailNeed)bad.push('detailNeed');if(!fd.photoNeed)bad.push('photoNeed');
     $$('.dx-field',form).forEach(function(f){f.classList.remove('invalid');});
     if(bad.length){bad.forEach(function(k){$('#f-'+k).classList.add('invalid');});var f=$('#f-'+bad[0]);var el=f.querySelector('input,select');f.scrollIntoView({block:'center'});if(el)el.focus();live.textContent='필수 항목 '+bad.length+'개를 입력해주세요.';return;}
     Object.assign(S.info,fd);S._resume=null;
-    track('basic_info_complete',{purpose:fd.purpose,industry:fd.industry});
+    track('basic_info_complete',{purpose:fd.purpose.join(','),industry:fd.industry.join(',')});
     var qs=activeQs(S.info);
     // 첫 미응답 문항부터 이어서 진행
     var first=0;for(var i=0;i<qs.length;i++){if(S.answers[qs[i].id]===undefined){first=i;break;}first=i;}
     S.qi=first;S.screen='q';save();render();
   });
   if(saved){
-    $('#dxResume').addEventListener('click',function(){S.info=Object.assign(fresh().info,saved.info);S.answers=saved.answers||{};S.qi=saved.qi||0;S._resume=null;S.screen=saved.screen==='q'&&S.info.purpose?'q':'info';render();});
+    $('#dxResume').addEventListener('click',function(){S.info=Object.assign(fresh().info,saved.info);S.info.purpose=toArr(S.info.purpose);S.info.industry=toArr(S.info.industry);S.answers=saved.answers||{};S.qi=saved.qi||0;S._resume=null;S.screen=saved.screen==='q'&&S.info.purpose.length?'q':'info';render();});
     $('#dxDiscard').addEventListener('click',function(){lsDel(STORE_KEY);S=fresh();render();});
   }
 }
 function readInfo(form){
   var g=function(n){var el=form.querySelector('[name='+n+']:checked');return el?el.value:'';};
-  return {purpose:g('purpose'),industry:form.industry.value,company:form.company.value.trim().slice(0,50),detailNeed:g('detailNeed'),photoNeed:g('photoNeed')};
+  var all=function(n){return $$('input[name='+n+']:checked',form).map(function(x){return x.value;});};
+  return {purpose:all('purpose'),industry:all('industry'),company:form.company.value.trim().slice(0,50),detailNeed:g('detailNeed'),photoNeed:g('photoNeed')};
 }
 
 /* S03 질문 */
@@ -1046,7 +1050,7 @@ function renderAnalyzing(){title.textContent='결과 분석 중';setProg(1);body
 function renderResult(){
   if(!lastResult){S.screen='info';renderInfo();return;}
   var R=lastResult.R,I=lastResult.info,A=lastResult.answers,N=names(I);
-  var who=I.company||'우리 기업',purpose=(PURPOSES.filter(function(p){return p[0]===I.purpose;})[0]||['',''])[1];
+  var who=I.company||'우리 기업',purpose=purposeLabel(I);
   title.textContent='진단 결과';setProg(1);
   track('result_view',{rule_version:RULE_VERSION});
   var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2><p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
@@ -1108,9 +1112,9 @@ function encodeShare(info,answers){
 }
 function decodeShare(s){
   try{var o=JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/')))));
-    var info=fresh().info;info.purpose=o.p;info.industry=o.i;info.detailNeed=o.d||'';info.photoNeed=o.f||'';
+    var info=fresh().info;info.purpose=toArr(o.p);info.industry=toArr(o.i);info.detailNeed=o.d||'';info.photoNeed=o.f||'';
     var ans={};Q.forEach(function(q,i){var ch=(o.a||'')[i];if(ch==='u')ans[q.id]='u';else if(/[0-4]/.test(ch))ans[q.id]=+ch;});
-    if(!PURPOSES.some(function(p){return p[0]===info.purpose;}))return null;
+    if(!info.purpose.length||!info.purpose.every(function(k){return PURPOSES.some(function(p){return p[0]===k;});}))return null;
     return {info:info,answers:ans};}catch(_){return null;}
 }
 
@@ -1188,7 +1192,7 @@ function submitLead(f,btn){
 function mailBody(p,labels){
   var L=['접수번호: '+p.receipt_no,'회사명: '+p.company,'담당자: '+p.contact_name,'전화: '+(p.phone||'-'),'이메일: '+(p.email||'-'),'관심 서비스: '+labels.join(', '),'희망 일정: '+p.schedule,'예산 구간: '+(p.budget||'선택 안 함'),'홍보 수신: '+(p.marketing_opt_in?'동의':'미동의'),'접수 동의: '+p.consent.version+' / '+p.consent.agreed_at,'','추가 문의:',p.memo||'-'];
   if(p.diagnosis){var d=p.diagnosis,N=names(d.info),s=d.scores;
-    L.push('','── 진단 결과 (규칙 '+d.rule_version+', 결과 버전 '+d.version+')','목적: '+d.info.purpose+' / 업종: '+d.info.industry,
+    L.push('','── 진단 결과 (규칙 '+d.rule_version+', 결과 버전 '+d.version+')','목적: '+purposeLabel(d.info)+' / 업종: '+toArr(d.info.industry).join(', '),
       '판매 기반 현황점수: '+(s.status===null?'추가 확인 필요':Math.round(s.status)),
       '필요도 D/W/P/B/M: '+['D','W','P','B','M'].map(function(k){return s[k]==null?'-':fmt(s[k]);}).join(' / ')+' · AI 기회: '+(s.A==null?'-':fmt(s.A)),
       '추천: '+(d.recommendations.map(function(k){return N[k];}).join(' > ')||'없음'),'실행 순서: '+(d.execution_order.map(function(k){return N[k];}).join(' → ')||'-'),
@@ -1216,7 +1220,7 @@ function start(opener){
   track('diagnosis_start',{});
   if(lastResult&&!shared&&(S.screen==='result'||S.screen==='consult'||S.screen==='done')){openPanel('result',opener);return;}
   if(!lastResult&&(S.screen==='result'||S.screen==='consult'||S.screen==='done'||S.screen==='analyzing'))S.screen='info';
-  if(S.screen==='info'||S.screen==='done'){var sv=loadSaved();S._resume=(sv&&Object.keys(sv.answers||{}).length&&!S.info.purpose)?sv:null;if(S.screen==='done')S.screen='info';}
+  if(S.screen==='info'||S.screen==='done'){var sv=loadSaved();S._resume=(sv&&Object.keys(sv.answers||{}).length&&!S.info.purpose.length)?sv:null;if(S.screen==='done')S.screen='info';}
   openPanel(null,opener);
 }
 $$('[data-dx-start]').forEach(function(b){b.addEventListener('click',function(){start(b);});});
