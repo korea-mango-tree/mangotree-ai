@@ -792,6 +792,8 @@ var LEAD_ENDPOINT='';
 var LEAD_EMAIL='mtree712@gmail.com';
 // 기업 검색 API 주소 (api/company-search.js 배포 주소). 비워두면 입력한 이름으로만 진행합니다.
 var COMPANY_SEARCH_ENDPOINT='';
+// 카카오 지도 JavaScript 키 (developers.kakao.com, 사이트 도메인 등록 필요). 넣으면 서버 없이 업체 검색이 켜집니다.
+var KAKAO_JS_KEY='';
 var RULE_VERSION='2026-10-07.r2';
 var QUESTION_VERSION='2026-10-07.q2';
 var CONSENT_VERSION='2026-10-07.c1';
@@ -1273,12 +1275,47 @@ var IND_RULES=[['식품',/식품|농산|수산|축산|음료|제과|떡|김치|�
 function guessIndustry(cat){if(!cat)return [];for(var i=0;i<IND_RULES.length;i++){if(IND_RULES[i][1].test(cat))return [IND_RULES[i][0]];}return [];}
 var found=$('#dxFound'),searchForm=$('#dxSearch'),queryInput=$('#dxQuery'),searchSeq=0,foundList=[];
 function focusSearch(){if(!queryInput)return;window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){queryInput.focus();},300);}
+function withTimeout(p,ms){return new Promise(function(res,rej){var t=setTimeout(function(){rej(new Error('timeout'));},ms);p.then(function(v){clearTimeout(t);res(v);},function(e){clearTimeout(t);rej(e);});});}
+function fromEndpoint(q){
+  return withTimeout(fetch(COMPANY_SEARCH_ENDPOINT+(COMPANY_SEARCH_ENDPOINT.indexOf('?')>-1?'&':'?')+'q='+encodeURIComponent(q)),8000)
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(function(d){return {companies:d.companies||[],documents:d.documents||[]};});
+}
+// 위키백과 웹문서 검색 (키 불필요). 설명에 기업·업종을 뜻하는 말이 있는 문서만 기업 후보로 쓴다.
+var WIKI_COMPANY=/기업|회사|주식회사|브랜드|제조|업체|그룹|쇼핑|호텔|리조트|식품|화장품|프랜차이즈|유통|스타트업|은행|증권|제약|게임|항공|자동차|전자|건설|통신/;
+function fromWiki(q){
+  var u='https://ko.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=0&gsrlimit=10&prop=description|info&inprop=url&gsrsearch='+encodeURIComponent(q);
+  return withTimeout(fetch(u),8000).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){
+    var pages=d.query&&d.query.pages?Object.keys(d.query.pages).map(function(k){return d.query.pages[k];}):[];
+    pages.sort(function(a,b){return (a.index||0)-(b.index||0);});
+    return pages.filter(function(p){return p.description&&WIKI_COMPANY.test(p.description);}).map(function(p){
+      return {name:p.title.replace(/\s*\(.+\)$/,''),category:p.description,address:'',url:p.fullurl||'',source:'위키백과'};});
+  });
+}
+// 카카오 지도 장소 검색 (JS 키 필요). SDK는 처음 검색할 때 불러온다.
+var kakaoReady=null;
+function loadKakao(){
+  if(kakaoReady)return kakaoReady;
+  kakaoReady=new Promise(function(res,rej){var sc=document.createElement('script');sc.src='https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&libraries=services&appkey='+encodeURIComponent(KAKAO_JS_KEY);
+    sc.onload=function(){window.kakao.maps.load(function(){res(window.kakao);});};sc.onerror=function(){kakaoReady=null;rej(new Error('kakao sdk'));};document.head.appendChild(sc);});
+  return kakaoReady;
+}
+function fromKakao(q){
+  return withTimeout(loadKakao().then(function(k){return new Promise(function(res){
+    new k.maps.services.Places().keywordSearch(q,function(data,status){
+      res(status===k.maps.services.Status.OK?data.map(function(x){return {name:x.place_name,category:(x.category_name||'').replace(/\s*>\s*/g,'>'),address:x.road_address_name||x.address_name||'',url:x.place_url||'',source:'카카오 장소 검색'};}):[]);
+    },{size:10});});}),8000);
+}
 function searchCompanies(q){
-  if(!COMPANY_SEARCH_ENDPOINT)return Promise.resolve({configured:false,companies:[]});
-  var ctl=window.AbortController?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort();},8000);
-  return fetch(COMPANY_SEARCH_ENDPOINT+(COMPANY_SEARCH_ENDPOINT.indexOf('?')>-1?'&':'?')+'q='+encodeURIComponent(q),{signal:ctl?ctl.signal:undefined})
-    .then(function(r){clearTimeout(timer);if(!r.ok)throw new Error(r.status);return r.json();})
-    .then(function(d){return {configured:true,companies:d.companies||[],documents:d.documents||[]};});
+  if(COMPANY_SEARCH_ENDPOINT)return fromEndpoint(q).then(function(d){d.sources=['server'];return d;});
+  var jobs=[fromWiki(q).catch(function(){return null;})];
+  if(KAKAO_JS_KEY)jobs.unshift(fromKakao(q).catch(function(){return null;}));
+  return Promise.all(jobs).then(function(rs){
+    if(rs.every(function(x){return x===null;}))throw new Error('search failed');
+    var seen={},list=[];
+    rs.forEach(function(arr){(arr||[]).forEach(function(c){var k=c.name+'|'+c.address;if(!seen[k]){seen[k]=1;list.push(c);}});});
+    return {companies:list,documents:[],sources:KAKAO_JS_KEY?['kakao','wiki']:['wiki']};
+  });
 }
 function coBtn(i,c){return '<li><button type="button" class="dx-co" data-co="'+i+'"><span class="t"><b>'+esc(c.name)+'</b><small>'+esc([c.category,c.address].filter(Boolean).join(' · ')||c.url||'')+'</small></span><span class="go">선택 →</span></button></li>';}
 function runSearch(q){
@@ -1291,10 +1328,10 @@ function runSearch(q){
     if(!foundList.length&&d.documents&&d.documents.length)foundList=d.documents.slice(0,5).map(function(x){return {name:q,category:'',address:x.host,url:x.url,source:'네이버 웹문서',channels:x.channel?[x.channel]:[]};});
     var h='';
     if(foundList.length)h+='<div class="hd">검색된 기업 '+foundList.length+'곳 · 우리 회사를 선택하세요</div>';
-    else if(d.configured)h+='<div class="hd">검색된 기업이 없어요</div>';
+    else h+='<div class="hd">웹문서에서 일치하는 기업을 찾지 못했어요</div>';
     h+='<ul class="dx-co-list">'+foundList.map(function(c,i){return coBtn(i,c);}).join('');
     h+='<li><button type="button" class="dx-co manual" data-co="manual"><span class="t"><b>‘'+esc(q)+'’'+(foundList.length?' 목록에 없어요':'')+'</b><small>입력한 이름으로 진단 시작</small></span><span class="go">진행 →</span></button></li></ul>';
-    if(!d.configured)h+='<p class="note">기업 검색 서버가 아직 연결되지 않아 입력한 이름으로 진단을 시작합니다.</p>';
+    if(d.sources&&d.sources.length===1&&d.sources[0]==='wiki')h+='<p class="note">지금은 위키백과 웹문서 검색만 연결되어 있어 널리 알려진 기업 위주로 나와요. 찾는 기업이 없으면 입력한 이름으로 진행해주세요.</p>';
     found.innerHTML=h;
     $$('[data-co]',found).forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-co');pickCompany(k==='manual'?{name:q,manual:true}:foundList[+k],b);});});
   }).catch(function(){
