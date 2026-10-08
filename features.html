@@ -631,6 +631,16 @@ a.dx-bar:hover,a.dx-bar:focus-visible{border-color:var(--ink);box-shadow:var(--s
 .dx-pr-f .price small{display:block;font-size:12px;color:var(--gray);font-weight:600;margin-top:2px}
 .dx-pr-f .btn{width:100%;justify-content:center}
 @media(max-width:480px){.dx-pr-f ul{grid-template-columns:1fr}}
+.dx-rec .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.dx-rec .acts .btn{margin-top:0}
+.dx-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dx-plan{display:flex;flex-direction:column;gap:6px;text-align:left;padding:12px;border:1px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;font-family:inherit;color:var(--ink);transition:.15s}
+.dx-plan:hover,.dx-plan:focus-visible{border-color:var(--ink);box-shadow:var(--sh-sm);outline:none}
+.dx-plan img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:9px;background:var(--soft)}
+.dx-plan b{font-size:13.5px;letter-spacing:-.02em;line-height:1.3}
+.dx-plan span{font-size:12px;font-weight:800;color:var(--gold)}
+.dx-plan.rec{border-color:var(--yellow-2);background:var(--yellow-tint)}
+@media(max-width:560px){.dx-plans{grid-template-columns:repeat(2,1fr)}}
 .dx-consult-box{margin-top:26px;border-radius:18px;background:var(--dark);color:#fff;padding:22px}
 .dx-consult-box p{color:#C9CDD3;font-size:14px;margin-bottom:14px;word-break:keep-all}
 .dx-consult-box .btn{width:100%;justify-content:center}
@@ -1107,6 +1117,7 @@ function renderAnalyzing(){title.textContent='결과 분석 중';setProg(1);body
 
 /* S05 결과 */
 function renderResult(){
+  S._req=null;
   if(!lastResult){S.screen='info';renderInfo();return;}
   var R=lastResult.R,I=lastResult.info,A=lastResult.answers,N=names(I);
   var who=I.company||'우리 기업',purpose=purposeLabel(I);
@@ -1131,7 +1142,7 @@ function renderResult(){
       if(d==='D'&&R.photoFirst)h+='<div class="dx-pre">선행 작업: 상세페이지에 쓸 사진이 부족해 촬영을 먼저 진행합니다.</div>';
       if(d==='W'&&R.noHomepageB2B)h+='<div class="dx-pre">홈페이지가 없어 기업 홈페이지 구축을 중심으로 상담합니다.</div>';
       if(d==='M'&&R.top.some(function(t){return BASE.indexOf(t)>-1;}))h+='<div class="dx-pre">선행 작업: 위 제작을 마친 뒤 진행합니다.</div>';
-      h+='<button type="button" class="btn btn-dark" data-consult-for="'+d+'">이 서비스 상담하기</button></div>';});
+      h+='<div class="acts"><button type="button" class="btn btn-primary" data-plan-for="'+d+'">기획안 받아보기</button><button type="button" class="btn btn-line" data-consult-for="'+d+'">이 서비스 상담하기</button></div></div>';});
     h+='</div>';
     h+='<div class="dx-sec-t">제작 실행 순서</div><ol class="dx-steps">'+R.steps.map(function(d){return '<li>'+esc(N[d])+'</li>';}).join('')+'</ol>';
     var later=R.later.map(function(d){return N[d];});
@@ -1148,6 +1159,7 @@ function renderResult(){
   var fu=followUps(I,R,A);
   if(fu.length)h+='<div class="dx-sec-t">상담에서 함께 확인할 내용</div><ul class="dx-list">'+fu.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul>';
   h+=premiumBlock(I,R,A);
+  h+='<div class="dx-sec-t">상품군별 기획안 받아보기<small>우리 기업에 맞춘 제작 기획안을 무료로 보내드려요</small></div><div class="dx-plans">'+DOMS.map(function(d){var rec=R.top.indexOf(d)>-1;return '<button type="button" class="dx-plan'+(rec?' rec':'')+'" data-plan-for="'+d+'"><img src="'+SHOWCASE[d][0]+'" alt="" loading="lazy"><b>'+esc(N[d])+'</b><span>'+(rec?'추천 · ':'')+'기획안 받아보기 →</span></button>';}).join('')+'</div>';
   if(!interests)interests=R.top.slice();
   h+='<div class="dx-sec-t">관심 서비스 선택<small>상담 신청서에 반영돼요</small></div><div class="dx-chips" id="dxInterests">'+DOMS.map(function(d){return chip('interest','checkbox',d,N[d],interests.indexOf(d)>-1);}).join('')+'</div>';
   h+='<div class="dx-consult-box"><p>진단에서 확인한 개선 과제를 실제 제작 계획으로 구체화해보세요. 상세페이지, 홈페이지, 촬영 중 필요한 분야를 선택하시면 보유 자료와 목적에 맞춰 상담을 진행합니다.</p><button type="button" class="btn btn-primary" id="dxGoConsult">무료 제작 상담 신청 →</button></div>';
@@ -1159,6 +1171,8 @@ function renderResult(){
   var buy=$('#dxBuyReport');if(buy)buy.addEventListener('click',function(){track('report_checkout',{via:REPORT_PAYMENT_URL?'payment':'consult'});
     if(REPORT_PAYMENT_URL){window.open(REPORT_PAYMENT_URL,'_blank','noopener');return;}
     interests=(interests||[]).filter(function(x){return x!=='report';});interests.unshift('report');S._memo='정밀 진단 리포트를 신청합니다.';S.screen='consult';render();});
+  $$('[data-plan-for]',body).forEach(function(b){b.addEventListener('click',function(){var d=b.getAttribute('data-plan-for');track('plan_request_start',{service:d});
+    interests=[d];S._req='plan';S._memo=N[d]+' 기획안을 받아보고 싶습니다.';S.screen='consult';render();});});
   $$('[data-consult-for]',body).forEach(function(b){b.addEventListener('click',function(){var d=b.getAttribute('data-consult-for');if(interests.indexOf(d)<0)interests.push(d);S.screen='consult';render();});});
   if(shared){$('#dxMine').addEventListener('click',function(){shared=false;lastResult=null;history.replaceState(null,'',location.pathname);S=fresh();render();});return;}
   $('#dxEdit').addEventListener('click',function(){S.info=JSON.parse(JSON.stringify(lastResult.info));S.answers=Object.assign({},S.answers,lastResult.answers);S.qi=0;S.screen='q';save();render();});
@@ -1191,7 +1205,8 @@ function renderConsult(){
   title.textContent='무료 제작 상담 신청';setProg(1);
   if(!submitId)submitId=uid();
   track('consultation_start',{from_result:!!lastResult});
-  var h='<h2>무료 제작 상담 신청</h2><p class="dx-lead">초기 상담은 무료이며, 제작 비용은 상담 후 범위를 정해 별도로 안내드립니다.'+(lastResult?' 진단 결과가 신청서에 함께 전달됩니다.':'')+'</p>';
+  var plan=S._req==='plan';title.textContent=plan?'기획안 받아보기':'무료 제작 상담 신청';
+  var h='<h2>'+(plan?'상품군별 기획안 받아보기':'무료 제작 상담 신청')+'</h2><p class="dx-lead">'+(plan?'진단 결과를 바탕으로 선택한 서비스의 제작 기획안(구성·범위·준비 자료)을 정리해 보내드려요. 기획안은 무료이며 제작 비용은 별도입니다.':'초기 상담은 무료이며, 제작 비용은 상담 후 범위를 정해 별도로 안내드립니다.')+(lastResult?' 진단 결과가 신청서에 함께 전달됩니다.':'')+'</p>';
   h+='<div id="dxFormErr"></div><form id="dxLead" novalidate>';
   h+='<div class="dx-grid2"><div class="dx-field" id="l-company"><label for="lCompany">회사명<span class="req" aria-hidden="true">*</span></label><input type="text" id="lCompany" name="company" maxlength="50" required value="'+esc(pre)+'" aria-describedby="le-company"><div class="dx-err" id="le-company">회사명을 입력해주세요.</div></div>';
   h+='<div class="dx-field" id="l-name"><label for="lName">담당자명<span class="req" aria-hidden="true">*</span></label><input type="text" id="lName" name="name" maxlength="30" required aria-describedby="le-name" autocomplete="name"><div class="dx-err" id="le-name">담당자명을 입력해주세요.</div></div></div>';
@@ -1238,20 +1253,20 @@ function submitLead(f,btn){
   var r=validateLead(f);
   if(r.bad.length){var el=$('#l-'+r.bad[0]).querySelector('input,select,textarea');if(el){el.focus();}live.textContent='입력 내용을 확인해주세요.';return;}
   var v=r.v,N=names(lastResult?lastResult.info:S.info),no=receiptNo();
-  var payload={submission_id:submitId,receipt_no:no,created_at:new Date().toISOString(),company:v.company,contact_name:v.name,phone:v.phone,email:v.email,
+  var payload={request_type:S._req==='plan'?'plan':'consult',submission_id:submitId,receipt_no:no,created_at:new Date().toISOString(),company:v.company,contact_name:v.name,phone:v.phone,email:v.email,
     interests:v.interests,schedule:v.schedule,budget:v.budget,memo:v.memo,consent:{version:CONSENT_VERSION,agreed_at:new Date().toISOString()},marketing_opt_in:v.marketing,
     diagnosis:lastResult?{version:lastResult.version,rule_version:RULE_VERSION,question_version:QUESTION_VERSION,info:lastResult.info,answers:lastResult.answers,
       scores:{D:lastResult.R.dom.D.value,W:lastResult.R.dom.W.value,P:lastResult.R.dom.P.value,B:lastResult.R.dom.B.value,M:lastResult.R.dom.M.value,A:lastResult.R.dom.A.value,status:lastResult.R.status},
       recommendations:lastResult.R.top,execution_order:lastResult.R.steps}:null};
   var labels=v.interests.map(function(d){return d==='etc'?'기타':d==='report'?'정밀 진단 리포트':N[d];});
   submitting=true;btn.disabled=true;btn.textContent='접수 중…';$('#dxFormErr').innerHTML='';
-  var ok=function(viaMail){submitting=false;track('consultation_submit_success',{via:viaMail?'mail':'api'});S._done={no:no,labels:labels,viaMail:viaMail,text:viaMail?mailBody(payload,labels):''};submitId=null;S.screen='done';render();};
+  var ok=function(viaMail){submitting=false;track('consultation_submit_success',{via:viaMail?'mail':'api'});S._done={no:no,labels:labels,viaMail:viaMail,plan:payload.request_type==='plan',text:viaMail?mailBody(payload,labels):''};submitId=null;S.screen='done';render();};
   var fail=function(){submitting=false;btn.disabled=false;btn.textContent='다시 시도';$('#dxFormErr').innerHTML='<div class="dx-alert" role="alert">신청이 저장되지 않았습니다. 다시 시도해주세요.</div>';$('#dxFormErr').scrollIntoView({block:'center'});};
   if(LEAD_ENDPOINT){
     fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':submitId},body:JSON.stringify(payload)})
       .then(function(res){if(!res.ok)throw new Error(res.status);ok(false);}).catch(fail);
   }else{
-    var subject='[기업진단 상담 신청] '+v.company+' ('+no+')';
+    var subject=(payload.request_type==='plan'?'[기획안 요청] ':'[기업진단 상담 신청] ')+v.company+' ('+no+')';
     location.href='mailto:'+LEAD_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(mailBody(payload,labels));
     setTimeout(function(){ok(true);},300);
   }
@@ -1271,7 +1286,7 @@ function mailBody(p,labels){
 }
 function renderDone(){
   var d=S._done||{};title.textContent='상담 신청';setProg(1);
-  var h='<div class="dx-done"><div class="ic" aria-hidden="true">✓</div><h2>'+(d.viaMail?'메일 전송으로 신청을 마무리해주세요':'상담 신청이 접수되었습니다')+'</h2><div class="no">접수번호 '+esc(d.no)+'</div>';
+  var h='<div class="dx-done"><div class="ic" aria-hidden="true">✓</div><h2>'+(d.viaMail?'메일 전송으로 신청을 마무리해주세요':d.plan?'기획안 요청이 접수되었습니다':'상담 신청이 접수되었습니다')+'</h2><div class="no">접수번호 '+esc(d.no)+'</div>';
   h+='<p class="dx-lead">선택 서비스: '+esc((d.labels||[]).join(', '))+'</p>';
   if(d.viaMail)h+='<p class="dx-lead">열린 메일 앱에서 <b>보내기</b>를 눌러야 접수가 완료됩니다. 메일 앱이 열리지 않았다면 아래 내용을 복사해 '+esc(LEAD_EMAIL)+'로 보내주세요.</p><button type="button" class="btn btn-line" id="dxCopyMail">신청 내용 복사</button>';
   else h+='<p class="dx-lead">신청 내용 확인 후 남겨주신 연락처로 안내드립니다.</p>';
@@ -1393,7 +1408,7 @@ function pickCompany(c,opener){
 }
 if(searchForm)searchForm.addEventListener('submit',function(e){e.preventDefault();var q=queryInput.value.trim();if(q.length<2){found.innerHTML='<div class="hd">기업명을 2자 이상 입력해주세요.</div>';queryInput.focus();return;}runSearch(q);});
 $$('[data-dx-start]').forEach(function(b){b.addEventListener('click',function(){if(queryInput){focusSearch();}else start(b);});});
-$$('[data-dx-consult]').forEach(function(b){b.addEventListener('click',function(){if(!lastResult)interests=interests||[];openPanel('consult',b);});});
+$$('[data-dx-consult]').forEach(function(b){b.addEventListener('click',function(){S._req=null;if(!lastResult)interests=interests||[];openPanel('consult',b);});});
 document.body.classList.add('dx-has-sticky');
 if(searchForm&&window.IntersectionObserver){new IntersectionObserver(function(es){document.body.classList.toggle('dx-search-in',es[0].isIntersecting);}).observe($('.dx-hero'));}
 track('landing_view',{});
