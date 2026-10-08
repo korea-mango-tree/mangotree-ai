@@ -604,6 +604,33 @@ a.dx-bar:hover,a.dx-bar:focus-visible{border-color:var(--ink);box-shadow:var(--s
 .dx-note{font-size:12.5px;color:var(--gray);margin-top:16px}
 .dx-ractions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .dx-ractions .btn{padding:12px 20px;font-size:14px}
+.dx-pr{margin-top:26px;border:1.5px solid var(--ink);border-radius:20px;overflow:hidden;background:#fff}
+.dx-pr-h{padding:18px 20px;background:var(--yellow-tint);border-bottom:1px solid var(--line)}
+.dx-pr-h .tag{display:inline-block;font-size:11.5px;font-weight:800;background:var(--ink);color:#fff;padding:3px 9px;border-radius:100px;margin-bottom:8px}
+.dx-pr-h h3{font-size:18px;letter-spacing:-.03em}
+.dx-pr-h p{font-size:13px;color:var(--ink-2);margin-top:4px;word-break:keep-all}
+.dx-pr-s{padding:16px 20px;border-bottom:1px solid var(--line)}
+.dx-pr-s h4{font-size:14.5px;margin-bottom:10px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.dx-pr-s h4 small{font-size:12px;color:var(--gray);font-weight:600}
+.dx-kpi{display:grid;grid-template-columns:1fr 64px 54px;gap:10px;align-items:center;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.dx-kpi:last-child{border-bottom:0}
+.dx-kpi .bar{height:8px;background:var(--soft);border-radius:8px;overflow:hidden}.dx-kpi .bar i{display:block;height:100%;background:var(--ok)}
+.dx-kpi b{text-align:right;font-size:13px}
+.dx-qual{display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.dx-qual div{display:flex;gap:8px;align-items:flex-start;word-break:keep-all}
+.dx-qual em{flex:none;font-style:normal;font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:100px}
+.dx-qual .g{background:var(--ok-soft);color:var(--ok)}.dx-qual .w{background:var(--need-soft);color:var(--need)}
+.dx-locked{position:relative;margin-top:8px;border-radius:12px;overflow:hidden}
+.dx-locked .sk{padding:10px 0;filter:blur(3px);opacity:.55;pointer-events:none;user-select:none}
+.dx-locked .sk i{display:block;height:10px;border-radius:6px;background:var(--line-2);margin:9px 0}
+.dx-locked .ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:800;color:var(--ink);background:linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.85))}
+.dx-pr-f{padding:18px 20px;background:var(--soft-2)}
+.dx-pr-f ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13px;margin-bottom:14px}
+.dx-pr-f li::before{content:"✓ ";color:var(--ok);font-weight:800}
+.dx-pr-f .price{font-size:14px;font-weight:800;margin-bottom:12px}
+.dx-pr-f .price small{display:block;font-size:12px;color:var(--gray);font-weight:600;margin-top:2px}
+.dx-pr-f .btn{width:100%;justify-content:center}
+@media(max-width:480px){.dx-pr-f ul{grid-template-columns:1fr}}
 .dx-consult-box{margin-top:26px;border-radius:18px;background:var(--dark);color:#fff;padding:22px}
 .dx-consult-box p{color:#C9CDD3;font-size:14px;margin-bottom:14px;word-break:keep-all}
 .dx-consult-box .btn{width:100%;justify-content:center}
@@ -741,6 +768,10 @@ a.dx-bar:hover,a.dx-bar:focus-visible{border-color:var(--ink);box-shadow:var(--s
 // 상담 접수 API 주소. 비워두면 메일 앱으로 신청 내용을 보냅니다.
 var LEAD_ENDPOINT='';
 var LEAD_EMAIL='mtree712@gmail.com';
+// 정밀 진단 리포트 결제. 결제 링크(토스페이먼츠 링크결제, 스마트스토어 상품 등)와 표시 가격을 넣으면 결제 버튼이 그 링크로 연결됩니다.
+// 비워두면 결제 대신 '정밀 리포트 신청' 상담으로 연결합니다.
+var REPORT_PAYMENT_URL='';
+var REPORT_PRICE='';
 // 기업 검색 API 주소 (api/company-search.js 배포 주소). 비워두면 입력한 이름으로만 진행합니다.
 var COMPANY_SEARCH_ENDPOINT='';
 // 카카오 지도 JavaScript 키 (developers.kakao.com, 사이트 도메인 등록 필요). 넣으면 서버 없이 업체 검색이 켜집니다.
@@ -899,6 +930,38 @@ function followUps(info,R,answers){
   if(info.photoNeed==='unk')out.push('판매·홍보에 사진과 영상이 필요한지');
   activeQs(info).forEach(function(q){if(answers[q.id]==='u'||answers[q.id]===undefined)out.push(q.t.replace(/\?$/,''));});
   return out.slice(0,3);
+}
+/* ===== 정밀 리포트 미리보기 (일부 공개 + 잠금) ===== */
+var KPI_NAME={Q01:'상세페이지 보유',Q02:'구매 이유 전달',Q03:'홈페이지 최신성',Q04:'모바일 전환 동선',Q05:'대표 사진 확보',Q06:'사진 연출력',Q07:'브랜드 기준',Q08:'디자인 일관성',Q09:'온라인 노출·운영',Q10:'성과 측정',Q11:'자료·담당자 준비',Q12:'반복 업무 여유'};
+var QUAL={Q01:['주요 상품의 상세페이지가 갖춰져 있어요.','상품을 자세히 소개하는 상세페이지가 부족해요.'],Q02:['구매 이유와 이용 안내가 잘 드러나요.','고객이 사야 할 이유가 상세페이지에서 잘 보이지 않아요.'],Q03:['홈페이지를 최신 정보로 운영하고 있어요.','홈페이지가 없거나 정보가 오래되었어요.'],Q04:['모바일에서 문의·구매로 잘 이어져요.','모바일에서 문의·구매로 이어지기 어려워요.'],Q05:['대표 상품·공간 사진이 충분해요.','판매·홍보에 쓸 대표 사진이 부족해요.'],Q06:['사진이 장점과 사용 장면을 잘 보여줘요.','사진이 제품의 장점을 충분히 보여주지 못해요.'],Q07:['브랜드 기준이 정리되어 있어요.','로고·색상 등 브랜드 기준이 정리되지 않았어요.'],Q08:['매체 간 디자인이 일관돼요.','홈페이지·상세페이지·홍보물의 디자인이 제각각이에요.'],Q09:['온라인 홍보 채널을 꾸준히 운영해요.','온라인에서 우리 회사를 찾기 어려워요.'],Q10:['홍보 성과를 채널별로 확인하고 있어요.','문의·주문이 어디서 오는지 확인하지 못하고 있어요.'],Q11:['업무 자료와 운영 담당자가 준비되어 있어요.','새 도구를 운영할 자료와 담당자가 부족해요.'],Q12:['반복 업무 부담이 크지 않아요.','반복 업무에 쓰는 시간이 커서 자동화 여지가 있어요.']};
+// 선택지 0·1·2 → 준비도 0·50·100 (Q12는 부담이 작을수록 높음)
+function readiness(q,idx){return q.id==='Q12'?(2-idx)*50:idx*50;}
+function premiumBlock(I,R,A){
+  var N=names(I);
+  var items=activeQs(I).filter(function(q){return typeof A[q.id]==='number';}).map(function(q){return {q:q,v:readiness(q,A[q.id])};});
+  if(!items.length)return '';
+  var weak=items.slice().sort(function(a,b){return a.v-b.v||a.q.id.localeCompare(b.q.id);});
+  var strong=items.filter(function(x){return x.v===100;});
+  var weakQ=items.filter(function(x){return x.v===0;});
+  var FREE_KPI=3,shown=weak.slice(0,FREE_KPI),hiddenN=items.length-shown.length;
+  var h='<section class="dx-pr" aria-labelledby="dxPrT"><div class="dx-pr-h"><span class="tag">PREMIUM</span><h3 id="dxPrT">정밀 진단 리포트 미리보기</h3><p>답변을 지표별로 나눈 정량 평가와 강점·약점 정성 평가, 실행 로드맵을 담은 리포트예요. 일부만 무료로 보여드려요.</p></div>';
+  h+='<div class="dx-pr-s"><h4>정량 평가 · 지표별 준비도<small>'+items.length+'개 지표 중 '+shown.length+'개 공개</small></h4>';
+  shown.forEach(function(x){h+='<div class="dx-kpi"><span>'+esc(KPI_NAME[x.q.id])+'</span><span class="bar" aria-hidden="true"><i style="width:'+x.v+'%"></i></span><b>'+x.v+'점</b></div>';});
+  if(hiddenN>0)h+='<div class="dx-locked" aria-hidden="true"><div class="sk">'+Array(Math.min(hiddenN,4)+1).join('<i style="width:'+'92%'+'"></i>')+'</div><div class="ov">🔒 나머지 '+hiddenN+'개 지표는 정밀 리포트에서</div></div><span class="sr-only">나머지 '+hiddenN+'개 지표는 정밀 리포트에서 볼 수 있어요.</span>';
+  h+='</div>';
+  var g=strong[0],w=weakQ[0];
+  h+='<div class="dx-pr-s"><h4>정성 평가 · 강점과 약점<small>일부 공개</small></h4><div class="dx-qual">';
+  if(g)h+='<div><em class="g">강점</em><span>'+esc(QUAL[g.q.id][0])+'</span></div>';
+  if(w)h+='<div><em class="w">약점</em><span>'+esc(QUAL[w.q.id][1])+'</span></div>';
+  if(!g&&!w)h+='<div><em class="g">요약</em><span>대부분 영역이 중간 수준이에요. 영역별 세부 코멘트는 리포트에서 확인할 수 있어요.</span></div>';
+  var moreQ=Math.max(0,strong.length+weakQ.length-(g?1:0)-(w?1:0));
+  h+='</div><div class="dx-locked" aria-hidden="true"><div class="sk"><i style="width:88%"></i><i style="width:76%"></i><i style="width:82%"></i></div><div class="ov">🔒 '+(moreQ?'강점·약점 '+moreQ+'건과 ':'')+'영역별 개선 코멘트</div></div></div>';
+  if(R.steps.length){h+='<div class="dx-pr-s"><h4>12주 실행 로드맵<small>1단계만 공개</small></h4><div class="dx-qual"><div><em class="g">1–4주</em><span>'+esc(N[R.steps[0]])+' — 준비 자료 정리와 제작 범위 확정</span></div></div>';
+    h+='<div class="dx-locked" aria-hidden="true"><div class="sk"><i style="width:84%"></i><i style="width:70%"></i></div><div class="ov">🔒 5–12주 단계별 실행 계획</div></div></div>';}
+  h+='<div class="dx-pr-f"><ul><li>'+items.length+'개 지표 정량 평가</li><li>영역별 강점·약점 코멘트</li><li>12주 실행 로드맵</li><li>담당자 1:1 결과 설명</li></ul>';
+  h+='<div class="price">'+(REPORT_PRICE?esc(REPORT_PRICE):'정밀 리포트 가격은 신청 후 안내드려요')+'<small>결제 확인 후 담당자가 리포트를 보내드립니다.</small></div>';
+  h+='<button type="button" class="btn btn-dark" id="dxBuyReport">'+(REPORT_PAYMENT_URL?'결제하고 전체 리포트 받기 →':'전체 리포트 신청하기 →')+'</button></div></section>';
+  return h;
 }
 function preparation(R){var out=[];R.top.forEach(function(d){PREP[d].forEach(function(p){if(out.indexOf(p)<0)out.push(p);});});return out.slice(0,5);}
 
@@ -1084,6 +1147,7 @@ function renderResult(){
   if(prep.length)h+='<div class="dx-sec-t">상담 전 준비하면 좋은 자료</div><ul class="dx-list">'+prep.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul>';
   var fu=followUps(I,R,A);
   if(fu.length)h+='<div class="dx-sec-t">상담에서 함께 확인할 내용</div><ul class="dx-list">'+fu.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul>';
+  h+=premiumBlock(I,R,A);
   if(!interests)interests=R.top.slice();
   h+='<div class="dx-sec-t">관심 서비스 선택<small>상담 신청서에 반영돼요</small></div><div class="dx-chips" id="dxInterests">'+DOMS.map(function(d){return chip('interest','checkbox',d,N[d],interests.indexOf(d)>-1);}).join('')+'</div>';
   h+='<div class="dx-consult-box"><p>진단에서 확인한 개선 과제를 실제 제작 계획으로 구체화해보세요. 상세페이지, 홈페이지, 촬영 중 필요한 분야를 선택하시면 보유 자료와 목적에 맞춰 상담을 진행합니다.</p><button type="button" class="btn btn-primary" id="dxGoConsult">무료 제작 상담 신청 →</button></div>';
@@ -1092,6 +1156,9 @@ function renderResult(){
   body.innerHTML=h;setNav('');
   $('#dxInterests').addEventListener('change',function(){interests=$$('input[name=interest]:checked',body).map(function(x){return x.value;});});
   $('#dxGoConsult').addEventListener('click',function(){S.screen='consult';render();});
+  var buy=$('#dxBuyReport');if(buy)buy.addEventListener('click',function(){track('report_checkout',{via:REPORT_PAYMENT_URL?'payment':'consult'});
+    if(REPORT_PAYMENT_URL){window.open(REPORT_PAYMENT_URL,'_blank','noopener');return;}
+    interests=(interests||[]).filter(function(x){return x!=='report';});interests.unshift('report');S._memo='정밀 진단 리포트를 신청합니다.';S.screen='consult';render();});
   $$('[data-consult-for]',body).forEach(function(b){b.addEventListener('click',function(){var d=b.getAttribute('data-consult-for');if(interests.indexOf(d)<0)interests.push(d);S.screen='consult';render();});});
   if(shared){$('#dxMine').addEventListener('click',function(){shared=false;lastResult=null;history.replaceState(null,'',location.pathname);S=fresh();render();});return;}
   $('#dxEdit').addEventListener('click',function(){S.info=JSON.parse(JSON.stringify(lastResult.info));S.answers=Object.assign({},S.answers,lastResult.answers);S.qi=0;S.screen='q';save();render();});
@@ -1131,7 +1198,7 @@ function renderConsult(){
   h+='<div class="dx-grid2"><div class="dx-field" id="l-phone"><label for="lPhone">전화번호</label><input type="tel" id="lPhone" name="phone" maxlength="20" placeholder="010-0000-0000" aria-describedby="le-phone" autocomplete="tel"><div class="dx-err" id="le-phone">전화번호를 확인해주세요.</div></div>';
   h+='<div class="dx-field" id="l-email"><label for="lEmail">이메일</label><input type="email" id="lEmail" name="email" maxlength="100" placeholder="you@example.com" aria-describedby="le-email" autocomplete="email"><div class="dx-err" id="le-email">이메일 형식을 확인해주세요.</div></div></div>';
   h+='<p class="dx-help" style="margin:-10px 0 18px">전화번호와 이메일 중 하나 이상 입력해주세요.</p>';
-  h+='<fieldset class="dx-field" id="l-interests"><legend>관심 서비스<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+DOMS.map(function(d){return chip('interests','checkbox',d,N[d],sel.indexOf(d)>-1);}).join('')+chip('interests','checkbox','etc','기타',sel.indexOf('etc')>-1)+'</div><div class="dx-err" id="le-interests">관심 서비스를 1개 이상 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="l-interests"><legend>관심 서비스<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+DOMS.map(function(d){return chip('interests','checkbox',d,N[d],sel.indexOf(d)>-1);}).join('')+chip('interests','checkbox','report','정밀 진단 리포트',sel.indexOf('report')>-1)+chip('interests','checkbox','etc','기타',sel.indexOf('etc')>-1)+'</div><div class="dx-err" id="le-interests">관심 서비스를 1개 이상 선택해주세요.</div></fieldset>';
   h+='<div class="dx-grid2"><div class="dx-field"><label for="lSchedule">희망 일정</label><select id="lSchedule" name="schedule">'+opts(SCHEDULES,'미정')+'</select></div>';
   h+='<div class="dx-field"><label for="lBudget">예산 구간<span class="opt">선택</span></label><select id="lBudget" name="budget">'+opts(BUDGETS,'','선택 안 함')+'</select></div></div>';
   h+='<div class="dx-field" id="l-memo"><label for="lMemo">추가 문의<span class="opt">선택 · <span id="lMemoCnt">0</span>/1,000자</span></label><textarea id="lMemo" name="memo" maxlength="1000" placeholder="예) 대표 상품 3종의 상세페이지와 촬영을 함께 하고 싶어요"></textarea></div>';
@@ -1142,6 +1209,7 @@ function renderConsult(){
   setNav('<button type="button" class="btn btn-line" id="dxBack">'+(lastResult?'← 결과로':'닫기')+'</button><button type="button" class="btn btn-primary" id="dxSubmit">상담 신청하기</button>');
   var f=$('#dxLead');
   $('#lMemo').addEventListener('input',function(){$('#lMemoCnt').textContent=this.value.length.toLocaleString();});
+  if(S._memo){$('#lMemo').value=S._memo;$('#lMemoCnt').textContent=S._memo.length;S._memo=null;}
   f.addEventListener('input',function(e){var x=e.target.closest('.dx-field');if(x)x.classList.remove('invalid');if(e.target.name==='phone'||e.target.name==='email'){$('#l-phone').classList.remove('invalid');$('#l-email').classList.remove('invalid');}});
   f.addEventListener('change',function(e){if(e.target.name==='interests')interests=$$('input[name=interests]:checked',f).map(function(x){return x.value;});var x=e.target.closest('.dx-field');if(x)x.classList.remove('invalid');});
   f.addEventListener('submit',function(e){e.preventDefault();});
@@ -1175,7 +1243,7 @@ function submitLead(f,btn){
     diagnosis:lastResult?{version:lastResult.version,rule_version:RULE_VERSION,question_version:QUESTION_VERSION,info:lastResult.info,answers:lastResult.answers,
       scores:{D:lastResult.R.dom.D.value,W:lastResult.R.dom.W.value,P:lastResult.R.dom.P.value,B:lastResult.R.dom.B.value,M:lastResult.R.dom.M.value,A:lastResult.R.dom.A.value,status:lastResult.R.status},
       recommendations:lastResult.R.top,execution_order:lastResult.R.steps}:null};
-  var labels=v.interests.map(function(d){return d==='etc'?'기타':N[d];});
+  var labels=v.interests.map(function(d){return d==='etc'?'기타':d==='report'?'정밀 진단 리포트':N[d];});
   submitting=true;btn.disabled=true;btn.textContent='접수 중…';$('#dxFormErr').innerHTML='';
   var ok=function(viaMail){submitting=false;track('consultation_submit_success',{via:viaMail?'mail':'api'});S._done={no:no,labels:labels,viaMail:viaMail,text:viaMail?mailBody(payload,labels):''};submitId=null;S.screen='done';render();};
   var fail=function(){submitting=false;btn.disabled=false;btn.textContent='다시 시도';$('#dxFormErr').innerHTML='<div class="dx-alert" role="alert">신청이 저장되지 않았습니다. 다시 시도해주세요.</div>';$('#dxFormErr').scrollIntoView({block:'center'});};
