@@ -668,7 +668,7 @@ a.dx-bar:hover,a.dx-bar:focus-visible{border-color:var(--ink);box-shadow:var(--s
           <form class="dx-search" id="dxSearch" role="search" novalidate><label for="dxQuery" class="sr-only">기업명</label><input id="dxQuery" type="search" maxlength="50" placeholder="기업명을 입력하세요 (예: 망고트리)" autocomplete="organization" enterkeyhint="search"><button type="submit" class="btn btn-primary">기업 찾기 →</button></form>
           <div class="dx-found" id="dxFound" aria-live="polite"></div>
           <button type="button" class="dx-sub-cta" data-dx-consult>진단 없이 바로 제작 상담하기</button>
-          <div class="dx-meta"><span>무료</span><span>기업명 검색으로 시작</span><span>상세 설문은 선택 · 최대 12문항</span><span>결과 보기에 연락처 불필요</span></div>
+          <div class="dx-meta"><span>무료</span><span>기업명 검색으로 시작</span><span>상세 설문은 선택 · 최대 14문항</span><span>결과 보기에 연락처 불필요</span></div>
         </div>
         <div class="dx-works" aria-label="망고트리 작업 사례">
           <figure><img src="assets/pf_detail1.jpg" alt="상세페이지 제작 사례" loading="eager"><figcaption>상세페이지</figcaption></figure>
@@ -694,18 +694,19 @@ a.dx-bar:hover,a.dx-bar:focus-visible{border-color:var(--ink);box-shadow:var(--s
       <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>진단은 이렇게 진행돼요</h2><p>기업명 검색 · 선택 설문 · 무료</p></div>
       <ol class="dx-flow reveal">
         <li><h3>기업명 검색</h3><p>기업명을 입력하면 웹 검색으로 찾은 기업 목록에서 우리 회사를 고릅니다.</p></li>
-        <li><h3>필요한 만큼 설문</h3><p>진단 목적과 업종을 확인한 뒤 최대 12개 질문에 답합니다. 언제든 남은 질문을 건너뛰고 결과를 볼 수 있어요.</p></li>
+        <li><h3>필요한 만큼 설문</h3><p>진단 목적과 업종을 확인한 뒤 최대 14개 질문에 답합니다. 언제든 남은 질문을 건너뛰고 결과를 볼 수 있어요.</p></li>
         <li><h3>개선 순서 확인</h3><p>영역별 현황과 우선 추천 서비스, 제작 실행 순서를 바로 확인합니다.</p></li>
       </ol>
     </div>
   </section>
   <section class="block soft">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="eyebrow">Scope</span><h2>6개 영역을 진단합니다</h2><p>판매 기반을 먼저 다지고, 확산과 고도화는 그다음 단계로 안내합니다.</p></div>
+      <div class="sec-head reveal"><span class="eyebrow">Scope</span><h2>7개 영역을 진단합니다</h2><p>판매 기반을 먼저 다지고, 확산과 고도화는 그다음 단계로 안내합니다.</p></div>
       <div class="dx-domains reveal">
         <div class="dx-dom"><span class="stage">1단계 · 판매 기반</span><h3>상세페이지</h3><p>구매 이유, 상품 정보, 모바일 가독성, 구매 동선</p></div>
         <div class="dx-dom"><span class="stage">1단계 · 판매 기반</span><h3>홈페이지</h3><p>기업 신뢰, 모바일 사용성, 문의 연결, 정보 최신성</p></div>
-        <div class="dx-dom"><span class="stage">1단계 · 판매 기반</span><h3>촬영</h3><p>보유 사진, 연출 자료, 활용 권한, 영상 필요</p></div>
+        <div class="dx-dom"><span class="stage">1단계 · 판매 기반</span><h3>촬영</h3><p>보유 사진, 연출 자료, 활용 권한</p></div>
+        <div class="dx-dom"><span class="stage">1단계 · 판매 기반</span><h3>SNS 영상</h3><p>숏폼 영상 운영, 장점·사용 장면 전달력</p></div>
         <div class="dx-dom"><span class="stage">1단계 · 판매 기반</span><h3>브랜드</h3><p>브랜드 일관성, 패키지, 카탈로그, 광고 소재</p></div>
         <div class="dx-dom"><span class="stage s2">2단계 · 확산</span><h3>마케팅</h3><p>유입, 채널 운영, 광고 측정, 전환 확인</p></div>
         <div class="dx-dom"><span class="stage s3">3단계 · 고도화</span><h3>업무 효율화</h3><p>반복 업무, 자료 준비, 담당자, 현재 AI 활용</p></div>
@@ -786,8 +787,8 @@ var REPORT_PRICE='';
 var COMPANY_SEARCH_ENDPOINT='';
 // 카카오 지도 JavaScript 키 (developers.kakao.com, 사이트 도메인 등록 필요). 넣으면 서버 없이 업체 검색이 켜집니다.
 var KAKAO_JS_KEY='';
-var RULE_VERSION='2026-10-07.r2';
-var QUESTION_VERSION='2026-10-07.q2';
+var RULE_VERSION='2026-10-08.r3';
+var QUESTION_VERSION='2026-10-08.q3';
 var CONSENT_VERSION='2026-10-07.c1';
 var STORE_KEY='mt_dx_session_v2',RESULT_KEY='mt_dx_results_v2',TTL=7*24*3600*1000;
 
@@ -798,9 +799,9 @@ var NEEDS=[['yes','필요'],['no','불필요'],['unk','모름']];
 var SCHEDULES=['미정','1개월 이내','1–3개월','3개월 이후'];
 // 예산 구간은 운영자 확정 전 임시값입니다.
 var BUDGETS=['미정','500만 원 미만','500만–1,000만 원','1,000만–3,000만 원','3,000만 원 이상'];
-var DOMS=['D','W','P','B','M','A'];
-var BASE=['D','W','P','B'];
-var DOM_LABEL={D:'상세페이지',W:'홈페이지',P:'촬영',B:'브랜드',M:'마케팅',A:'업무 효율화'};
+var DOMS=['D','W','P','V','B','M','A'];
+var BASE=['D','W','P','V','B'];
+var DOM_LABEL={D:'상세페이지',W:'홈페이지',P:'촬영',V:'SNS 영상',B:'브랜드',M:'마케팅',A:'업무 효율화'};
 
 var Q=[
  ['Q01','D','상품·서비스를 자세히 소개하는 상세페이지가 있나요?',['없음','일부 상품만 있음','주요 상품에 잘 갖춰짐']],
@@ -809,6 +810,8 @@ var Q=[
  ['Q04','W','모바일에서 홈페이지를 보고 문의·구매로 쉽게 이어지나요?',['어려움','일부 불편함','편리함']],
  ['Q05','P','대표 상품이나 공간의 사진이 충분한가요?',['거의 없음','일부만 있음','충분함']],
  ['Q06','P','사진이 장점과 사용 장면을 잘 보여주나요?',['보여주지 못함','기본 모습만 전달','잘 보여줌']],
+ ['Q13','V','SNS용 숏폼·홍보 영상을 만들어 올리고 있나요?',['없음','가끔 올림','꾸준히 올림']],
+ ['Q14','V','영상이 제품·서비스의 장점과 사용 장면을 짧고 분명하게 보여주나요?',['보여주지 못함','일부만 전달','잘 보여줌']],
  ['Q07','B','로고·색상 등 브랜드 기준이 정리되어 있나요?',['없음','로고만 있음','정리되어 있음']],
  ['Q08','B','홈페이지·상세페이지·홍보물의 디자인이 일관적인가요?',['제각각임','일부만 일치','일관됨']],
  ['Q09','M','고객이 온라인에서 우리 회사를 찾고 홍보 콘텐츠를 볼 수 있나요?',['거의 없음','가끔 운영','꾸준히 운영']],
@@ -816,14 +819,16 @@ var Q=[
  ['Q11','A','업무 자료와 새 도구를 운영할 담당자가 준비되어 있나요?',['둘 다 없음','일부 준비됨','둘 다 준비됨']],
  ['Q12','A','반복 업무에 쓰는 시간이 부담되나요?',['거의 없음','보통','큼']]
 ].map(function(r){return {id:r[0],dom:r[1],t:r[2],o:r[3]};});
+// 공유 링크는 문항 번호 순으로 저장한다 (화면 순서와 별개라 문항을 추가해도 예전 링크가 맞는다)
+var QID=Q.slice().sort(function(a,b){return a.id.localeCompare(b.id);});
 var QBY={};Q.forEach(function(q){QBY[q.id]=q;});
 
-var SCOPE={D:'상품정보 정리 · 구매 이유 카피 · 디자인 · 모바일 구성',W:'정보 구조와 메뉴 설계 · 반응형 화면 · 문의·구매 동선',P:'기본 컷 · 사용 및 연출 컷 · 매체별 활용 규격',B:'로고·색상·글꼴 기준 · 패키지·카탈로그 · 광고 소재',M:'검색·채널 정보 정비 · 콘텐츠 운영 계획 · 유입·전환 측정 설정',A:'반복 업무 정리 · AI 콘텐츠·상담 자동화 시범 적용'};
-var PREP={D:['대표 상품 목록','제품 정보(성분·규격·가격 등)','기존 상세페이지 주소','보유 사진'],W:['홈페이지 목적과 원하는 메뉴','회사소개 자료','참고 사이트'],P:['촬영 대상 목록','샘플 준비 가능 여부','촬영 용도와 원하는 분위기'],B:['기존 로고·디자인 원본','사용 중인 매체 목록','참고 브랜드'],M:['운영 중인 채널 목록','최근 홍보 내역','문의·주문 경로'],A:['반복 업무 목록','업무 자료 저장 위치','운영 담당자']};
+var SCOPE={V:'숏폼 기획·촬영·편집 · 릴스·쇼츠·틱톡 규격 · 자막·음악',D:'상품정보 정리 · 구매 이유 카피 · 디자인 · 모바일 구성',W:'정보 구조와 메뉴 설계 · 반응형 화면 · 문의·구매 동선',P:'기본 컷 · 사용 및 연출 컷 · 매체별 활용 규격',B:'로고·색상·글꼴 기준 · 패키지·카탈로그 · 광고 소재',M:'검색·채널 정보 정비 · 콘텐츠 운영 계획 · 유입·전환 측정 설정',A:'반복 업무 정리 · AI 콘텐츠·상담 자동화 시범 적용'};
+var PREP={V:['영상으로 보여줄 상품·공간','운영 중인 SNS 계정','참고하고 싶은 영상 링크'],D:['대표 상품 목록','제품 정보(성분·규격·가격 등)','기존 상세페이지 주소','보유 사진'],W:['홈페이지 목적과 원하는 메뉴','회사소개 자료','참고 사이트'],P:['촬영 대상 목록','샘플 준비 가능 여부','촬영 용도와 원하는 분위기'],B:['기존 로고·디자인 원본','사용 중인 매체 목록','참고 브랜드'],M:['운영 중인 채널 목록','최근 홍보 내역','문의·주문 경로'],A:['반복 업무 목록','업무 자료 저장 위치','운영 담당자']};
 // 영역별 대표 이미지와 연결 페이지 (포트폴리오는 #카테고리로 해당 탭이 열림)
-var SHOWCASE={D:['assets/pf_detail1.jpg','portfolio.html#detail','상세페이지 포트폴리오'],W:['assets/pf_home1.jpg','portfolio.html#home','홈페이지 포트폴리오'],P:['assets/pf_shoot2.jpg','portfolio.html#shoot','촬영 포트폴리오'],B:['assets/pf_print1.jpg','portfolio.html#print','브랜드·패키지 포트폴리오'],M:['assets/work_01.jpg','portfolio.html','전체 포트폴리오'],A:['assets/section01_1.png','products.html','AI 제품 소개']};
+var SHOWCASE={V:['assets/work_03.png','https://mangotree.co.kr/bbs/board.php?bo_table=video&theme=eb4_shop_001','SNS 영상 포트폴리오'],D:['assets/pf_detail1.jpg','portfolio.html#detail','상세페이지 포트폴리오'],W:['assets/pf_home1.jpg','portfolio.html#home','홈페이지 포트폴리오'],P:['assets/pf_shoot2.jpg','portfolio.html#shoot','촬영 포트폴리오'],B:['assets/pf_print1.jpg','portfolio.html#print','브랜드·패키지 포트폴리오'],M:['assets/work_01.jpg','portfolio.html','전체 포트폴리오'],A:['assets/section01_1.png','products.html','AI 제품 소개']};
 function barOpen(d){var x=SHOWCASE[d];return '<a class="dx-bar" href="'+x[1]+'" target="_blank" rel="noopener" aria-label="'+DOM_LABEL[d]+' 개선 필요도, '+x[2]+' 새 창에서 보기"><img class="th" src="'+x[0]+'" alt="" loading="lazy"><span class="n">'+DOM_LABEL[d]+'<small>'+(d==='A'?'AI 제품 보기 →':'사례 보기 →')+'</small></span>';}
-var PHRASE={D:'상품 소개',W:'홈페이지',P:'사진 자료',B:'브랜드 표현',M:'온라인 홍보',A:'반복 업무 자동화'};
+var PHRASE={V:'SNS 영상',D:'상품 소개',W:'홈페이지',P:'사진 자료',B:'브랜드 표현',M:'온라인 홍보',A:'반복 업무 자동화'};
 
 /* ===== 유틸 ===== */
 function $(s,r){return (r||document).querySelector(s);}
@@ -852,22 +857,22 @@ function loadSaved(){var d=lsGet(STORE_KEY);if(!d||!d.savedAt||Date.now()-d.save
 function isOnlineSales(info){return has(info,'sale')||has(info,'visit');}
 function detailAsked(info){return !isOnlineSales(info);}
 function applicable(info){
-  var a={D:true,W:true,P:true,B:true,M:true,A:true};
+  var a={D:true,W:true,P:true,V:true,B:true,M:true,A:true};
   if(detailAsked(info)&&info.detailNeed==='no')a.D=false;
-  if(info.photoNeed==='no')a.P=false;
+  if(info.photoNeed==='no'){a.P=false;a.V=false;}
   return a;
 }
 function activeQs(info){var a=applicable(info);return Q.filter(function(q){return a[q.dom];});}
 function qScore(q,idx){return q.dom==='A'?idx*2:4-idx*2;}
 function names(info){
-  var n={D:'맞춤형 상세페이지',W:'홈페이지 및 랜딩',P:'제품 및 브랜드 촬영',B:'브랜드 및 디자인',M:'온라인 마케팅',A:'AI 활용 및 자동화'};
-  if(has(info,'b2b')&&!isOnlineSales(info)){n.D='제품소개 페이지';n.W='기업 홈페이지';n.P='제품·납품 사례 촬영';n.B='카탈로그 및 브랜드 디자인';}
-  if(has(info,'visit')&&!has(info,'sale')){n.D='예약·체험 상세페이지';n.W='예약 랜딩 및 홈페이지';n.P='공간 및 체험 촬영';}
+  var n={V:'SNS 숏폼 영상',D:'맞춤형 상세페이지',W:'홈페이지 및 랜딩',P:'제품 및 브랜드 촬영',B:'브랜드 및 디자인',M:'온라인 마케팅',A:'AI 활용 및 자동화'};
+  if(has(info,'b2b')&&!isOnlineSales(info)){n.D='제품소개 페이지';n.W='기업 홈페이지';n.P='제품·납품 사례 촬영';n.V='제품·공정 소개 영상';n.B='카탈로그 및 브랜드 디자인';}
+  if(has(info,'visit')&&!has(info,'sale')){n.D='예약·체험 상세페이지';n.W='예약 랜딩 및 홈페이지';n.P='공간 및 체험 촬영';n.V='공간·체험 숏폼 영상';}
   return n;
 }
 function compute(info,answers){
   var ap=applicable(info),dom={};
-  ['D','W','P','B','M'].forEach(function(d){
+  ['D','W','P','V','B','M'].forEach(function(d){
     if(!ap[d]){dom[d]={state:'na'};return;}
     var qs=Q.filter(function(q){return q.dom===d;}),valid=[],unknown=[];
     qs.forEach(function(q){var v=answers[q.id];if(v==='u')unknown.push(q.id);else if(typeof v==='number')valid.push({id:q.id,idx:v,score:qScore(q,v)});});
@@ -925,6 +930,7 @@ function narrative(info,R){
   var d1={D:'상품별 구매 이유와 사용 정보를 정리하면 상세페이지 제작에 바로 활용할 수 있습니다.',
     W:R.noHomepageB2B?'거래처가 회사와 제품 정보를 확인하고 문의할 수 있도록 기업 홈페이지 구축을 중심으로 검토하세요.':'방문자가 필요한 정보를 찾고 문의나 구매로 이어지도록 홈페이지 구성을 정비하는 것이 좋습니다.',
     P:'장점과 사용 상황을 보여주는 사진을 확보하면 상세페이지·홈페이지·홍보물 전반에 활용할 수 있습니다.',
+    V:'제품의 장점과 사용 장면을 15–30초 숏폼으로 보여주면 SNS·상세페이지·광고에 함께 쓸 수 있습니다.',
     B:'로고·색상·글꼴 기준을 정리해 모든 매체에서 같은 브랜드로 보이도록 하는 것이 좋습니다.',
     M:'고객이 우리 기업을 찾는 경로와 홍보 성과 측정을 정비하는 것부터 시작하세요.',
     A:'자료와 담당자가 준비되어 있어 반복 업무에 AI를 시범 적용해볼 수 있습니다.'}[t[0]];
@@ -942,8 +948,8 @@ function followUps(info,R,answers){
   return out.slice(0,3);
 }
 /* ===== 정밀 리포트 미리보기 (일부 공개 + 잠금) ===== */
-var KPI_NAME={Q01:'상세페이지 보유',Q02:'구매 이유 전달',Q03:'홈페이지 최신성',Q04:'모바일 전환 동선',Q05:'대표 사진 확보',Q06:'사진 연출력',Q07:'브랜드 기준',Q08:'디자인 일관성',Q09:'온라인 노출·운영',Q10:'성과 측정',Q11:'자료·담당자 준비',Q12:'반복 업무 여유'};
-var QUAL={Q01:['주요 상품의 상세페이지가 갖춰져 있어요.','상품을 자세히 소개하는 상세페이지가 부족해요.'],Q02:['구매 이유와 이용 안내가 잘 드러나요.','고객이 사야 할 이유가 상세페이지에서 잘 보이지 않아요.'],Q03:['홈페이지를 최신 정보로 운영하고 있어요.','홈페이지가 없거나 정보가 오래되었어요.'],Q04:['모바일에서 문의·구매로 잘 이어져요.','모바일에서 문의·구매로 이어지기 어려워요.'],Q05:['대표 상품·공간 사진이 충분해요.','판매·홍보에 쓸 대표 사진이 부족해요.'],Q06:['사진이 장점과 사용 장면을 잘 보여줘요.','사진이 제품의 장점을 충분히 보여주지 못해요.'],Q07:['브랜드 기준이 정리되어 있어요.','로고·색상 등 브랜드 기준이 정리되지 않았어요.'],Q08:['매체 간 디자인이 일관돼요.','홈페이지·상세페이지·홍보물의 디자인이 제각각이에요.'],Q09:['온라인 홍보 채널을 꾸준히 운영해요.','온라인에서 우리 회사를 찾기 어려워요.'],Q10:['홍보 성과를 채널별로 확인하고 있어요.','문의·주문이 어디서 오는지 확인하지 못하고 있어요.'],Q11:['업무 자료와 운영 담당자가 준비되어 있어요.','새 도구를 운영할 자료와 담당자가 부족해요.'],Q12:['반복 업무 부담이 크지 않아요.','반복 업무에 쓰는 시간이 커서 자동화 여지가 있어요.']};
+var KPI_NAME={Q13:'SNS 영상 운영',Q14:'영상 전달력',Q01:'상세페이지 보유',Q02:'구매 이유 전달',Q03:'홈페이지 최신성',Q04:'모바일 전환 동선',Q05:'대표 사진 확보',Q06:'사진 연출력',Q07:'브랜드 기준',Q08:'디자인 일관성',Q09:'온라인 노출·운영',Q10:'성과 측정',Q11:'자료·담당자 준비',Q12:'반복 업무 여유'};
+var QUAL={Q13:['SNS용 숏폼 영상을 꾸준히 올리고 있어요.','SNS용 숏폼·홍보 영상이 없거나 드물어요.'],Q14:['영상이 장점과 사용 장면을 잘 보여줘요.','영상이 제품의 장점을 짧고 분명하게 전달하지 못해요.'],Q01:['주요 상품의 상세페이지가 갖춰져 있어요.','상품을 자세히 소개하는 상세페이지가 부족해요.'],Q02:['구매 이유와 이용 안내가 잘 드러나요.','고객이 사야 할 이유가 상세페이지에서 잘 보이지 않아요.'],Q03:['홈페이지를 최신 정보로 운영하고 있어요.','홈페이지가 없거나 정보가 오래되었어요.'],Q04:['모바일에서 문의·구매로 잘 이어져요.','모바일에서 문의·구매로 이어지기 어려워요.'],Q05:['대표 상품·공간 사진이 충분해요.','판매·홍보에 쓸 대표 사진이 부족해요.'],Q06:['사진이 장점과 사용 장면을 잘 보여줘요.','사진이 제품의 장점을 충분히 보여주지 못해요.'],Q07:['브랜드 기준이 정리되어 있어요.','로고·색상 등 브랜드 기준이 정리되지 않았어요.'],Q08:['매체 간 디자인이 일관돼요.','홈페이지·상세페이지·홍보물의 디자인이 제각각이에요.'],Q09:['온라인 홍보 채널을 꾸준히 운영해요.','온라인에서 우리 회사를 찾기 어려워요.'],Q10:['홍보 성과를 채널별로 확인하고 있어요.','문의·주문이 어디서 오는지 확인하지 못하고 있어요.'],Q11:['업무 자료와 운영 담당자가 준비되어 있어요.','새 도구를 운영할 자료와 담당자가 부족해요.'],Q12:['반복 업무 부담이 크지 않아요.','반복 업무에 쓰는 시간이 커서 자동화 여지가 있어요.']};
 // 선택지 0·1·2 → 준비도 0·50·100 (Q12는 부담이 작을수록 높음)
 function readiness(q,idx){return q.id==='Q12'?(2-idx)*50:idx*50;}
 function premiumBlock(I,R,A){
@@ -1017,7 +1023,7 @@ function renderInfo(){
   h+='<fieldset class="dx-field" id="f-purpose"><legend>진단 목적'+autoTag('purpose')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+PURPOSES.map(function(p){return chip('purpose','checkbox',p[0],p[1],toArr(I.purpose).indexOf(p[0])>-1);}).join('')+'</div><div class="dx-err" id="e-purpose">진단 목적을 1개 이상 선택해주세요.</div></fieldset>';
   h+='<fieldset class="dx-field" id="f-industry"><legend>업종'+autoTag('industry')+'<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+INDUSTRIES.map(function(v){return chip('industry','checkbox',v,v,toArr(I.industry).indexOf(v)>-1);}).join('')+'</div><div class="dx-err" id="e-industry">업종을 1개 이상 선택해주세요.</div></fieldset>';
   h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?'+autoTag('detailNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
-  h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?'+autoTag('photoNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
+  h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?'+autoTag('photoNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영·SNS 영상 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
   h+='<div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
   h+='</form>';
   body.innerHTML=h;
@@ -1101,7 +1107,7 @@ function finish(){
       var R=compute(S.info,S.answers);
       var hist=lsGet(RESULT_KEY)||[];var ver=(hist.length?hist[hist.length-1].version:0)+1;
       var stored={version:ver,at:new Date().toISOString(),info:S.info,answers:pickActive(S.info,S.answers),rule_version:RULE_VERSION,question_version:QUESTION_VERSION,
-        scores:{D:R.dom.D.value,W:R.dom.W.value,P:R.dom.P.value,B:R.dom.B.value,M:R.dom.M.value,A:R.dom.A.value,status:R.status},recommendations:R.top};
+        scores:{D:R.dom.D.value,W:R.dom.W.value,P:R.dom.P.value,V:R.dom.V.value,B:R.dom.B.value,M:R.dom.M.value,A:R.dom.A.value,status:R.status},recommendations:R.top};
       hist.push(stored);lsSet(RESULT_KEY,hist.slice(-5));
       lastResult={R:R,info:JSON.parse(JSON.stringify(S.info)),answers:pickActive(S.info,S.answers),version:ver};
       interests=null;
@@ -1129,7 +1135,7 @@ function renderResult(){
   if(R.status!==null)h+='<div class="dx-score"><div class="v">'+rnd(R.status)+'<small>점</small></div><div class="l"><b>판매 기반 현황점수</b><span>높을수록 판매 기반이 잘 갖춰진 상태예요. 응답에 따른 내부 지표이며 기업 간 공식 평가가 아닙니다.</span></div></div>';
   else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>답하지 않았거나 ‘잘 모르겠음’을 고른 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
   h+='<div class="dx-sec-t">영역별 개선 필요도<small>높을수록 개선이 필요해요 · 누르면 관련 작업 사례를 볼 수 있어요</small></div><div class="dx-bars">';
-  ['D','W','P','B','M'].forEach(function(d){var x=R.dom[d],s,w=0,c='na';
+  ['D','W','P','V','B','M'].forEach(function(d){var x=R.dom[d],s,w=0,c='na';
     if(x.state==='na')s='해당 없음';else if(x.state==='insufficient')s='확인 필요';else{var lv=level(x.value);c=lv[0];w=x.value;s=fmt(x.value)+' · '+lv[1];if(d==='M'&&x.value>=40&&R.top.some(function(t){return BASE.indexOf(t)>-1;}))s=fmt(x.value)+' · 제작 이후 개선';}
     h+=barOpen(d)+'<span class="track" aria-hidden="true"><i style="width:'+w+'%"></i></span><span class="s '+c+'">'+s+'</span></a>';});
   var ax=R.dom.A;
@@ -1154,7 +1160,7 @@ function renderResult(){
   }else{
     h+='<div class="dx-sec-t">추천 안내</div><div class="dx-summary">'+(R.baseInsuf?'확인이 필요한 영역이 있어 추천 순위를 정하지 않았어요. 상담에서 현황을 함께 점검해 드립니다.':'지금은 새로 제작할 항목보다 기존 상세페이지·홈페이지·사진 자료를 유지관리하고 부분 개선할 시점이에요.')+'</div>';
   }
-  var insuf=['D','W','P','B','M'].filter(function(d){return R.dom[d].state==='insufficient';});
+  var insuf=['D','W','P','V','B','M'].filter(function(d){return R.dom[d].state==='insufficient';});
   if(insuf.length)h+='<p class="dx-later">확인 필요 영역(추천 순위와 별도): '+esc(insuf.map(function(d){return DOM_LABEL[d];}).join(', '))+'</p>';
   var prep=preparation(R);
   if(prep.length)h+='<div class="dx-sec-t">상담 전 준비하면 좋은 자료</div><ul class="dx-list">'+prep.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul>';
@@ -1187,7 +1193,7 @@ function renderResult(){
 // 공유 링크는 만든 뒤 30일이 지나면 열리지 않는다.
 var SHARE_TTL=30*24*3600*1000;
 function encodeShare(info,answers){
-  var a=Q.map(function(q){var v=answers[q.id];return v===undefined?'-':v==='u'?'u':String(v);}).join('');
+  var a=QID.map(function(q){var v=answers[q.id];return v===undefined?'-':v==='u'?'u':String(v);}).join('');
   var o={p:info.purpose,i:info.industry,d:info.detailNeed,f:info.photoNeed,a:a,r:RULE_VERSION,e:Math.floor((Date.now()+SHARE_TTL)/1000)};
   return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
@@ -1195,7 +1201,7 @@ function decodeShare(s){
   try{var o=JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/')))));
     if(o.e&&Date.now()>o.e*1000)return {expired:true};
     var info=fresh().info;info.purpose=toArr(o.p);info.industry=toArr(o.i);info.detailNeed=o.d||'';info.photoNeed=o.f||'';
-    var ans={};Q.forEach(function(q,i){var ch=(o.a||'')[i];if(ch==='u')ans[q.id]='u';else if(/[0-4]/.test(ch))ans[q.id]=+ch;});
+    var ans={};QID.forEach(function(q,i){var ch=(o.a||'')[i];if(ch==='u')ans[q.id]='u';else if(/[0-4]/.test(ch))ans[q.id]=+ch;});
     if(!info.purpose.length||!info.purpose.every(function(k){return PURPOSES.some(function(p){return p[0]===k;});}))return null;
     return {info:info,answers:ans};}catch(_){return null;}
 }
@@ -1258,7 +1264,7 @@ function submitLead(f,btn){
   var payload={request_type:S._req==='plan'?'plan':'consult',submission_id:submitId,receipt_no:no,created_at:new Date().toISOString(),company:v.company,contact_name:v.name,phone:v.phone,email:v.email,
     interests:v.interests,schedule:v.schedule,budget:v.budget,memo:v.memo,consent:{version:CONSENT_VERSION,agreed_at:new Date().toISOString()},marketing_opt_in:v.marketing,
     diagnosis:lastResult?{version:lastResult.version,rule_version:RULE_VERSION,question_version:QUESTION_VERSION,info:lastResult.info,answers:lastResult.answers,
-      scores:{D:lastResult.R.dom.D.value,W:lastResult.R.dom.W.value,P:lastResult.R.dom.P.value,B:lastResult.R.dom.B.value,M:lastResult.R.dom.M.value,A:lastResult.R.dom.A.value,status:lastResult.R.status},
+      scores:{D:lastResult.R.dom.D.value,W:lastResult.R.dom.W.value,P:lastResult.R.dom.P.value,V:lastResult.R.dom.V.value,B:lastResult.R.dom.B.value,M:lastResult.R.dom.M.value,A:lastResult.R.dom.A.value,status:lastResult.R.status},
       recommendations:lastResult.R.top,execution_order:lastResult.R.steps}:null};
   var labels=v.interests.map(function(d){return d==='etc'?'기타':d==='report'?'정밀 진단 리포트':N[d];});
   submitting=true;btn.disabled=true;btn.textContent='접수 중…';$('#dxFormErr').innerHTML='';
@@ -1279,10 +1285,10 @@ function researchPrompt(p){
   var L=['[망고트리 정밀 진단 리포트 — 딥리서치 요청]','조사 대상: '+((meta&&meta.name)||p.company)+(meta&&(meta.category||meta.address)?' ('+[meta.category,meta.address].filter(Boolean).join(', ')+')':''),(meta&&meta.url&&meta.source==='위키백과'?'참고 문서: '+meta.url+' (홈페이지는 조사로 확인)':'알려진 홈페이지: '+((meta&&meta.url)||'없음 (조사로 확인)'))];
   if(d){var weak=Object.keys(d.answers).filter(function(k){var q=QBY[k];return q&&typeof d.answers[k]==='number'&&readiness(q,d.answers[k])===0;}).map(function(k){return KPI_NAME[k];});
     L.push('진단 목적: '+purposeLabel(d.info)+' / 업종: '+toArr(d.info.industry).join(', '),
-      '진단 결과: 판매 기반 현황점수 '+(s.status===null?'확인 필요':Math.round(s.status))+', 필요도 '+['D','W','P','B','M'].map(function(k){return DOM_LABEL[k]+' '+(s[k]==null?'-':fmt(s[k]));}).join('·'),
+      '진단 결과: 판매 기반 현황점수 '+(s.status===null?'확인 필요':Math.round(s.status))+', 필요도 '+['D','W','P','V','B','M'].map(function(k){return DOM_LABEL[k]+' '+(s[k]==null?'-':fmt(s[k]));}).join('·'),
       '추천 순서: '+(d.execution_order.map(function(k){return N[k];}).join(' → ')||'없음'),'약한 지표: '+(weak.join(', ')||'없음'));}
-  L.push('','조사 항목: 1) 온라인 노출(검색·지도·홈페이지 상태) 2) 판매 채널(자사몰·오픈마켓·예약) 3) 콘텐츠·브랜드(사진·디자인·SNS) 4) 공개 리뷰·기사 평판 5) 같은 업종·지역 경쟁사 3곳 비교 6) 업종 동향 3가지',
-    '출력: A 요약 5줄 / B 12개 지표 0–100 정량 평가(진단 답변과 웹 근거 병기) / C 강점·약점 각 3개와 영역별 코멘트 / D 경쟁사 비교표 / E 12주 로드맵(추천 순서 유지) / F 출처 목록',
+  L.push('','조사 항목: 1) 온라인 노출(검색·지도·홈페이지 상태) 2) 판매 채널(자사몰·오픈마켓·예약) 3) 콘텐츠·브랜드(사진·SNS 숏폼 영상·디자인) 4) 공개 리뷰·기사 평판 5) 같은 업종·지역 경쟁사 3곳 비교 6) 업종 동향 3가지',
+    '출력: A 요약 5줄 / B 14개 지표 0–100 정량 평가(진단 답변과 웹 근거 병기) / C 강점·약점 각 3개와 영역별 코멘트 / D 경쟁사 비교표 / E 12주 로드맵(추천 순서 유지) / F 출처 목록',
     '규칙: 모든 사실에 출처 링크, 미확인은 "추정" 표시, 매출·전환율 수치 생성 금지, 개인정보 수집 금지');
   return L.join('\n');
 }
@@ -1291,7 +1297,7 @@ function mailBody(p,labels){
   if(p.diagnosis){var d=p.diagnosis,N=names(d.info),s=d.scores;
     L.push('','── 진단 결과 (규칙 '+d.rule_version+', 결과 버전 '+d.version+')','목적: '+purposeLabel(d.info)+' / 업종: '+toArr(d.info.industry).join(', '),
       '판매 기반 현황점수: '+(s.status===null?'추가 확인 필요':Math.round(s.status)),
-      '필요도 D/W/P/B/M: '+['D','W','P','B','M'].map(function(k){return s[k]==null?'-':fmt(s[k]);}).join(' / ')+' · AI 기회: '+(s.A==null?'-':fmt(s.A)),
+      '필요도 D/W/P/V/B/M: '+['D','W','P','V','B','M'].map(function(k){return s[k]==null?'-':fmt(s[k]);}).join(' / ')+' · AI 기회: '+(s.A==null?'-':fmt(s.A)),
       '추천: '+(d.recommendations.map(function(k){return N[k];}).join(' > ')||'없음'),'실행 순서: '+(d.execution_order.map(function(k){return N[k];}).join(' → ')||'-'),
       '원응답: '+Object.keys(d.answers).map(function(k){return k+'='+d.answers[k];}).join(' '));}
   var meta=p.diagnosis&&p.diagnosis.info.meta;
