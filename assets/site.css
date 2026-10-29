@@ -205,3 +205,7 @@ body.fab-off .contact-fab{opacity:0;visibility:hidden;pointer-events:none}
 @media(max-width:820px){.plat-grid-5{grid-template-columns:repeat(2,1fr)}}
 .platcard .pdesc{font-size:14px;color:var(--ink-2);line-height:1.6;margin-top:10px}
 .platcard .plink{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font-size:14.5px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+/* 페이지메이커 공식 아이콘: 원본 80px, 40px로만 표시 */
+.pm-icon{width:40px;height:40px;border-radius:10px}
+.plat-ph.has-icon{display:grid;place-items:center}
+.h-plat-list .h-plat-ph .pm-icon,.plat-phone .plat-ph .pm-icon{width:40px;height:40px;max-width:40px;aspect-ratio:1;border:0;border-radius:10px;box-shadow:none;object-fit:contain;transform:none}

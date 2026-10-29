@@ -169,3 +169,7 @@
 @media(max-width:560px){.h-plat-ph{width:80px}}
 /* 제품 촬영(c1): 좁은 화면에서도 두 병과 제품명이 잘리지 않게 3:2 비율 유지 */
 @media(max-width:960px){.h-collage .c1{height:auto;aspect-ratio:3/2}}
+/* 페이지메이커 공식 아이콘: 원본 80px, 40px로만 표시 */
+.pm-icon{width:40px;height:40px;border-radius:10px}
+.h-plat-ph.has-icon{display:grid;place-items:center}
+.h-plat-list .h-plat-ph .pm-icon,.plat-phone .plat-ph .pm-icon{width:40px;height:40px;max-width:40px;aspect-ratio:1;border:0;border-radius:10px;box-shadow:none;object-fit:contain;transform:none}

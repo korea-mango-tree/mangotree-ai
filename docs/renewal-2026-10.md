@@ -221,3 +221,23 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - alt: 「흰 패브릭과 식물을 배경으로 연출한 편백 제품 촬영」, 캡션: 「제품 촬영」.
   - `object-position: 53% 56%`. 960px 이하에서는 타일을 3:2 비율로 바꿨다.
   - 1440(531×360), 1024(388×360), 390(350×233), 320(280×187)에서 두 병과 제품명이 잘리지 않는 것을 확인했다.
+
+## 13. 페이지메이커 공식 아이콘, 최종 캡처, 검사 결과
+- **아이콘**: Drive `페이지메이커 아이콘8080.jpg`(https://drive.google.com/file/d/1KtSzSiYhd0XoNKtepzKvAL9JD6JdkdXS/view, 80×80 JPEG, 12,300B). 대화 첨부를 바이트 그대로 받아 `assets/work/pagemaker-icon-80.jpg`로 저장했다.
+  - 메인 목록과 `platforms.html#pagemaker`의 중립 패널 가운데에 **40×40px로만** 표시한다(확대 없음, 실측 40×40).
+  - 이름이 바로 옆에 있어 장식 이미지(`alt=""`)로 처리했다.
+- **최종 캡처** (`docs/review/`): `home-1440-product-shoot.png`, `home-390-product-shoot.png`, `home-1440-platforms.png`, `home-390-platforms.png`, `platforms-1440-cards.png`, `platforms-390-cards.png`
+  - 고정 헤더와 떠 있는 버튼은 요소 캡처에서 빼고 찍었다.
+- **변경된 페이지(index·platforms) 검사 (1440·390·320px)**
+
+| 항목 | 결과 |
+|---|---|
+| 내부 링크 (index 24개, platforms 12개 고유 링크) | 모두 200 응답 |
+| `#앵커` 대상 | 모두 존재 |
+| 새 창 링크 | 전부 `rel=noopener` |
+| axe WCAG 2.1 A/AA | 0건 |
+| 가로 넘침 | 0건 |
+| 콘솔 오류·4xx | 0건 |
+| `platforms.html#pagemaker`·`#pageconnect`·`#oneulbamn` 이동 | 세 폭 모두 고정 헤더(76px) 아래 top 176px |
+
+- **Gemini 교차 시각 검수(히어로 화면 한정)**: 새 히어로의 데스크톱 실배포와 모바일 390 캡처에 대해 "필수 수정 없음. 제목·CTA·이미지 간 겹침이나 의도치 않은 잘림 없고 가독성 양호". 히어로 첨부 화면만 본 검수이며 전체 기능 검수는 아니다.
