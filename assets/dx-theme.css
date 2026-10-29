@@ -78,7 +78,8 @@
 /* 상담 신청 양식 */
 .dxpage .dx-field input,.dxpage .dx-field select,.dxpage .dx-field textarea{border:1.5px solid rgba(22,22,22,.2);border-radius:10px;min-height:48px}
 .dxpage .dx-field input:focus,.dxpage .dx-field select:focus,.dxpage .dx-field textarea:focus{outline:2px solid var(--charcoal);outline-offset:1px;border-color:var(--charcoal)}
-.dxpage .dx-consult-box{background:var(--ivory);border:0;border-radius:14px}
+.dxpage .dx-consult-box{background:var(--ivory);border:0;border-radius:14px;color:var(--charcoal)}
+.dxpage .dx-consult-box p{color:var(--ivory-ink)}
 
 /* 하단 고정 CTA */
 .dxpage .dx-sticky{background:rgba(245,240,230,.96);border-top:1px solid var(--ivory-2)}

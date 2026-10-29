@@ -429,3 +429,12 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - 상담 접수 서버(`LEAD_ENDPOINT`), 기업 검색 API(`COMPANY_SEARCH_ENDPOINT`), 카카오 JS 키, 리포트 결제 링크·가격(`REPORT_PAYMENT_URL`·`REPORT_PRICE`) 설정. 지금은 모두 빈 값이며, 새 API 키나 백엔드 구축은 이번 범위가 아니다.
 - 요금제 실제 금액 공개 여부. 지금은 「범위 확인 후 견적」으로 표기한다.
 - Higgsfield 이미지 생성. 크레딧이 부족해(잔액 0.07, 최소 0.25) 생성하지 않았다. 충전·구매도 하지 않는다.
+
+**독립 검수 P2 수정: 결과 화면 상담 안내문 대비**
+- **원인:** `dx-theme.css`가 `.dx-consult-box` 배경을 아이보리(`#F5F0E6`)로 바꿨는데, 안내문 글자색은 `diagnosis.css`의 원래 값 `#C9CDD3`(어두운 배경용)이 남아 있었다. 질문을 모두 마친 뒤 결과 화면 아래에 나오는 14px 안내문으로, 대비가 1.41:1이었다.
+- **수정:** `dx-theme.css`에서 `.dx-consult-box`에 `color:var(--charcoal)`, `.dx-consult-box p`에 `color:var(--ivory-ink)`(`#5A554C`)를 지정했다. 대비는 6.51:1이다.
+- **검증:** 해당 영역만 다시 확인했다(1440·390, 판매 목적 14문항 완료 후 결과 화면).
+  - 안내문 글자색 `#5A554C`, 14px. 버튼은 노랑 배경에 진한 글자.
+  - 상담 안내 박스와 결과 화면 전체(`#dxBody`) 모두 axe 색 대비 0건.
+  - 외부 전송 0건, 오류 0건.
+- **캡처:** `docs/review/dx-1440-consult-box.png`, `dx-390-consult-box.png`
