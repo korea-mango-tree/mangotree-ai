@@ -43,7 +43,7 @@
 
 
   /* 첫 화면(히어로)에 주요 행동 버튼이 보이는 동안 떠 있는 문의 버튼을 감춤 */
-  var hero=document.querySelector('.hero, .dx-hero');
+  var hero=document.querySelector('.hero, .h-hero, .dx-hero');
   if(hero&&document.querySelector('.contact-fab')&&'IntersectionObserver' in window){
     new IntersectionObserver(function(es){
       document.body.classList.toggle('fab-off',es[0].isIntersecting);

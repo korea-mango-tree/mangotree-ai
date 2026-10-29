@@ -14,11 +14,11 @@ for (const vp of [{w:390,h:844},{w:320,h:640},{w:667,h:375}]) {
 // 가로 화면 메뉴
 {const p=await b.newPage({viewport:{width:667,height:375}});await p.goto(`http://localhost:${port}/index.html`);await p.click('#burger');await p.waitForTimeout(200);
  const info=await p.evaluate(()=>{const n=document.getElementById('navLinks');return {h:n.clientHeight,sh:n.scrollHeight,ov:getComputedStyle(n).overflowY,bottom:Math.round(n.getBoundingClientRect().bottom)};});
- const last=p.locator('#navLinks .nav-cta-m a');await last.scrollIntoViewIfNeeded();const lr=await last.boundingBox();
- // 키보드로 마지막 항목까지 Tab
+ const last=p.locator('#navLinks .nav-cta-m a');const lr=await last.boundingBox();
+ // 순수 키보드 검증: 스크롤 보조 호출 없이 Tab으로만 마지막 CTA까지 이동해 화면 안에 보이는지 확인
  let n=0;for(;n<10;n++){const t=await p.evaluate(()=>document.activeElement.textContent.trim());if(t==='무료 AI 진단 시작')break;await p.keyboard.press('Tab');}
  const lr2=await last.boundingBox();
- R.landscapeMenu={...info,vh:375,ctaBox:lr&&{top:Math.round(lr.y),bottom:Math.round(lr.y+lr.height)},ctaInViewAfterTab:lr2&&lr2.y>=0&&lr2.y+lr2.height<=375,tabsToCta:n};
+ R.landscapeMenu={...info,vh:375,ctaBoxBeforeTab:lr&&{top:Math.round(lr.y),bottom:Math.round(lr.y+lr.height)},ctaInViewAfterTab:lr2&&lr2.y>=0&&lr2.y+lr2.height<=375,tabsToCta:n};
  await p.close();}
 // 홈: 히어로 보일 때 FAB 숨김, 스크롤 뒤 표시
 for (const w of [1440,390]) {const p=await b.newPage({viewport:{width:w,height:w>800?900:844}});await p.goto(`http://localhost:${port}/index.html`);await p.waitForTimeout(500);

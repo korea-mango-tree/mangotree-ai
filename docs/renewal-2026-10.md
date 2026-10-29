@@ -1,5 +1,7 @@
 # 홈페이지 리뉴얼 (2026-10) — 3-AI 교차 검수 기록
 
+> 진행 상태: `d41ecbd`·`65b09d5`는 공통 구조·접근성 기반 정리용 **중간 체크포인트**다. 그 뒤 사용자 지시에 따라 메인(`index.html`)을 처음부터 다시 만들었다(9절). 최종 완료 여부는 교차 검수 후 결정한다.
+
 브랜치 `claude/homepage-renewal-crosscheck` · PR [#10](https://github.com/korea-mango-tree/mangotree-ai/pull/10) · 기준 `main` 533eefd
 
 ## 1. 지침과 진행 방식
@@ -31,7 +33,7 @@
 
 | 레퍼런스 | 확인 주체 | 이번 구현에서의 활용 |
 |---|---|---|
-| Land-book Parker Studio — https://land-book.com/websites/101540-parker-studio (Big Type·Cards·Big Footer·Black & White) | Codex 본문 확인 | 큰 고정 제목, 흑백 기반의 카드 리듬 |
+| Land-book Parker Studio — https://land-book.com/websites/101540-parker-studio (Big Type·Cards·Big Footer·Black & White) | Codex가 목록 본문과 공개 데스크톱·모바일 미리보기를 직접 확인(큰 serif 제목, 넓은 여백, 작업물 중심 위계, 좁은 좌측 보조 영역과 중앙 본문) | 흑백 대비와 큰 타입이라는 원리만 참조. 차콜·웜 아이보리·망고 옐로 면 분할과 한글 산세리프 대형 타입은 망고트리 고유 설계 |
 | Awwwards Fiddle.Digital — https://www.awwwards.com/sites/fiddle-digital-design-agency (Typography·Grid·Connect, 2025) | Codex 본문 확인 | 왼쪽 정렬 섹션 제목, 12열 그리드 비대칭 배치 |
 | Mobbin "The long onboarding" — https://mobbin.com/blog/the-long-onboarding-a-study-of-1-460-flows | Codex 본문 확인 | 진단 흐름은 바꾸지 않음. 「연락처 없이 결과 확인」 안내로 질문 부담을 미리 알림 |
 
@@ -77,7 +79,7 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 
 | 항목 | 변경 전 | 변경 후 |
 |---|---|---|
-| 홈 문서 높이 1440 / 390 / 320px (대체 글꼴) | 10,209 / 18,771 / 18,458 | 8,951 / 11,750 / 12,187 |
+| 홈 문서 높이 1440 / 390 / 320px | 10,209 / 18,771 / 18,458 (대체 글꼴) | 체크포인트 8,951 / 11,750 / 12,187 → 새 메인 6,277 / 6,978 / 7,366 (Pretendard) |
 | axe WCAG 2.1 A/AA (8페이지 × 1440·390) | 위반 16건 (모두 color-contrast) | **0건** |
 | 콘솔 오류·4xx (9페이지) | — | 0건 |
 | 가로 넘침 (8페이지 × 1440·390·320) | `modules` 320px 넘침 | 0건 |
@@ -90,13 +92,13 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 | 모션 감소 | 히어로 자동 전환 | 자동 전환 멈춤, 등장 효과 숨김 없음 |
 | JS 끔 (홈 / 포트폴리오) | `.reveal` 44 / 18개 숨김 | 0 / 0개 숨김 |
 | 진단 sticky CTA와 문의·맨위로 버튼 (390×844, 320×640, 667×375) | — | 겹침 없음 |
-| 667×375 열린 메뉴 | — | 내부 스크롤, Tab 6번으로 CTA까지 이동하고 화면 안에 보임 |
+| 667×375 열린 메뉴 | — | 메뉴 안에서 스크롤됨. 열었을 때 CTA는 화면 밖(y 380–428, 화면 높이 375)이고, 스크롤 보조 없이 Tab 6번으로 CTA에 포커스가 가면 화면 안에 들어옴 |
 | 첫 화면이 보일 때 떠 있는 문의 버튼 | — | 숨김, 스크롤하면 표시 (1440·390) |
 
 - **증거 스크린샷** (`docs/review/`)
-  - `mobile-390-home-hero.png`: 390×844 홈 첫 화면
+  - `home-1440-hero.png`, `mobile-390-home-hero.png`: 새 메인 첫 화면(1440×900, 390×844)
   - `mobile-390-diagnosis-sticky-cta.png`: 진단 sticky CTA, 문의 버튼, 맨위로 버튼
-  - `landscape-667x375-menu-open.png`: 열린 메뉴를 끝까지 스크롤해 CTA가 보이는 상태
+  - `landscape-667x375-menu-open.png`: 열린 메뉴를 끝까지 스크롤해 CTA가 보이는 상태(내부 스크롤 확인용 캡처. 키보드 검증은 `tools/qa/overlap-menu.js`)
 - **재실행 스크립트** (`tools/qa/`, 인자는 포트): `console.js`, `diagnosis-e2e.js`, `lead-submit.js`, `a11y.js`(axe-core 필요), `overlap-menu.js`
 
 ## 8. 제약과 남은 일
@@ -104,3 +106,47 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - Vercel 미리보기 배포는 Codex가 담당한다. 이 브랜치에는 Vercel 설정을 추가하지 않았다.
 - `index.source.html`(메인 원본)은 바꾸지 않았다. 원본에서 다시 생성하는 흐름이 있다면 이번 홈 변경을 원본에도 반영해야 한다.
 - 진짜 카카오 채널 주소를 확인하면 문의 버튼에 다시 추가할 수 있다.
+
+## 9. 메인 전면 재제작 (v2)
+사용자 지시: "부분 개선하지 말고 인덱스 메인 페이지부터 대대적으로 리뉴얼하면서 새롭게 만들어줘." 기존 카드·폰 목업·섹션 배열을 다듬는 수준이 아니라, `index.html`의 정보 구조·레이아웃·아트디렉션을 새로 만들었다.
+
+- **포지셔닝**: AI와 디자인·개발을 연결하는 커머스 파트너.
+  - 헤드라인: 「커머스의 다음 장을 함께 만듭니다.」
+  - 주 CTA는 무료 AI 진단 하나, 보조는 텍스트 링크 「프로젝트 상담하기」.
+- **아트디렉션**: 차콜(#161616) · 웜 아이보리(#F5F0E6) · 망고 옐로(브랜드 #FEE500)의 면 분할, 한글 대형 타입(1440px에서 약 104px, 390px에서 약 44px), 실제 작업물이 주인공.
+  - 스크롤 연출·회전 슬라이드·카운트업은 없다.
+  - 마우스를 올려야만 보이는 정보도 없다.
+- **섹션 6개**
+  1. 차콜 첫 화면 + 실제 작업물 콜라주(제품 촬영·상세페이지·푸드 촬영·홈페이지)
+  2. WHAT WE DO: Create / Connect / Grow 대형 번호 행. 6개 AI 제품은 `modules.html#mod-0~5` 태그로 연결
+  3. SELECTED WORK: 오늘밤엔(대형), 커머스 앱 구축 사례, 상세페이지 디자인
+  4. HOW WE WORK: 진단 → 설계·구현 → 운영 개선, 「AI가 속도를 내고, 사람이 끝까지 만듭니다」
+  5. 직접 운영하는 플랫폼 목록 + EXPLORE 링크(AI 제품·AI 모듈·활용사례·요금제)
+  6. 노란 마지막 CTA, 그 아래 공통 푸터
+- **홈에서 걷어낸 것**: 회전 폰 목업, 노란 둥근 사각형, 작은 지표 3칸, 서비스 그림 카드 6개, 샘플 대시보드, 티글 판매 상품, 요금제 미니 카드, 채널 로고 띠. 모두 전용 페이지(products·modules·platforms·pricing·usecase) 링크로 정리했다.
+- **스타일 분리**: `assets/base.css`(토큰·헤더·푸터·버튼) → `assets/site.css`(공통 접근성·메뉴) → `assets/home.css`(메인 전용, `h-` 접두사) 순으로 불러온다.
+  - 하위 페이지와 진단 페이지는 자체 인라인 스타일과 `site.css`만 쓰므로 영향이 없다.
+  - `index.html`은 78KB에서 13KB가 되었다.
+- **앱 화면 이미지**: 16:9로 과하게 자르지 않는다. 원본 비율을 유지하고 오른쪽 스토어 화살표만 잘라냈다(`aspect-ratio` 715/322, 730/345).
+- **Gemini 제안 반영**
+  - 섹션 여백: 데스크톱 160px, 모바일 약 80–88px. 좌우 여백: 1440px에서 72px, 모바일 20px.
+  - 색 값 #1A1A24·#F9F9F6·#FFD700은 받지 않았다. 사용자가 지정한 "웜 아이보리"와 기존 브랜드 노랑(#FEE500)을 유지했다.
+
+### 에셋 추가
+| 파일 | 원본 | 처리 |
+|---|---|---|
+| `assets/work/product-shoot-1600.jpg`, `assets/work/product-shoot-800.jpg` | Drive `DSC01622_인트로.jpg` (id 1tnkdIU9nTK7s26ROTQ9OJy87aKVMjVyb, 4848×3756, 8,824,001B, 공식 제품 촬영 원본) | Drive MCP가 응답 크기 한도로 원본을 받지 못해, Codex가 첨부한 같은 사진(2000×1550)을 1600·800px JPEG(품질 80·78, 191KB·57KB)로 최적화. 원본은 저장소에 넣지 않음. 확정된 고객·제품명이 없어 화면에는 「제품 촬영」「베이커리 제품 연출 촬영」으로만 표기 |
+| `assets/work_02.png` (기존) | 저장소에 이미 공개된 상세페이지 작업 콜라주 | 「상세페이지 디자인」 작업물로 사용 |
+
+### 새 메인 검증 (1440·390·320px)
+| 항목 | 결과 |
+|---|---|
+| 콘솔 오류·4xx | 0건 |
+| 320px 가로 넘침 | 0건 |
+| axe WCAG 2.1 A/AA (1440·390px) | 0건 |
+| 모바일 메뉴 키보드 | `aria-expanded`, Escape 닫기, 포커스 반환, 링크 48px 유지 |
+| 본문 바로가기 | 첫 Tab에서 보이고 `#main`으로 이동 |
+| 모션 감소 | 영향 없음(애니메이션 없음) |
+| JS 끔 | 숨는 요소 0개 |
+| 떠 있는 문의 버튼 | 첫 화면에서 숨김, 스크롤하면 표시 |
+| 하위 페이지·진단 | `tools/apply_common.py` 재실행 결과 변경 없음 |
