@@ -65,18 +65,49 @@
     doc.classList.add('reveal-on');
   }
 
-  /* 포트폴리오 분류 필터 */
+  /* 포트폴리오 분류 필터: aria-pressed, 결과 개수, 빈 결과, 주소 #detail·#shoot·#home·#print 연동 */
   var tabs=[].slice.call(document.querySelectorAll('.pf-tab'));
   if(tabs.length){
     var cards=[].slice.call(document.querySelectorAll('.pf-card'));
+    var countEl=document.querySelector('[data-pf-count]');
+    var emptyEl=document.querySelector('[data-pf-empty]');
+    var keys=tabs.map(function(t){return t.dataset.f;});
+    function applyFilter(f){
+      var n=0;
+      tabs.forEach(function(t){
+        var on=t.dataset.f===f;
+        t.classList.toggle('on',on);
+        t.setAttribute('aria-pressed',on?'true':'false');
+      });
+      cards.forEach(function(c){
+        var show=f==='all'||c.dataset.cat===f;
+        c.hidden=!show;
+        if(show)n++;
+      });
+      if(countEl)countEl.textContent=n+'개 작업';
+      if(emptyEl)emptyEl.hidden=n>0;
+    }
     tabs.forEach(function(t){
-      t.setAttribute('aria-pressed',t.classList.contains('on')?'true':'false');
       t.addEventListener('click',function(){
-        tabs.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false');});
-        t.classList.add('on');t.setAttribute('aria-pressed','true');
-        var f=t.dataset.f;
-        cards.forEach(function(c){c.style.display=(f==='all'||c.dataset.cat===f)?'':'none';});
+        applyFilter(t.dataset.f);
+        if(history.replaceState)history.replaceState(null,'',t.dataset.f==='all'?location.pathname+location.search:'#'+t.dataset.f);
       });
     });
+    [].slice.call(document.querySelectorAll('[data-f-reset]')).forEach(function(a){
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        var all=tabs.filter(function(t){return t.dataset.f==='all';})[0];
+        if(all){all.click();all.focus();}
+      });
+    });
+    var start=location.hash.slice(1);
+    if(start&&start!=='all'&&keys.indexOf(start)>-1){
+      applyFilter(start);
+      var works=document.getElementById('works');
+      if(works)works.scrollIntoView();
+    }else{
+      applyFilter('all');
+    }
   }
+
 })();

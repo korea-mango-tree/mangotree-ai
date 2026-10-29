@@ -120,3 +120,62 @@
 /* 개념 카드 안의 기능 태그는 카드 상단선을 물려받지 않음 */
 .x-concepts .x-feats{margin-top:16px}
 .x-concepts .x-feats li{border-top:0;padding:6px 12px}
+
+/* ===== 활용사례·포트폴리오 (usecase.html, portfolio.html) ===== */
+[hidden]{display:none!important}
+.x-note{font-size:14px;color:var(--ivory-ink);margin-top:14px}
+
+/* 도입 시나리오: 고민 → 적용 방향 → 관련 제품 */
+.x-scen{list-style:none;border-top:2px solid var(--charcoal)}
+.x-scen>li{display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1.15fr);gap:20px 40px;padding:44px 0;border-bottom:1px solid rgba(22,22,22,.16)}
+.x-quote{font-size:clamp(24px,2.6vw,36px);font-weight:700;letter-spacing:-.04em;line-height:1.3}
+.x-dir h3{font-size:clamp(19px,1.7vw,23px);letter-spacing:-.03em}
+.x-dir p{font-size:16.5px;line-height:1.75;color:var(--ink-2);margin-top:8px}
+.x-rel{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.x-rel a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--charcoal);border-radius:999px;font-size:13.5px;font-weight:700}
+.x-rel a:hover{background:var(--charcoal);color:var(--ivory)}
+@media(max-width:960px){.x-scen>li{grid-template-columns:48px minmax(0,1fr)}.x-dir{grid-column:2}}
+@media(max-width:560px){.x-scen>li{grid-template-columns:1fr;padding:32px 0}.x-dir{grid-column:1}}
+
+/* 진행 흐름(3단계) */
+.x-flow{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.x-flow li{border-top:3px solid var(--mango);padding-top:24px}
+.x-flow b{display:block;font-size:13px;letter-spacing:.12em;color:var(--mango)}
+.x-flow h3{font-size:clamp(24px,2.6vw,34px);letter-spacing:-.04em;margin:8px 0 10px}
+.x-flow p{font-size:16px;line-height:1.75;color:var(--on-dark-2)}
+@media(max-width:860px){.x-flow{grid-template-columns:1fr;gap:32px}}
+
+/* 작업물 그리드: 원본 비율(340:460) 그대로, 그림자 없음 */
+.x-works{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:28px 20px}
+.x-work figure{margin:0}
+.x-work img{display:block;width:100%;height:auto;aspect-ratio:340/460;object-fit:cover;border-radius:14px;background:var(--ivory)}
+.x-work figcaption{margin-top:12px}
+.x-work .x-wcat{display:block;font-size:13px;font-weight:700;color:var(--ivory-ink)}
+.x-work .x-wname{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.025em;margin-top:2px}
+@media(max-width:960px){.x-works{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.x-works{grid-template-columns:repeat(2,1fr);gap:20px 12px}.x-work .x-wname{font-size:14.5px}}
+
+/* 분류 필터 */
+.x-filter{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid rgba(22,22,22,.16)}
+.x-tabs{display:flex;flex-wrap:wrap;gap:8px}
+.x-tabs .pf-tab{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--charcoal);border-radius:999px;background:#fff;color:var(--charcoal);font:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.x-tabs .pf-tab:hover{background:var(--ivory)}
+.x-tabs .pf-tab.on,.x-tabs .pf-tab[aria-pressed="true"]{background:var(--charcoal);color:var(--ivory)}
+.x-count{font-size:14.5px;font-weight:700;color:var(--ivory-ink)}
+.x-empty{padding:48px 0;font-size:16px;color:var(--ivory-ink)}
+@media(max-width:560px){
+  .x-tabs{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px;padding:0 20px 4px;scrollbar-width:none;width:calc(100% + 40px)}
+  .x-tabs .pf-tab{flex:none}
+}
+
+/* 개발 사례(가로 화면 이미지): 오른쪽 스토어 화살표만 잘라내고 원래 비율 유지 */
+.x-dev{list-style:none;display:grid;gap:20px}
+.x-dev li{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);background:#fff;border-radius:20px;overflow:hidden;align-items:center}
+.x-dev .x-devimg{aspect-ratio:715/322;overflow:hidden;background:var(--ivory-2)}
+.x-dev .x-devimg.alt{aspect-ratio:730/345}
+.x-dev .x-devimg img{display:block;height:100%;width:auto;max-width:none}
+.x-dev .x-devtxt{padding:32px 36px}
+.x-dev h3{font-size:clamp(24px,2.4vw,34px);letter-spacing:-.04em;margin:6px 0 10px}
+.x-dev p{font-size:16px;line-height:1.75;color:var(--ink-2)}
+@media(max-width:900px){.x-dev li{grid-template-columns:1fr}.x-dev .x-devtxt{padding:22px 22px 26px}}
+.x-tag{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ivory-ink)}
