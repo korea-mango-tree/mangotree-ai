@@ -148,3 +148,19 @@
 @media(max-width:560px){.h-plat-list{grid-template-columns:1fr}.h-plat-list img{width:80px}}
 .h-plat-name{color:var(--charcoal)}
 .h-plat-name>span{font-size:15px;color:var(--ivory-ink)}
+
+/* 첫 화면 오른쪽 정적 패널: 원사이트 커머스 배너(1920×620) 원본을 CSS로만 크롭.
+   그림은 원본 가로 약 850~1700px에 모여 있어 그 영역만 보이게 함 */
+.h-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 400px;grid-template-areas:"label label" "title panel" "foot foot";column-gap:48px;align-items:end}
+.h-label{grid-area:label}.h-hero-title{grid-area:title}.h-hero-panel{grid-area:panel}.h-hero-foot{grid-area:foot}
+.h-hero-panel{margin:0;width:400px;height:330px;border-radius:24px;overflow:hidden;background:#E6E0F9}
+.h-hero-panel img{width:100%;height:100%;object-fit:cover;object-position:73% center}
+@media(max-width:1120px){
+  .h-hero-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"label" "title" "foot" "panel"}
+  .h-hero-panel{width:100%;height:220px;margin-top:40px}
+  .h-hero-panel img{object-position:72% center}
+}
+@media(max-width:560px){
+  .h-hero-panel{height:168px;border-radius:18px;margin-top:28px}
+  .h-hero-panel img{object-position:76% center}
+}
