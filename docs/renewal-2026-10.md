@@ -200,3 +200,13 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - **티글**: 브랜드가 확정되지 않은 이미지(`d40fdfe16f24.jpg`)를 `platforms.html` 카드에서도 빼고 중립 블록으로 바꿨다. `products.html`에는 아직 남아 있으며 확인이 필요하다.
 - **검증**: index·platforms 1440·390·320px에서 axe 0건, 가로 넘침 0건, 콘솔 오류 0건, 앵커 대상 존재 확인.
 - **대기 중**: 메인 제품 촬영 사진 교체는 Codex가 Drive 촬영컷을 첨부하면 진행한다. 첫 화면의 원사이트 커머스 일러스트는 유지한다.
+
+### 11-1. 페이지메이커 공개 근거 반영
+- **근거**
+  - Google Play `https://play.google.com/store/apps/details?hl=ko&id=com.ai.pagemaker` (개발자: 망고트리, Codex 확인)
+  - 앱 지원 웹사이트 `https://pagemaker.ai.kr/`
+- **소개**: 「제품 URL이나 이미지로 상세페이지·디자인·카피를 만드는 AI 제작 서비스」. 수치·요금은 넣지 않았다.
+- **`platforms.html#pagemaker`**: 「공식 서비스 보기」 링크를 달았다. 새 창(`target=_blank rel=noopener`)으로 열리고, 화면낭독기에 「(새 창)」을 알린다.
+- **노출 순서**: 메인 목록과 플랫폼 페이지 모두 페이지메이커 → 페이지커넥트 → 오늘밤엔 → 망고티켓 → 티글.
+- **로고**: Drive 「01페이지메이커AI.png」「페이지메이커 아이콘8080.jpg」를 Codex가 전달하면 중립 블록을 교체한다.
+- **검증**: index·platforms 1440·390·320px에서 axe 0건, 가로 넘침 0건.
