@@ -138,3 +138,13 @@
 .h-hero a:focus-visible,.h-process a:focus-visible{outline-color:var(--mango)}
 /* work_02 콜라주는 위쪽이 흐리게 페이드돼 있어 아래쪽(작업물 중심)을 보여줌 */
 .h-collage .c2 img,.h-case-img.tall img{object-position:center 78%}
+
+/* 운영 플랫폼: 실제 화면 썸네일(장식, 이름은 옆 글자) */
+.h-plat-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.h-plat-list a{flex-direction:row;align-items:center;justify-content:flex-start;gap:20px;padding:20px 0}
+.h-plat-list img{width:112px;height:auto;aspect-ratio:240/333;object-fit:cover;object-position:top;border-radius:12px;border:1px solid rgba(22,22,22,.12);background:#fff;flex:none}
+.h-plat-name{display:flex;flex-direction:column;gap:4px}
+@media(max-width:860px){.h-plat-list a{flex-direction:row;gap:16px}}
+@media(max-width:560px){.h-plat-list{grid-template-columns:1fr}.h-plat-list img{width:80px}}
+.h-plat-name{color:var(--charcoal)}
+.h-plat-name>span{font-size:15px;color:var(--ivory-ink)}
