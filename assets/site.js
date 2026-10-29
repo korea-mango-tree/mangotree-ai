@@ -41,6 +41,15 @@
     });
   }
 
+
+  /* 첫 화면(히어로)에 주요 행동 버튼이 보이는 동안 떠 있는 문의 버튼을 감춤 */
+  var hero=document.querySelector('.hero, .dx-hero');
+  if(hero&&document.querySelector('.contact-fab')&&'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      document.body.classList.toggle('fab-off',es[0].isIntersecting);
+    },{rootMargin:'0px 0px -35% 0px'}).observe(hero);
+  }
+
   /* 등장 효과: 지원·허용될 때만 숨김을 켜고, 이미 화면에 있는 요소는 바로 표시 */
   var items=[].slice.call(document.querySelectorAll('.reveal'));
   if(items.length&&!reduce&&'IntersectionObserver' in window){

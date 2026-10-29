@@ -1,0 +1,106 @@
+# 홈페이지 리뉴얼 (2026-10) — 3-AI 교차 검수 기록
+
+브랜치 `claude/homepage-renewal-crosscheck` · PR [#10](https://github.com/korea-mango-tree/mangotree-ai/pull/10) · 기준 `main` 533eefd
+
+## 1. 지침과 진행 방식
+- 저장소에는 AGENTS.md·CLAUDE.md·PR 템플릿이 없다. 이 문서와 PR 본문이 기록을 대신한다.
+- 역할 분담
+  - ChatGPT(Codex): 문제 진단, 통합 검수, Vercel 미리보기 배포
+  - Claude: 코드 분석, 구현, 테스트
+  - Gemini: 시각 디자인, 레퍼런스 분석
+- 사용자 결정: 중간 확인 없이 개선까지 진행한다. 병합과 운영 배포는 최종 교차 검수 뒤에 한다.
+- 기존 작업과의 충돌은 없다.
+  - 착수 시점에 열린 PR이 0건이었다.
+  - `claude/main-page-load-k3xm6b`는 `main`보다 뒤처진 브랜치다.
+
+## 2. AI 간 전달 사항 — 채택과 보류
+| 제안 | 출처 | 결정 | 근거 |
+|---|---|---|---|
+| 2열 첫 화면, 서비스 카드 계층, 노란 핵심 CTA, 모바일 48px 터치 | Gemini 1차 | 채택 | 기존 구조를 다듬는 수준이고 브랜드 유지 원칙에 맞음 |
+| 다크 테마 전면 전환, React 도입, 무한 롤링 추가, 새 문의 모달 | Gemini 1차 | 보류 | Codex 검수 결론: 위험 대비 이득이 작고 범위를 넘음 |
+| 대형 고정 한글 제목 + 실제 작업물 이미지, 흰색·크림·차콜 리듬, 반복 카드 축소, 비대칭 서비스 배치 | Gemini 2차 | 채택 | 서비스 카드 2+4 비대칭, 대표 사례, 크림 섹션 |
+| 390px 기준 제목 약 40px, 섹션 제목 28px, 본문 15~16px, 좌우 20px | Gemini 2차 | 일부 채택 | 제목은 9.2vw(390px에서 약 36px). 40px이면 "커머스의 제작·판매·운영을"이 3줄로 넘어감 |
+| 첫 화면의 CTA 중복 완화 | Gemini 3차 → Codex | 채택 | 첫 화면이 보이는 동안 떠 있는 문의 버튼을 숨김 |
+| 수치 위 여백 48px | Gemini 3차 | 채택 | `.hero-note` 아래 48px |
+| 추가 자간 축소 | Gemini 3차 | 보류 | Codex 판단: 현재 -.035em로 충분 |
+| 진단 페이지 sticky CTA와 문의 버튼 겹침 | Codex 독립 QA (P2) | 수정 | `.contact-fab`를 sticky 회피 규칙에 포함 |
+| 가로 화면(667×375)에서 메뉴가 잘림 | Codex 독립 QA (P2) | 수정 | 메뉴에 `max-height:calc(100dvh - 76px)`와 내부 스크롤 |
+
+## 3. 레퍼런스
+레퍼런스 URL은 Codex가 본문을 확인해 전달했다. Claude는 이 컨테이너의 네트워크 정책 때문에 직접 열람하지도, 픽셀을 직접 분석하지도 않았다. 아래 활용 내용은 전달받은 분류 정보를 이번 구현에 적용한 판단이다.
+
+| 레퍼런스 | 확인 주체 | 이번 구현에서의 활용 |
+|---|---|---|
+| Land-book Parker Studio — https://land-book.com/websites/101540-parker-studio (Big Type·Cards·Big Footer·Black & White) | Codex 본문 확인 | 큰 고정 제목, 흑백 기반의 카드 리듬 |
+| Awwwards Fiddle.Digital — https://www.awwwards.com/sites/fiddle-digital-design-agency (Typography·Grid·Connect, 2025) | Codex 본문 확인 | 왼쪽 정렬 섹션 제목, 12열 그리드 비대칭 배치 |
+| Mobbin "The long onboarding" — https://mobbin.com/blog/the-long-onboarding-a-study-of-1-460-flows | Codex 본문 확인 | 진단 흐름은 바꾸지 않음. 「연락처 없이 결과 확인」 안내로 질문 부담을 미리 알림 |
+
+Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제외했다. 출처를 확인하지 못한 제안은 "검증된 트렌드"로 기록하지 않는다.
+
+## 4. 에셋 출처 (Google Drive)
+원본은 `망고트리_2026회사소개및포트폴리오.pdf`(https://drive.google.com/file/d/1UHSVF2lKu7ErlMA2b37GvynrKRjwektU/view, 수정일 2026-04-21, 3,957,942 bytes)다.
+- PyMuPDF `extract_image`로 추출했고, 원본 바이트를 그대로 썼다. 화면 오른쪽의 스토어 넘김 화살표는 CSS `object-position`으로 가렸고 파일은 고치지 않았다.
+- 화면 속 과거 할인율이나 지표는 문구로 옮기지 않았다.
+
+| 파일 | PDF 위치 | 크기 | 사용처·표기 |
+|---|---|---|---|
+| `assets/work/oneulbamn-app-screens.jpg` | 15쪽 xref76 | 903×322 JPEG, 51,374B | 홈 대표 사례·포트폴리오. 서비스명(오늘밤엔)이 본문과 일치하고, 설명은 PDF 본문(전국 숙소 예약 앱 리뉴얼, 멀티브랜드 확장)만 사용 |
+| `assets/work/commerce-app-screens.jpg` | 17쪽 xref86 | 918×345 JPEG, 49,822B | 본문은 「망고마켓」이지만 화면 속 브랜드는 「천생식탁」이고 둘의 관계 설명이 없음. 그래서 「커머스 앱 구축 사례 — 회사소개서 수록 화면」으로 보수적으로 표기하고 망고마켓 링크는 넣지 않음. 기능 설명은 PDF 본문만 사용 |
+
+- 19쪽 샌디라운지는 다른 서비스명이 섞여 있어 제외했다.
+- Drive에 있는 고객사 로고·상세페이지는 게시 권한을 확인할 수 없어 쓰지 않았다.
+- `assets/og-image.png`는 저장소의 로고와 티글 화면으로 만든 공유 이미지다.
+
+## 5. 변경 요약
+- **홈**
+  - 고정 한글 제목으로 바꾸고 돌아가는 단어와 카운트업을 없앰. 주 행동은 무료 진단, 보조 행동은 도입 문의 메일
+  - 첫 화면 KPI를 없애고, 대시보드는 「서비스 화면 예시」와 자리표시 수치로 표기
+  - 서비스 카드 2+4 비대칭 배치, 각 카드는 `modules.html#mod-0~5`로 연결
+  - 대표 사례(Drive), 포트폴리오 미리보기, 티글 상품은 「예시」로 표기하고 가격·재고는 티글에서 확인하도록 안내
+- **공통**
+  - `assets/site.css`, `assets/site.js`를 추가하고 8개 페이지에 복사돼 있던 스크립트와 쓰이지 않던 `acBtn` 가짜 진단 코드를 제거
+  - 메뉴 「기능」 → 「AI 모듈」
+  - 카카오 일반 주소 버튼과 깨진 `#workspace` 링크 → 도입 문의 메일
+  - 「인기」 → 「추천」, 근거 없는 「▲ 32%」 삭제
+- **`features.html`**: `diagnosis.html`로 이동하는 페이지. 쿼리와 `#r=` 공유 링크를 그대로 유지
+- **플랫폼 페이지**: 같은 화면 4장을 반복하던 갤러리 삭제. **포트폴리오 페이지**: 개발 사례 추가, 모바일 2열
+- **재현 도구**: `tools/apply_common.py`로 공통 마크업을 일괄 적용(두 번 실행해도 결과가 같음)
+
+## 6. 사실관계 정정 (1차 보고 대비)
+- `LEAD_ENDPOINT`는 `main`에서 **빈 값**이다. 1차 보고의 "값이 있음"은 마스킹 명령이 빈 문자열을 잘못 읽은 결과다.
+- 그래서 상담 신청은 메일 앱을 여는 방식으로만 동작한다. 사용자가 메일 앱에서 **보내기를 눌러야 접수가 끝난다.** 완료 화면에도 「열린 메일 앱에서 보내기를 눌러야 접수가 완료됩니다」라고 안내되며, 이번 변경에서 바꾸지 않았다.
+- 결제 링크(`REPORT_PAYMENT_URL`), 기업 검색(`COMPANY_SEARCH_ENDPOINT`), `KAKAO_JS_KEY`도 빈 값이다. 새로 구현하지 않았고 키도 요구하지 않았다.
+
+## 7. 검증 결과
+- **실행 환경**: 로컬 `python3 -m http.server`에서 변경 전(main worktree)과 변경 후를 같은 시나리오로 비교했다. 브라우저는 Playwright Chromium이다.
+- **글꼴**: Pretendard CDN이 막혀 있어 스크린샷만 npm `pretendard@1.3.9` 파일로 대체했다.
+
+| 항목 | 변경 전 | 변경 후 |
+|---|---|---|
+| 홈 문서 높이 1440 / 390 / 320px (대체 글꼴) | 10,209 / 18,771 / 18,458 | 8,951 / 11,750 / 12,187 |
+| axe WCAG 2.1 A/AA (8페이지 × 1440·390) | 위반 16건 (모두 color-contrast) | **0건** |
+| 콘솔 오류·4xx (9페이지) | — | 0건 |
+| 가로 넘침 (8페이지 × 1440·390·320) | `modules` 320px 넘침 | 0건 |
+| 진단 문항 수: 온라인판매·식품 / B2B·제조·불필요 | 14 / 8 | 14 / 8 (같음) |
+| 진단 결과 문구·공유 링크 복원 | — | 변경 전과 같음 |
+| 예전 `features.html#r=…` 링크 | features에서 표시 | `diagnosis.html`로 이동 후 같은 결과 |
+| 상담 신청 제출 (외부 POST 차단·mock) | 완료 화면 = 메일 안내 | 같음, 실제 POST 0건 |
+| 모바일 메뉴 | `aria-expanded` 없음, Esc로 닫히지 않음, 링크 높이 0px(측정값) | `aria-expanded`·`aria-controls`, Esc 닫기 후 버튼으로 포커스 복귀, 링크 7개 모두 48px |
+| 본문 바로가기 | 없음 | 첫 Tab에서 보이고, 누르면 `#main`으로 포커스 이동 |
+| 모션 감소 | 히어로 자동 전환 | 자동 전환 멈춤, 등장 효과 숨김 없음 |
+| JS 끔 (홈 / 포트폴리오) | `.reveal` 44 / 18개 숨김 | 0 / 0개 숨김 |
+| 진단 sticky CTA와 문의·맨위로 버튼 (390×844, 320×640, 667×375) | — | 겹침 없음 |
+| 667×375 열린 메뉴 | — | 내부 스크롤, Tab 6번으로 CTA까지 이동하고 화면 안에 보임 |
+| 첫 화면이 보일 때 떠 있는 문의 버튼 | — | 숨김, 스크롤하면 표시 (1440·390) |
+
+- **증거 스크린샷** (`docs/review/`)
+  - `mobile-390-home-hero.png`: 390×844 홈 첫 화면
+  - `mobile-390-diagnosis-sticky-cta.png`: 진단 sticky CTA, 문의 버튼, 맨위로 버튼
+  - `landscape-667x375-menu-open.png`: 열린 메뉴를 끝까지 스크롤해 CTA가 보이는 상태
+- **재실행 스크립트** (`tools/qa/`, 인자는 포트): `console.js`, `diagnosis-e2e.js`, `lead-submit.js`, `a11y.js`(axe-core 필요), `overlap-menu.js`
+
+## 8. 제약과 남은 일
+- 이 컨테이너에서는 github.io, vercel.app, Land-book·Awwwards·Mobbin, Pretendard CDN에 접속할 수 없다. 공개 사이트와 Vercel 미리보기 확인은 Codex와 사용자가 맡았다.
+- Vercel 미리보기 배포는 Codex가 담당한다. 이 브랜치에는 Vercel 설정을 추가하지 않았다.
+- `index.source.html`(메인 원본)은 바꾸지 않았다. 원본에서 다시 생성하는 흐름이 있다면 이번 홈 변경을 원본에도 반영해야 한다.
+- 진짜 카카오 채널 주소를 확인하면 문의 버튼에 다시 추가할 수 있다.

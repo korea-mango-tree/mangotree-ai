@@ -103,6 +103,9 @@ def process(page):
     s = s.replace('<div class="clogos reveal">', '<div class="clogos reveal" aria-hidden="true">')
     s = s.replace('alt="channel">', 'alt="" loading="lazy">')
 
+    # 근거 없는 성장 수치 배지 제거
+    s = s.replace('<span class="vz-up">▲ 32%</span>', '')
+
     # 근거 없는 '인기' 배지 -> '추천'
     s = s.replace('<span class="badge">인기</span>', '<span class="badge">추천</span>')
 
