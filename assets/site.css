@@ -209,3 +209,6 @@ body.fab-off .contact-fab{opacity:0;visibility:hidden;pointer-events:none}
 .pm-icon{width:40px;height:40px;border-radius:10px}
 .plat-ph.has-icon{display:grid;place-items:center}
 .h-plat-list .h-plat-ph .pm-icon,.plat-phone .plat-ph .pm-icon{width:40px;height:40px;max-width:40px;aspect-ratio:1;border:0;border-radius:10px;box-shadow:none;object-fit:contain;transform:none}
+
+/* 화면낭독기 안내용으로 스크립트가 포커스를 옮기는 제목에는 윤곽선을 그리지 않음 */
+h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:none}

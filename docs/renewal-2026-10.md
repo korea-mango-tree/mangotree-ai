@@ -346,3 +346,86 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 
 - **기존 페이지 회귀**: index·products·platforms는 1440·390에서 axe 0건, 가로 넘침 0건, 오류 0건이다.
 - **캡처**: `docs/review/usecase-1440.png`, `usecase-390.png`, `portfolio-1440.png`, `portfolio-390.png`
+
+## 17. AI 모듈·요금제·무료진단 페이지 정리 (modules.html, pricing.html, diagnosis.html)
+
+메인과 같은 차콜·웜 아이보리·망고 옐로, 큰 한글 제목, 넓은 여백으로 맞췄다. 새 기능이나 새 수치·가격·고객은 넣지 않았다.
+
+**구조**
+- **modules·pricing**: 페이지 안 `<style>`을 지우고 `base.css → site.css → sub.css` 공통 구조로 옮겼다(`body.sub`, `x-` 접두사).
+- **diagnosis**: 기능 우선이라 기존 인라인 CSS를 한 글자도 바꾸지 않고 `assets/diagnosis.css`로 그대로 옮겼다. 디자인 조정은 `site.css` 다음에 불러오는 `assets/dx-theme.css`(`body.dxpage`)에만 넣었다. 마크업·스크립트·문구 구조는 그대로다.
+  - 결과 화면의 의미색(개선 필요=주황, 양호=초록)은 정보를 전하므로 유지했다.
+
+**사전 QA 지적 4건 수정**
+1. **요금제 「진단 리포트 예시」**
+   - 숙박 관리자 화면 이미지(`0555685655e2…`)를 뺐다.
+   - 그 자리에 실제 진단 방식을 3단계로 설명한다: 기업명으로 시작 → 선택형 설문 최대 14문항(모름 선택 가능) → 정해진 규칙으로 계산한 개선 순서.
+   - 4개 플랜(AI START·COMMERCE·GROWTH·ENTERPRISE)에는 금액을 적지 않고 「금액: 범위 확인 후 견적」으로 표기했다.
+   - 플랜마다 상담 버튼(메일 제목 `[망고트리 AI+] {플랜} 플랜 상담`)을 달았다.
+2. **AI 모듈 상세 창 아이콘**
+   - `elIcon.textContent=icon.textContent`가 SVG를 빈 글자로 덮어쓰던 문제를 고쳤다. 지금은 원본 SVG를 `cloneNode(true)`로 복제해 넣는다.
+   - 카드 아이콘이 검게 채워지던 문제도 고쳤다. 인라인 CSS를 지우면서 `.ico` 선 스타일이 빠졌던 것이라 `sub.css`에 복구했다.
+3. **진단 「정밀 리포트 미리보기」**
+   - 태그를 「설문 기반 미리보기」로 바꿨다.
+   - 미리보기 지표는 방금 입력한 설문 답변으로만 계산했고, 온라인 노출·판매 채널·평판·경쟁사 조사는 아직 하지 않았다고 명시했다.
+   - 기업 조사는 「상담 후 진행」으로 표기했다. 가격 문구는 「신청하면 상담으로 범위와 일정을 정한 뒤, 조사와 담당자 검수를 거쳐 보내드립니다」이다.
+   - 위키백과 대체 검색, 메일 상담, 리포트 신청을 서버 접수나 결제로 표현하지 않는다.
+   - `LEAD_ENDPOINT`·`COMPANY_SEARCH_ENDPOINT`·`REPORT_PAYMENT_URL`·`REPORT_PRICE`는 빈 값 그대로다.
+4. **앵커 착지 위치**
+   - `#cases`·`#usecase`가 글꼴·이미지 로드 뒤 24px 어긋나던 문제를 고쳤다.
+     - `site.js`가 주소에 해시가 있으면 `document.fonts.ready`와 `load` 시점에 한 번 더 맞춘다.
+     - 사용자가 먼저 스크롤·키를 누르면 다시 맞추지 않는다.
+   - 카드 단위 앵커(`#mod-N`·`#tigl`)는 `scroll-padding-top:80px`에 `scroll-margin-top:96px`이 겹쳐 176px에 착지했다. 겹친 값을 지워 모든 앵커가 80px로 같다.
+
+**유지 확인 (기능)**
+
+| 항목 | 결과 |
+|---|---|
+| 판매 목적 설문 | 14문항, 결과·점수 표시, 외부 POST 0건 |
+| B2B 목적 설문 | 8문항(조건 분기), 결과 표시 |
+| 전부 「모름」 | 14문항 완료, 종합점수 미계산·영역별 「확인 필요」·추천 순위 미표시 |
+| 답변 수정 | 「질문 1 / 14」로 돌아감 |
+| 처음부터 다시 | 확인 창 → 기본 정보 단계로 복귀, 진행 저장값 삭제 |
+| 7일 이어하기 | 4/14에서 이어하기 제안 → 이어서 결과까지 |
+| 30일 공유 링크 `#r=` | 복사 동작, `diagnosis.html#r`·`features.html#r` 모두 같은 결과(개인정보 미포함) |
+| 기존 `#start` | 설문 창 열림, Tab 갇힘, Escape 닫힘 |
+| 상담 신청 | 동의 미체크 시 막힘(`invalid`+안내 문구), 허구 정보로 제출 시 메일 앱 안내 화면, 실제 발송·외부 전송 0건 |
+| 하단 고정 버튼 겹침 | 390·320·667 높이 모두 0건 |
+
+| AI 모듈 상세 창 (1440·390) | 결과 |
+|---|---|
+| 분류 앵커 | `#mod-0`~`#mod-5` 6개 유지 |
+| 36개 모듈 | 모두 열림, 아이콘 SVG·설명·추천 상황 표시 |
+| Enter / Space | 열림 |
+| Tab / Shift+Tab | 창 안에 갇힘 |
+| Escape·닫기 버튼·배경 클릭 | 닫힘, 스크롤 잠금 해제 |
+| 포커스 | 닫으면 누른 카드로 복귀 |
+
+**검증 (1440·1024·390·320px, 8개 페이지)**
+- 대상: modules·pricing·diagnosis와 공통 CSS·JS가 바뀐 기존 5개 페이지(index·products·platforms·usecase·portfolio).
+- 이미지 깨짐·내부 링크 깨짐·가로 넘침·콘솔 오류 0건이다.
+- axe WCAG 2.1 A/AA 0건이다.
+  - 진단 첫 화면과 아이보리 구역의 작은 영문 제목은 4.48:1이라 `#5A554C`로 올렸다.
+- 첫 Tab은 본문 바로가기이고, 모바일 메뉴는 Escape로 닫으면 포커스가 버튼으로 돌아간다.
+- 앵커 착지(새 페이지로 진입): portfolio `#cases`·`#works`, usecase `#usecase`·`#works`, modules `#mod-3`·`#mod-5`, pricing `#diagnosis`·`#contact`, platforms `#tigl`, products `#agent` 모두 80px이다.
+- `tools/qa/` 스크립트 결과:
+  - console: 9개 주소 OK.
+  - diagnosis-e2e·lead-submit: 통과.
+  - a11y: 8개 페이지 × 1440·390에서 axe 0건.
+  - overlap-menu: 통과.
+
+**남은 확인 사항**
+- 주소 `#start`로 설문 창을 바로 연 경우, 닫으면 포커스가 문서 처음(`body`)으로 간다. 누른 버튼이 없어서 돌아갈 곳이 없기 때문이며, 이번 범위에서는 바꾸지 않았다.
+- 「처음부터 다시」는 진행 중인 응답만 지운다. 이전 결과 기록(`mt_dx_results_v2`, 결과 버전 비교용)은 기존 동작대로 남는다.
+
+**캡처**
+- `docs/review/modules-1440.png`, `modules-390.png`, `modules-1440-modal.png`, `modules-390-modal.png`
+- `docs/review/pricing-1440.png`, `pricing-390.png`
+- `docs/review/diagnosis-{1440,1024,390,320}.png`
+- 진단 흐름 단계별: `docs/review/dx-{1440,390}-{1hero,2info,3question,4result,5premium,6consult,7done}.png`
+
+**관리자 승인 대기(보류 목록)**
+- main 병합과 운영 배포 승격. PR은 초안 상태를 유지한다.
+- 상담 접수 서버(`LEAD_ENDPOINT`), 기업 검색 API(`COMPANY_SEARCH_ENDPOINT`), 카카오 JS 키, 리포트 결제 링크·가격(`REPORT_PAYMENT_URL`·`REPORT_PRICE`) 설정. 지금은 모두 빈 값이며, 새 API 키나 백엔드 구축은 이번 범위가 아니다.
+- 요금제 실제 금액 공개 여부. 지금은 「범위 확인 후 견적」으로 표기한다.
+- Higgsfield 이미지 생성. 크레딧이 부족해(잔액 0.07, 최소 0.25) 생성하지 않았다. 충전·구매도 하지 않는다.

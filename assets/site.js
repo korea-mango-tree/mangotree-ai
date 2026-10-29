@@ -65,6 +65,18 @@
     doc.classList.add('reveal-on');
   }
 
+  /* 주소 #앵커로 들어온 경우: 웹폰트·이미지가 늦게 로드되며 레이아웃이 밀리면 대상 위치를 한 번 더 맞춤.
+     사용자가 먼저 스크롤했다면 건드리지 않음 */
+  var hashTarget=null;
+  try{hashTarget=location.hash.length>1?document.getElementById(decodeURIComponent(location.hash.slice(1))):null;}catch(e){}
+  if(hashTarget){
+    var userMoved=false;
+    ['wheel','touchstart','keydown','mousedown'].forEach(function(ev){window.addEventListener(ev,function(){userMoved=true;},{once:true,passive:true});});
+    var realign=function(){if(!userMoved)hashTarget.scrollIntoView({behavior:'auto',block:'start'});};
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(realign);
+    window.addEventListener('load',realign);
+  }
+
   /* 포트폴리오 분류 필터: aria-pressed, 결과 개수, 빈 결과, 주소 #detail·#shoot·#home·#print 연동 */
   var tabs=[].slice.call(document.querySelectorAll('.pf-tab'));
   if(tabs.length){
