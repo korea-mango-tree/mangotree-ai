@@ -160,10 +160,14 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 | `assets/work_02.png` | 같은 경로 `work_02.png`(원사이트 실제 상세페이지 콜라주) | 440×600 | 콜라주·대표 작업 「상세페이지 디자인」(위쪽 페이드는 원본에 들어 있어 아래쪽을 보여줌) |
 | `assets/platform01_img.png` | `…/image/index/platform01_img.png` = 오늘밤엔 | 240×333 | 운영 플랫폼 목록 썸네일(표시 폭 112px, 모바일 80px) |
 | `assets/platform02_img.png` | `…/image/index/platform02_img.png` = 망고티켓 | 240×333 | 운영 플랫폼 목록 썸네일 |
-| `assets/inline/d40fdfe16f24.jpg`, `assets/inline/d85270845dde.jpg` | 저장소 기존 플랫폼 화면(티글·페이지커넥트) | 240×333 | 같은 목록 썸네일 |
+| `assets/inline/d85270845dde.jpg` | 저장소 기존 플랫폼 화면(페이지커넥트) | 240×333 | 같은 목록 썸네일 |
+| (없음) 티글 | — | — | 검증된 티글 화면이 없어 썸네일을 넣지 않음. 같은 크기의 브랜드 없는 아이보리 블록으로 정렬만 맞춤 |
 
 - **썸네일 처리**: 이름이 바로 옆 글자로 있어 이미지는 장식(`alt=""`)으로 처리했다.
-- **`platform04_img.png` 주의**: 원사이트의 이 파일은 「다님 마켓플레이스」지만, 저장소의 같은 이름 파일은 티글 화면이다. 이번에는 쓰지 않았고, 망고마켓으로도 표기하지 않는다.
+- **`platform04_img.png`·`assets/inline/d40fdfe16f24.jpg` 브랜드 미확정**: Codex 독립 검수에서는 원사이트 `platform04_img.png`와 `d40fdfe16f24.jpg`의 상단 브랜드가 「다님 마켓플레이스」로 확인됐다. 한편 저장소의 두 파일을 4배로 확대해 보면 파란 영문 워드마크와 한글 문구가 보이지만, 240px 원본이라 판독이 확실하지 않다(`docs/review/d40-top-crop.png`).
+  - 1차에 「티글 화면」이라고 적은 판단은 근거가 부족했으므로 철회한다.
+  - 메인에서는 티글 썸네일을 빼고 중립 블록으로 대체했다. 망고마켓으로도 표기하지 않는다.
+  - `platforms.html`·`products.html`에서도 이 이미지가 티글로 표기돼 있다. 이번 메인 범위 밖이라 그대로 두었고, 별도 확인이 필요하다.
 - **로고**: 저장소 `assets/logo.png`(760×118)는 원사이트 `…/image/mango2/logo.png`와 같은 망고 심볼과 "mango tree" 워드마크로 보인다. 원본을 받지 못해 바이트 비교는 하지 않았다. 헤더는 기존과 같은 축소본(`assets/inline/207611274d6b.png`)을 쓴다.
 - **상담 연결**: 원사이트 하단과 떠 있는 상담 버튼에서 확인한 공식 카카오 채널 `https://pf.kakao.com/_BxelfC/chat`을 메인의 「카카오톡으로 상담하기」(첫 화면·마지막 CTA, 새 창)에 연결했다. 메일 문의는 보조로 유지한다. 메시지는 보내지 않았다.
 - **히어로 오른쪽 패널 (반영)**: 원사이트 배너 `https://mangotree.co.kr/data/ebslider/eb4_shop_001/img/ca248669d37f6488ce8760bd0b8e10ee.jpg`(1920×620, 146,389B)를 Codex가 받아 첨부했다(원본과 바이트 동일, md5 `64aa1708b451ac4275b342af764cff5b`). `assets/work/commerce-scan-banner.jpg`로 **원본 그대로** 저장했다.
