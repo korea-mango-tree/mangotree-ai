@@ -1,0 +1,104 @@
+{
+  "items": [
+    {
+      "title": "스마트카드태그",
+      "sourceUrl": "https://mangotree.co.kr/shop/item.php?it_id=1791434755",
+      "imageUrl": "https://mangotree.co.kr/data/editor/2610/7669aacc3e15d3a43a20d9afcfca830a_1791434926_087.jpg",
+      "filename": "smart-card-detail.webp",
+      "width": 860,
+      "height": 1625,
+      "size": 76732,
+      "crop": [
+        0,
+        130,
+        860,
+        1755
+      ],
+      "sourceWidth": 860,
+      "sourceHeight": 13240,
+      "quality": 90,
+      "sha256": "557c06abd9b681bc3736301743ba944b17f75723e4131dd9410ca7fa7d3bb5ac",
+      "note": "Full-width selected vertical region, no upscaling; photo watermarks retained."
+    },
+    {
+      "title": "성해주 전통주",
+      "sourceUrl": "https://mangotree.co.kr/shop/item.php?it_id=1782460001",
+      "imageUrl": "https://mangotree.co.kr/data/editor/2606/c166092f9c8484eba8f0cd3baa644d27_1782460089_5987.jpg",
+      "filename": "seonghaeju-detail.webp",
+      "width": 860,
+      "height": 1500,
+      "size": 90236,
+      "crop": [
+        0,
+        0,
+        860,
+        1500
+      ],
+      "sourceWidth": 860,
+      "sourceHeight": 10903,
+      "quality": 90,
+      "sha256": "ac3ef54b0b77f7c6d81321e6b9115932c499b3433aa87387c2289d477855d760",
+      "note": "Full-width selected vertical region, no upscaling; photo watermarks retained."
+    },
+    {
+      "title": "몽트비어",
+      "sourceUrl": "https://mangotree.co.kr/shop/item.php?it_id=1782459525&pname=homepage",
+      "imageUrl": "https://mangotree.co.kr/data/editor/2606/c166092f9c8484eba8f0cd3baa644d27_1782459575_4028.jpg",
+      "filename": "montbeer-home.webp",
+      "width": 1200,
+      "height": 625,
+      "size": 131242,
+      "crop": [
+        0,
+        0,
+        1920,
+        1000
+      ],
+      "sourceWidth": 1920,
+      "sourceHeight": 11625,
+      "quality": 90,
+      "sha256": "66cb388b0168a79fbb108a0ed545e04e7defef132d33f8ba7463daa64f453c58",
+      "note": "Full-width selected vertical region, no upscaling; photo watermarks retained."
+    },
+    {
+      "title": "추어탕",
+      "sourceUrl": "https://mangotree.co.kr/bbs/board.php?bo_table=gallery&wr_id=2824",
+      "imageUrl": "https://mangotree.co.kr/data/editor/2607/db56e72a94dfe6d0deda304f1b86934b_1783669880_5341.jpg",
+      "filename": "chueotang-photo.webp",
+      "width": 1000,
+      "height": 1500,
+      "size": 190676,
+      "crop": [
+        0,
+        0,
+        1000,
+        1500
+      ],
+      "sourceWidth": 1000,
+      "sourceHeight": 1500,
+      "quality": 90,
+      "sha256": "184ff216b63518a4b1da9b539d88989534b1a79235cbd350e0bd203c9a5e1219",
+      "note": "Full-width selected vertical region, no upscaling; photo watermarks retained."
+    },
+    {
+      "title": "가평 잣",
+      "sourceUrl": "https://mangotree.co.kr/bbs/board.php?bo_table=gallery&wr_id=2784",
+      "imageUrl": "https://mangotree.co.kr/data/editor/2603/a5f8f1f3dbae0ae23974f41b480313be_1773726249_942.jpg",
+      "filename": "gapyeong-pinenuts-photo.webp",
+      "width": 1000,
+      "height": 1250,
+      "size": 474218,
+      "crop": [
+        0,
+        250,
+        1000,
+        1500
+      ],
+      "sourceWidth": 1000,
+      "sourceHeight": 1500,
+      "quality": 90,
+      "sha256": "317eeb681b58ad745433fcdf22b2667fa5e23127cade95c71b914becd98abd69",
+      "note": "Full-width selected vertical region, no upscaling; photo watermarks retained."
+    }
+  ]
+}
