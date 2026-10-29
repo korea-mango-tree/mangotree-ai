@@ -171,7 +171,7 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - `products.html`에는 이 이미지가 남아 있다. 이번 범위 밖이라 그대로 두었고, 원본 화질로 확인한 뒤 정리한다.
 - **로고**: 저장소 `assets/logo.png`(760×118)는 원사이트 `…/image/mango2/logo.png`와 같은 망고 심볼과 "mango tree" 워드마크로 보인다. 원본을 받지 못해 바이트 비교는 하지 않았다. 헤더는 기존과 같은 축소본(`assets/inline/207611274d6b.png`)을 쓴다.
 - **상담 연결**: 원사이트 하단과 떠 있는 상담 버튼에서 확인한 공식 카카오 채널 `https://pf.kakao.com/_BxelfC/chat`을 메인의 「카카오톡으로 상담하기」(첫 화면·마지막 CTA, 새 창)에 연결했다. 메일 문의는 보조로 유지한다. 메시지는 보내지 않았다.
-- **히어로 오른쪽 패널 (반영)**: 원사이트 배너 `https://mangotree.co.kr/data/ebslider/eb4_shop_001/img/ca248669d37f6488ce8760bd0b8e10ee.jpg`(1920×620, 146,389B)를 Codex가 받아 첨부했다(원본과 바이트 동일, md5 `64aa1708b451ac4275b342af764cff5b`). `assets/work/commerce-scan-banner.jpg`로 **원본 그대로** 저장했다.
+- **히어로 오른쪽 패널 (14절에서 갤러리 사진으로 교체됨)**: 원사이트 배너 `https://mangotree.co.kr/data/ebslider/eb4_shop_001/img/ca248669d37f6488ce8760bd0b8e10ee.jpg`(1920×620, 146,389B)를 Codex가 받아 첨부했다(원본과 바이트 동일, md5 `64aa1708b451ac4275b342af764cff5b`). `assets/work/commerce-scan-banner.jpg`로 **원본 그대로** 저장했다.
   - 픽셀은 생성하거나 변형하지 않았고, CSS `object-fit:cover`로만 잘라 보인다.
   - 1121px 이상: 헤드라인 오른쪽 400×330 패널, `object-position:73% center`(원본 가로 약 854~1606px가 보이며 기기·스캐너·아이콘이 모두 들어옴).
   - 1120px 이하: 설명·CTA 아래 전체 폭 패널(높이 220px, 560px 이하에서 168px), `object-position` 72%·76%.
@@ -242,3 +242,22 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 | `platforms.html#pagemaker`·`#pageconnect`·`#oneulbamn` 이동 | 세 폭 모두 고정 헤더(76px) 아래 top 176px |
 
 - **Gemini 교차 시각 검수(히어로 화면 한정)**: 새 히어로의 데스크톱 실배포와 모바일 390 캡처에 대해 "필수 수정 없음. 제목·CTA·이미지 간 겹침이나 의도치 않은 잘림 없고 가독성 양호". 히어로 첨부 화면만 본 검수이며 전체 기능 검수는 아니다.
+
+## 14. 첫 화면 오른쪽 비주얼 정리 (갤러리 실제 사진 1장)
+사용자 지시: 첫 화면 오른쪽 비주얼이 너무 어수선하다. 원사이트 갤러리(https://mangotree.co.kr/bbs/board.php?bo_table=gallery)의 실제 사진을 쓰고, 사진 1장과 충분한 여백으로 차분하게 정리한다.
+
+- **원본**: `https://mangotree.co.kr/data/editor/2512/thumb-b28a3cc19a056634aec6ef1a34d1dca2_1766972046_9529_660x462.jpg`
+  - Codex가 첨부한 handcream-package.jpg를 받았다(660×462 JPEG, 42,472B, md5 `3b8be076e169db33bf4552e840c07353`).
+  - 바이트 그대로 `assets/work/gallery-handcream-package.jpg`로 저장했다.
+- **표시 방식**
+  - 원본 비율(660:462)을 그대로 지킨다. 크롭·`object-fit`이 없어 상품과 왼쪽 위 m 워터마크가 잘리지 않는다.
+  - alt: 「녹색 배경에 연출한 핸드크림 제품과 패키지 촬영」.
+  - 소품이 많은 kongsim-shake.jpg는 쓰지 않았다.
+- **제거**: 3D 커머스 일러스트 패널(`commerce-scan-banner.jpg`)을 첫 화면에서 빼고 저장소에서도 지웠다(남은 참조 0). 첫 화면에 겹치는 카드나 배지는 없다.
+- **유지**: 제목·CTA, 아래 콜라주의 제품 촬영 타일, PageMaker·PageConnect는 그대로 두었다.
+- **크기**
+  - 1440px: 제목 오른쪽 440×308(제목 높이 236px보다 낮게), 열 사이 64px.
+  - 1120px 이하: 설명·CTA 아래 최대 520px 폭.
+  - 390px: 350×245, 320px: 280×196(원본 비율 그대로).
+- **검증 (1440·1024·390·320px)**: 이미지 로드(원본 660×462 확인), 크롭 없음(표시 비율 1.429), 제목·CTA와 겹침 0건, 가로 넘침 0건, 콘솔 오류·4xx 0건, axe 0건.
+- **캡처**: `docs/review/home-1440-hero.png`, `mobile-390-home-hero.png`, `mobile-320-home-hero.png`.
