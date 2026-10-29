@@ -15,7 +15,8 @@
       "sha256": "4b903e4a705f8559084b23070183707df9755b1c73cfe5cbc9df71d18774e4d8",
       "bytes": 369919,
       "minExistingPixelDifference": 40.12,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "AI레코더",
@@ -30,7 +31,8 @@
       "sha256": "a8259d50887e56657606f2f460d2a70a8a96b662395a3b44fb60dc874006584a",
       "bytes": 774605,
       "minExistingPixelDifference": 51.05,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "청국장",
@@ -45,7 +47,8 @@
       "sha256": "d7977ecf0a5c541df1ea5c67f2f2348cfd4c05795bbee5975f2548e8cc7ea0a1",
       "bytes": 1176792,
       "minExistingPixelDifference": 64.13,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "토마토쥬스",
@@ -60,7 +63,8 @@
       "sha256": "243f1138922411f3885d3a7300a4ad355eed210e252643583699ae2fc0db86b1",
       "bytes": 619577,
       "minExistingPixelDifference": 39.05,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "슈퍼모로톡스",
@@ -75,22 +79,23 @@
       "sha256": "6edada5b9d4dabc41e857071c814fa28c21718d2a48c915942dba3e65c001e5e",
       "bytes": 837608,
       "minExistingPixelDifference": 53.46,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
-      "title": "흙마늘돼지갈비",
+      "title": "성해주 전통주",
       "category": "detail",
-      "sourceUrl": "https://mangotree.co.kr/shop/item.php?it_id=1791351872",
+      "sourceUrl": "https://mangotree.co.kr/shop/item.php?it_id=1782460001",
       "listingUrl": "https://mangotree.co.kr/shop/list.php?ca_id=20",
-      "imageUrl": "https://mangotree.co.kr/data/item/1791351872/thumb-01_7Z2R66eI64qY6487KeA6rCI67mE67O17IKs_400x9465.jpg",
-      "verifiedPageTitle": "망고트리 - 온라인 비즈니스 성장을 위한 사업 파트너",
-      "filename": "detail-ddbc808c40be.jpg",
+      "imageUrl": "https://mangotree.co.kr/data/item/1782460001/thumb-017ISx7ZW07KO867O17IKs_400x5071.jpg",
+      "filename": "detail-f385abd68bdf.jpg",
       "width": 400,
-      "height": 9465,
-      "sha256": "ddbc808c40bebae3de0943774e507433db9644bbcb2021d0340a961ebc590f4d",
-      "bytes": 973615,
-      "minExistingPixelDifference": 58.66,
-      "sourceHttpStatus": 200
+      "height": 5071,
+      "sha256": "f385abd68bdf97702b2b80a9b637c536932b69c8706e4d8d2eed30b5b2f2c065",
+      "bytes": 425309,
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true,
+      "visualReview": "Representative preview verified; visually distinct from existing 16 and other added works."
     },
     {
       "title": "액상마그네슘",
@@ -105,7 +110,8 @@
       "sha256": "60e5f9a6aec029542bbac8387eac876fa1ae6c5459a6f42149e8ae6d407fabcc",
       "bytes": 543870,
       "minExistingPixelDifference": 51.08,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "호단티",
@@ -120,7 +126,8 @@
       "sha256": "c0502898d2a8cfa833e659a3e33248b99fcb51195d1928846f178e46f6ad7f4e",
       "bytes": 501146,
       "minExistingPixelDifference": 50.36,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "설약산",
@@ -135,7 +142,8 @@
       "sha256": "eccf8036873994cd795e04affdfe097ed7e7fa899eb1d4e79aeef35ea259fee3",
       "bytes": 189352,
       "minExistingPixelDifference": 61.88,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "몽트비어",
@@ -150,7 +158,8 @@
       "sha256": "ba3f22520aa898a087dd6f43eed7cf4cce52ad3704b87f0ab115559063ae70ce",
       "bytes": 212944,
       "minExistingPixelDifference": 55.45,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "타향골 창업",
@@ -165,7 +174,8 @@
       "sha256": "39566d798cddf26d2ce7e9bc0cc4a7dbc84d9b5367c49186e0c80cefcd581def",
       "bytes": 349320,
       "minExistingPixelDifference": 55.73,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "바이오연구소",
@@ -180,7 +190,8 @@
       "sha256": "71e420af81d2248aaa1d4c82793d763306941611dbb6b73e50bdbac2eb63d239",
       "bytes": 891760,
       "minExistingPixelDifference": 58.55,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "전통주 제조기업",
@@ -195,7 +206,8 @@
       "sha256": "2ffa9e28b46fe0a4f367e968d0deda09ac5f571ca6a1d9532f6684058eb28c3a",
       "bytes": 129048,
       "minExistingPixelDifference": 52.09,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "농식품바이오융합",
@@ -210,7 +222,8 @@
       "sha256": "81b9e4ba64752c88a9e2cd10cf0818285935cb8e71b5c5163df799203e1daa0b",
       "bytes": 96136,
       "minExistingPixelDifference": 78.69,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "바이오",
@@ -225,7 +238,8 @@
       "sha256": "f2dca70661ae95535e85df23f93c2f7579bc9dcdb629fe6b7367103d25d53683",
       "bytes": 149824,
       "minExistingPixelDifference": 46.45,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "고구마 가공식품",
@@ -240,7 +254,8 @@
       "sha256": "15e4414c37a2c76fceadb3c49df1eab066a79751230d4e509654f9f294d85b5e",
       "bytes": 101720,
       "minExistingPixelDifference": 62.39,
-      "sourceHttpStatus": 200
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true
     },
     {
       "title": "아노조비 반려동물 동결건조 간식 패키지",
@@ -377,18 +392,19 @@
       "sourceHttpStatus": 200
     },
     {
-      "title": "쌀조청강정",
+      "title": "가평 잣",
       "category": "shoot",
       "sourceUrl": "https://mangotree.co.kr/bbs/board.php?bo_table=gallery",
       "listingUrl": "https://mangotree.co.kr/bbs/board.php?bo_table=gallery",
-      "imageUrl": "https://mangotree.co.kr/data/editor/2607/thumb-db56e72a94dfe6d0deda304f1b86934b_1783669806_3378_440x660.jpg",
-      "filename": "shoot-dd20f4398208.jpg",
+      "imageUrl": "https://mangotree.co.kr/data/editor/2603/thumb-a5f8f1f3dbae0ae23974f41b480313be_1773726249_942_440x660.jpg",
+      "filename": "shoot-4d28b2200dcf.jpg",
       "width": 440,
       "height": 660,
-      "sha256": "dd20f4398208ed5905c530a3f37aa8f47800bfb03eb790ecd3e80be3a29fb3f3",
-      "bytes": 75636,
-      "minExistingPixelDifference": 54.24,
-      "sourceHttpStatus": 200
+      "sha256": "4d28b2200dcf7834dafa316b0eb193d76a58bb1225a19c7732e1ed3df12402b9",
+      "bytes": 104380,
+      "sourceHttpStatus": 200,
+      "sourceTitleInBody": true,
+      "visualReview": "Representative preview verified; visually distinct from existing 16 and other added works."
     },
     {
       "title": "토토미 닭강정",
@@ -481,5 +497,45 @@
     "Gallery photos have no individual article URLs; listing and exact lightbox image URL recorded.",
     "Preserve natural aspect ratio; long page images should use a constrained top-aligned preview linking to source.",
     "No marketing result metrics inferred."
+  ],
+  "visualReviewReplacements": [
+    {
+      "oldTitle": "흙마늘돼지갈비",
+      "oldFilename": "detail-ddbc808c40be.jpg",
+      "new": {
+        "title": "성해주 전통주",
+        "category": "detail",
+        "sourceUrl": "https://mangotree.co.kr/shop/item.php?it_id=1782460001",
+        "listingUrl": "https://mangotree.co.kr/shop/list.php?ca_id=20",
+        "imageUrl": "https://mangotree.co.kr/data/item/1782460001/thumb-017ISx7ZW07KO867O17IKs_400x5071.jpg",
+        "filename": "detail-f385abd68bdf.jpg",
+        "width": 400,
+        "height": 5071,
+        "sha256": "f385abd68bdf97702b2b80a9b637c536932b69c8706e4d8d2eed30b5b2f2c065",
+        "bytes": 425309,
+        "sourceHttpStatus": 200,
+        "sourceTitleInBody": true,
+        "visualReview": "Representative preview verified; visually distinct from existing 16 and other added works."
+      }
+    },
+    {
+      "oldTitle": "쌀조청강정",
+      "oldFilename": "shoot-dd20f4398208.jpg",
+      "new": {
+        "title": "가평 잣",
+        "category": "shoot",
+        "sourceUrl": "https://mangotree.co.kr/bbs/board.php?bo_table=gallery",
+        "listingUrl": "https://mangotree.co.kr/bbs/board.php?bo_table=gallery",
+        "imageUrl": "https://mangotree.co.kr/data/editor/2603/thumb-a5f8f1f3dbae0ae23974f41b480313be_1773726249_942_440x660.jpg",
+        "filename": "shoot-4d28b2200dcf.jpg",
+        "width": 440,
+        "height": 660,
+        "sha256": "4d28b2200dcf7834dafa316b0eb193d76a58bb1225a19c7732e1ed3df12402b9",
+        "bytes": 104380,
+        "sourceHttpStatus": 200,
+        "sourceTitleInBody": true,
+        "visualReview": "Representative preview verified; visually distinct from existing 16 and other added works."
+      }
+    }
   ]
 }
