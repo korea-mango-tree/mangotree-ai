@@ -246,3 +246,11 @@ body.mdl-lock{overflow:hidden}
 @media(max-width:1100px){.x-plans{grid-template-columns:repeat(2,1fr);row-gap:28px}}
 @media(max-width:600px){.x-plans{grid-template-columns:1fr}}
 .x-diag-steps{counter-reset:none}
+
+/* 플랫폼 상세: 공식 사이트 캡처를 넓은 브라우저 화면 틀에 원본 비율 그대로 */
+.x-browser{margin:0;width:100%;max-width:620px;border:1px solid rgba(22,22,22,.16);border-radius:14px;overflow:hidden;background:#fff}
+.x-bar{display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;background:var(--ivory);border-bottom:1px solid rgba(22,22,22,.1)}
+.x-bar i{width:9px;height:9px;border-radius:50%;background:rgba(22,22,22,.2)}
+.x-bar span{margin-left:10px;font-size:12px;color:var(--ivory-ink);letter-spacing:0}
+.x-browser img{display:block;width:100%;height:auto}
+.x-browser figcaption{font-size:13px;color:var(--ivory-ink);padding:10px 14px;border-top:1px solid rgba(22,22,22,.08)}

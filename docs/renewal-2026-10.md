@@ -438,3 +438,58 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 상담 안내 박스와 결과 화면 전체(`#dxBody`) 모두 axe 색 대비 0건.
   - 외부 전송 0건, 오류 0건.
 - **캡처:** `docs/review/dx-1440-consult-box.png`, `dx-390-consult-box.png`
+
+## 18. 플랫폼 공식 사이트 캡처 교체, 공통 헤더 「AI 기획」 버튼
+
+**플랫폼 캡처 (출처·날짜)**
+
+| 파일 | 출처 | 캡처일 | 실제 크기 | 비고 |
+|---|---|---|---|---|
+| `assets/work/pagemaker.jpg` | https://pagemaker.ai.kr/ 브라우저 화면 | 2026-10-30 | 1178×589 | 계정 상단(잔액·알림)과 왼쪽 메뉴 제외, 서비스 영역만. 041f33c에서 다시 자른 최종본 |
+| `assets/work/pageconnect.jpg` | https://baechesa.kr/ 브라우저 화면 | 2026-10-30 | 1265×712 | 원본 |
+| `assets/work/tigl.jpg` | https://www.tigl.kr/ 브라우저 화면 | 2026-10-30 | 1265×712 | 원본 |
+
+- 캡처 작업은 Codex가 했다(b0ba48e, 041f33c).
+  - 전달된 설명에는 1265×711로 적혀 있었으나, 파일을 직접 열어 잰 값은 1265×712이다.
+  - 최종 pagemaker.jpg는 직접 열어 계정 잔액이 보이지 않는 것을 확인했다.
+- **platforms.html** (`#pagemaker` `#pageconnect` `#tigl`)
+  - 아이콘, 빈 회색 자리, 세로 화면 이미지를 넓은 브라우저 화면 틀(`.x-browser`, 주소 표시줄 + 캡처 + 「○○ 화면 캡처 · 2026-10-30」)로 바꿨다.
+  - 이미지는 `width:100%; height:auto`이고, 원본 크기를 `width`/`height`로 지정해 자리를 미리 잡는다.
+  - 링크:
+    - 페이지커넥트 공식 링크 `https://baechesa.kr/`를 추가했다.
+    - 티글 링크는 `https://www.tigl.kr/`로 바꿨다.
+    - 둘 다 새 창으로 열리며 `noopener noreferrer`이다.
+- **index.html 플랫폼 목록**
+  - 같은 3개 캡처를 16:9 썸네일 틀(`.h-plat-wide`, 데스크톱 168px·모바일 128px)에 `object-fit:contain`으로 넣었다. 잘림이나 왜곡이 없고, 페이지메이커(2:1)는 위아래에 얇은 흰 여백이 생긴다.
+  - 오늘밤엔·망고티켓은 기존 세로 화면 그대로다.
+  - 2열 목록에서 가로형끼리(1행), 세로형끼리(2행) 같은 줄에 놓여 행 높이가 맞는다.
+- **검증 (1440·1024·390·320)**
+  - 3개 모두 로드되고 4xx 응답이 없다.
+  - platforms에서 표시 비율과 원본 비율의 차이는 0.0%이다.
+  - index는 `contain`이라 원본 비율 그대로 그려진다.
+
+**공통 헤더 「AI 기획」 버튼 (8개 페이지)**
+- 링크는 `https://page-writer-dckreoozc-mtree712-6778s-projects.vercel.app/`(망고트리 AI 기획 도우미)이며 `target="_blank" rel="noopener noreferrer"`이다.
+  - 화면 로드는 Codex가 브라우저에서 확인했다. 이쪽 검사에서는 외부 주소 요청을 막고 링크 속성만 확인했다.
+- 접근성 이름은 「AI 기획 (새 창에서 열림)」이다. ↗ 표시는 `aria-hidden` 처리했다.
+- 헤더 오른쪽에 `.nav-act` 묶음(AI 기획 · 무료 AI 진단 · 메뉴 버튼)을 만들어 메뉴와 간격이 섞이지 않게 했다. 마크업은 `tools/apply_common.py`로 넣었고, 다시 실행해도 결과가 같다.
+- 노랑 배경 + 차콜 테두리로 차콜 「무료 AI 진단」 버튼과 구분된다.
+- 모바일(960px 이하)에서는 진단 버튼이 기존처럼 메뉴 안으로 들어간다. AI 기획 버튼은 헤더 상단에 계속 보인다.
+  - 360px 이하에서는 로고를 조금 줄이고 ↗ 표시를 숨긴다. 화면낭독기용 새 창 안내는 그대로 남는다.
+  - 320px에서 로고와 버튼 사이 간격은 12px이다.
+
+| 헤더 검증 (8개 페이지 × 1440·1280·1024·390·320) | 결과 |
+|---|---|
+| 버튼 표시·헤더 안 위치 | 모두 표시 |
+| 로고·메뉴·진단 버튼·메뉴 버튼과 겹침 | 0건 |
+| 화면 밖 넘침 | 0건 |
+| 가로 스크롤 | 0건 |
+| 키보드 | Tab으로 도달(데스크톱 9번째, 모바일 3번째), 포커스 윤곽 표시 |
+| 모바일 메뉴 | 열기(aria-expanded=true) 시 메뉴가 버튼 아래(76px)에서 시작해 버튼을 가리지 않음 |
+| axe WCAG 2.1 A/AA | 0건 |
+| 콘솔 오류 | 0건 |
+
+- **캡처**
+  - `docs/review/header-ai-plan.png` (index 1440, diagnosis 1440, index 390, platforms 320)
+  - `docs/review/index-platforms-1440.png`, `index-platforms-390.png`
+  - `docs/review/platforms-cases-1440.png`, `platforms-cases-390.png`

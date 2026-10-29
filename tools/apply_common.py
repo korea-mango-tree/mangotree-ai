@@ -12,6 +12,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 BASE = 'https://korea-mango-tree.github.io/mangotree-ai/'
 MAIL = 'mailto:mtree712@gmail.com?subject=%5B%EB%A7%9D%EA%B3%A0%ED%8A%B8%EB%A6%AC%20AI%2B%5D%20%EB%8F%84%EC%9E%85%20%EB%AC%B8%EC%9D%98'  # [망고트리 AI+] 도입 문의
 
+AI_PLAN = ('<a class="nav-ai" href="https://page-writer-dckreoozc-mtree712-6778s-projects.vercel.app/" target="_blank" rel="noopener noreferrer">'
+           'AI 기획<span class="sr-only"> (새 창에서 열림)</span><span class="nav-ai-ic" aria-hidden="true">↗</span></a>')
+
 PAGES = ['index', 'products', 'modules', 'platforms', 'usecase', 'portfolio', 'pricing', 'diagnosis']
 NAV = [('products', '제품'), ('modules', 'AI 모듈'), ('platforms', '플랫폼'),
        ('usecase', '활용사례'), ('portfolio', '포트폴리오'), ('pricing', '요금제')]
@@ -78,6 +81,10 @@ def process(page):
     s = sub(r'<button class="burger"[^>]*>',
             '<button class="burger" id="burger" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">',
             s, name='burger')
+    # 헤더 오른쪽: AI 기획(외부 새 창) · 무료 진단 · 메뉴 버튼을 한 묶음으로
+    if 'class="nav-act"' not in s:
+        s = sub(r'(<a href="diagnosis.html" class="nav-cta"[^>]*>.*?</a>)(<button class="burger".*?</button>)',
+                lambda m: f'<div class="nav-act">{AI_PLAN}{m.group(1)}{m.group(2)}</div>', s, flags=re.S, name='nav-act')
 
     # 본문 바로가기 + main 랜드마크
     if 'class="skip-link"' not in s:
