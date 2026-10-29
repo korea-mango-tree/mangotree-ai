@@ -1,0 +1,132 @@
+{
+  "notice": "외부 공식 UI 참고 이미지 · 임시 적용 후 자체 화면으로 교체 예정. 망고트리 개발·운영 실적을 의미하지 않습니다.",
+  "items": [
+    {
+      "category": "Creative",
+      "product": "Penpot",
+      "input": "creative-penpot-workspace.webp",
+      "sourceURL": "https://github.com/penpot/penpot-docs/blob/main/img/interface/workspace-light.webp",
+      "imageURL": "https://raw.githubusercontent.com/penpot/penpot-docs/main/img/interface/workspace-light.webp",
+      "licenseURL": "https://github.com/penpot/penpot-docs/blob/main/LICENSE",
+      "license": "MPL-2.0",
+      "attribution": "Penpot / Kaleidos and contributors",
+      "status": "ready",
+      "note": "Design canvas with typography, layer list and properties. MPL source image and license must remain available.",
+      "originalDimensions": [
+        1604,
+        1061
+      ],
+      "extractedAtUTC": "2026-10-30T08:50:09.842896+09:00",
+      "displayFile": "qa/module-references/display/creative.webp",
+      "dimensions": [
+        1600,
+        1058
+      ],
+      "bytes": 48206,
+      "sha256": "927c3c07468a677abc21e3f78396766e7c2c3cc565b697917543126867469fad",
+      "transformation": "Whole-frame conversion to WebP q90, max1600 px, no upscale, no crop, no text modification"
+    },
+    {
+      "category": "Agent",
+      "product": "Flowise",
+      "input": "agent-flowise.gif",
+      "frame": 431,
+      "sourceURL": "https://github.com/FlowiseAI/Flowise/blob/main/README.md",
+      "imageURL": "https://github.com/FlowiseAI/Flowise/blob/main/images/flowise_agentflow.gif?raw=true",
+      "licenseURL": "https://github.com/FlowiseAI/Flowise/blob/main/LICENSE.md",
+      "license": "Apache-2.0 (images outside enterprise exclusions)",
+      "attribution": "Copyright (c) 2023-present FlowiseAI, Inc.",
+      "status": "ready",
+      "note": "Intent classification, agent routing and visible chatbot response. Frame extraction and size reduction only.",
+      "originalDimensions": [
+        2560,
+        1382
+      ],
+      "extractedAtUTC": "2026-10-30T08:50:09.842896+09:00",
+      "frameTimestampMs": 7180,
+      "displayFile": "qa/module-references/display/agent.webp",
+      "dimensions": [
+        1600,
+        864
+      ],
+      "bytes": 251588,
+      "sha256": "63bdcddaa527bc33682220ea41e555b2546fad3a7a9314e31fb62b3bce1c6f79",
+      "transformation": "Whole-frame conversion to WebP q90, max1600 px, no upscale, no crop, no text modification"
+    },
+    {
+      "category": "Insight",
+      "product": "Apache Superset",
+      "input": "insight-superset.jpg",
+      "sourceURL": "https://github.com/apache/superset/blob/master/README.md",
+      "imageURL": "https://superset.apache.org/img/screenshots/dashboard.jpg",
+      "licenseURL": "https://github.com/apache/superset/blob/master/LICENSE.txt",
+      "license": "Apache-2.0",
+      "attribution": "Copyright 2016-2024 The Apache Software Foundation",
+      "status": "ready",
+      "note": "Official sales dashboard example; values are sample data, not MangoTree outcomes.",
+      "originalDimensions": [
+        1280,
+        1113
+      ],
+      "extractedAtUTC": "2026-10-30T08:50:09.842896+09:00",
+      "displayFile": "qa/module-references/display/insight.webp",
+      "dimensions": [
+        1280,
+        1113
+      ],
+      "bytes": 93264,
+      "sha256": "f33a3a0b83f508df318e198b8df733fa1acf291ef472f93459600f03c964749a",
+      "transformation": "Whole-frame conversion to WebP q90, max1600 px, no upscale, no crop, no text modification"
+    },
+    {
+      "category": "Flow",
+      "product": "Node-RED",
+      "input": "flow-node-red.png",
+      "sourceURL": "https://github.com/node-red/node-red/blob/main/README.md",
+      "imageURL": "https://nodered.org/images/node-red-screenshot.png",
+      "licenseURL": "https://github.com/node-red/node-red.github.io/blob/main/LICENSE",
+      "license": "Apache-2.0",
+      "attribution": "Copyright 2016 JS Foundation and contributors; Copyright 2013, 2016 IBM Corp.",
+      "status": "ready",
+      "note": "Actual low-code workflow editor; reference UI only.",
+      "originalDimensions": [
+        1258,
+        832
+      ],
+      "extractedAtUTC": "2026-10-30T08:50:09.842896+09:00",
+      "displayFile": "qa/module-references/display/flow.webp",
+      "dimensions": [
+        1258,
+        832
+      ],
+      "bytes": 65894,
+      "sha256": "b0f562031e686f2992707d6fb46ded27d065c76feee4e0cea57059aca3d66e8a",
+      "transformation": "Whole-frame conversion to WebP q90, max1600 px, no upscale, no crop, no text modification"
+    },
+    {
+      "category": "Growth",
+      "product": "Matomo",
+      "input": "growth-matomo-overview.png",
+      "sourceURL": "https://github.com/matomo-org/matomo/blob/6.x-dev/plugins/Referrers/tests/UI/expected-screenshots/ReferrersPages_overview.png",
+      "imageURL": "https://media.githubusercontent.com/media/matomo-org/matomo/6.x-dev/plugins/Referrers/tests/UI/expected-screenshots/ReferrersPages_overview.png",
+      "licenseURL": "https://github.com/matomo-org/matomo/blob/6.x-dev/LICENSE",
+      "license": "GPL-3.0-or-later",
+      "attribution": "Matomo contributors",
+      "status": "ready",
+      "note": "Official repository UI reference screenshot: channel/search/campaign traffic. Fixture values are sample data. Converted image remains GPL; provide source image and license.",
+      "originalDimensions": [
+        1108,
+        1264
+      ],
+      "extractedAtUTC": "2026-10-30T08:50:09.842896+09:00",
+      "displayFile": "qa/module-references/display/growth.webp",
+      "dimensions": [
+        1108,
+        1264
+      ],
+      "bytes": 58868,
+      "sha256": "9b358d8d3eb511961e851674aeba7c5bbc3753ac85ead49b565ece9ee8fae974",
+      "transformation": "Whole-frame conversion to WebP q90, max1600 px, no upscale, no crop, no text modification"
+    }
+  ]
+}
