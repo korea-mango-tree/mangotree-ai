@@ -221,3 +221,40 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 .nav-ai-ic{font-weight:700}
 @media(max-width:960px){.nav-act{gap:6px}.nav-ai{min-height:40px;padding:0 12px;font-size:13.5px}}
 @media(max-width:360px){.nav{gap:12px}.nav-ai{padding:0 11px}.nav-ai-ic{display:none}.logo{gap:6px}.logo img{height:20px}.logo .plus{font-size:12px;padding:2px 6px}}
+
+/* 작업 흐름(실제 화면·공식 가이드 예시): 큰 화면, 원본 비율, 번호·짧은 설명·다음 단계 */
+.wf{list-style:none;margin:0;padding:0;display:grid;gap:56px 40px}
+.wf-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wf-4{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.wf-step figure{margin:0}
+.wf-shot{display:grid;place-items:center;aspect-ratio:16/10;background:#fff;border:1px solid rgba(22,22,22,.14);border-radius:14px;overflow:hidden;cursor:zoom-in}
+.wf-shot img{display:block;width:100%;height:100%;object-fit:contain}
+.wf-body{display:block;padding-top:20px}
+.wf-n{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#FEE500;color:#161616;font-size:14px;font-weight:800;margin-right:10px;vertical-align:middle}
+.wf-badge{display:inline-block;vertical-align:middle;font-size:12.5px;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid rgba(22,22,22,.22);color:#161616;background:#fff}
+.wf-badge.guide{background:#EFEDE7;border-style:dashed}
+.wf-step h3{font-size:clamp(22px,2.1vw,28px);letter-spacing:-.04em;line-height:1.25;margin-top:14px;color:inherit}
+.wf-step p{font-size:16px;line-height:1.7;margin-top:10px;color:#4A4740;max-width:560px}
+.wf-step .wf-src{font-size:13.5px;color:#5A554C;margin-top:12px}
+.wf-src a{text-decoration:underline;text-underline-offset:3px;display:inline-block;min-height:24px}
+.wf-next{font-size:14px!important;font-weight:700;color:#161616!important;margin-top:14px!important}
+.wf-next.end{color:#5A554C!important;font-weight:600}
+.wf-more{align-self:center;background:#F5F0E6;border-radius:14px;padding:32px}
+.wf-more .wf-n{margin-bottom:6px}
+.wf-4 .wf-shot{aspect-ratio:4/3;cursor:pointer}
+.wf-4 .wf-body{padding-top:14px}
+.wf-4 h3{font-size:18px;margin-top:10px}
+.wf-4 h3 a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+@media(max-width:960px){.wf-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+  .wf-2{grid-template-columns:1fr;gap:48px}
+  .wf-2 .wf-shot{aspect-ratio:auto}
+  .wf-2 .wf-shot img{height:auto}
+}
+@media(max-width:420px){.wf-4{grid-template-columns:1fr 1fr;gap:20px 14px}.wf-4 .wf-badge{font-size:11px;padding:4px 8px}.wf-4 .wf-n{width:30px;height:30px;font-size:12.5px;margin-right:6px}}
+/* 메인: 흐름 구역 */
+.h-flow{background:#fff;color:#161616;padding:144px 0}
+.h-flow-head{max-width:760px;margin-bottom:64px}
+.h-flow-head h2{font-size:clamp(32px,4vw,56px);line-height:1.15;letter-spacing:-.05em}
+.h-flow-head p:not(.h-kicker){font-size:16.5px;line-height:1.75;color:#5A554C;margin-top:20px}
+@media(max-width:760px){.h-flow{padding:88px 0}.h-flow-head{margin-bottom:40px}}

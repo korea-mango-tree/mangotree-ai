@@ -493,3 +493,138 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - `docs/review/header-ai-plan.png` (index 1440, diagnosis 1440, index 390, platforms 320)
   - `docs/review/index-platforms-1440.png`, `index-platforms-390.png`
   - `docs/review/platforms-cases-1440.png`, `platforms-cases-390.png`
+
+## 19. 월 기준 요금, 작업 흐름 화면, 고해상도 활용사례, 포트폴리오 48개, AI 모듈 참고 화면 (2026-10-30)
+
+### 19-1. 요금제 월 기준 요금 (사용자 승인 금액)
+
+| 플랜 | 월 기준 요금 |
+|---|---|
+| AI START | 99,000원 |
+| AI COMMERCE | 299,000원 |
+| AI GROWTH | 590,000원 |
+| AI ENTERPRISE | 990,000원부터 |
+
+- 금액을 플랜 이름 바로 아래, 기능 목록 앞에 크게 두었다. 모든 금액 옆에 「VAT 별도」를 붙였다.
+- 플랜 아래 안내:
+  - 맞춤 구축(전용 개발·연동 작업)과 외부 API 사용료는 별도다.
+  - 최종 범위와 금액은 상담에서 정한다.
+  - 사이트에서 바로 결제하는 기능은 없다.
+- 「견적 전용」 문구를 정리했다: 첫 화면 설명, 플랜 비교 설명, meta/og 설명.
+- 결제 기능은 추가하지 않았다. 진단 페이지의 `REPORT_PRICE`·`REPORT_PAYMENT_URL`은 빈 값 그대로다.
+
+### 19-2. 작업 흐름을 실제 화면으로 (기획 입력 → 제작 도구·템플릿 → 링크 활용 → 실적 확인)
+
+**사용 이미지** (`assets/workflows/`, `assets/work/`)
+
+| 파일 | 출처 | 구분 | 실제 크기 |
+|---|---|---|---|
+| `ai-planning.jpg` | 망고트리 AI 기획(헤더 「AI 기획」 링크) 첫 화면 | 실제 화면, 2026-10-30 캡처(Codex, 79ba5e2) | 680×712 |
+| `template-selection.jpg` | https://pagemaker.ai.kr/templates (계정 정보 제외) | 실제 화면, 2026-10-30 캡처 | 1145×535 |
+| `assets/work/pagemaker.jpg` | https://pagemaker.ai.kr/ | 실제 화면, 2026-10-30 캡처 | 1178×589 |
+| `connect-guide4.jpg` | https://baechesa.kr/con/guide 의 `/theme/dev_baechesa/images/trip/guide4.jpg` | 공식 가이드 원본 | 4000×2250 |
+| `connect-guide5.jpg` | 같은 가이드의 `guide5.jpg` | 공식 가이드 원본 | 4000×2250 |
+| `guide4-link-crop.jpg` | guide4의 기능 영역(상품 링크 생성 화면·상품 카드·SNS) 확대 크롭 | 공식 가이드 일부 확대 | 1300×690 |
+| `guide5-report-crop.jpg` | guide5의 기능 영역(일별·월별 실적, 클릭·검색 추이) 확대 크롭 | 공식 가이드 일부 확대 | 1300×828 |
+
+- 전달 메시지에는 가이드 원본이 2048×1152로 적혀 있었으나, 실제 파일은 4000×2250이다.
+- 화면에는 확대 크롭만 쓰고, 「원본 보기」는 4000px 원본으로 연결한다. 가이드 전체를 축소해 작은 글씨가 보이게 넣는 방식은 쓰지 않는다.
+- 표시 원칙:
+  - 각 화면에 「실제 화면 · 2026-10-30 캡처」 또는 「공식 가이드 이미지 일부 확대」 배지를 단다.
+  - 각 화면에 번호, 짧은 설명, 출처 링크, 원본 보기(새 창), 다음 단계를 붙인다. 이미지를 누르면 원본이 새 창으로 열린다.
+  - 원본 비율을 유지한다. 데스크톱은 16:10 틀 안에 `contain`, 760px 이하는 세로 1열 `height:auto`다.
+  - 모든 흐름 위에 같은 안내를 둔다: 「도구를 단계별로 이어 쓰는 흐름이며, 단계 사이가 자동으로 연결되는 기능은 아닙니다. 화면은 고객 실적이나 AI 자동 실행 결과가 아닙니다.」
+- 페이지별 배치(같은 묶음을 반복하지 않음):
+  - **index** `#flow`: 4단계 전체(AI 기획 → 템플릿 → 링크 → 실적). 첫 화면은 손대지 않았다.
+  - **products** `#workflow`: 제작 단계(AI 기획 → 템플릿 → 페이지메이커 생성 화면), 이어서 「전체 흐름 보기」.
+  - **modules**: 모듈 목록 위에 작은 4단계 지도. 각 단계는 관련 모듈 분류(`#mod-1`·`#mod-5`·`#mod-3`)로 이동한다.
+  - **usecase**: 시나리오별 화면(19-3).
+- **products 문구 정리**(실증 없는 완전 자동화 표현 제거)
+  - 「검색부터 구매까지 자동화(전 과정)」 → 「찾고 고르는 과정을 돕기」. 붙일 위치는 쇼핑몰 구조를 보고 정한다.
+  - 「리포트·CRM·캠페인 실행 자동화」 → 「정기 리포트·예약 발송 등 정해진 반복 업무 자동화, 발송·집행 전 담당자 확인」.
+  - AI AGENT의 「명령 한 번이면 캠페인까지 스스로 실행」 → 「찾고, 제안하고, 승인 뒤에 실행」. 4단계는 「담당자 승인 후 실행」으로, 분류 부제는 「승인 후 실행」으로 바꿨다.
+  - meta 설명과 첫 화면 문구도 같은 방향으로 맞췄다.
+
+### 19-3. 활용사례: 고민 → 처리 과정 → 보게 될 화면
+
+| 시나리오 | 처리 과정 | 화면 | 구분 |
+|---|---|---|---|
+| 01 상품이 잘 안 팔려요 | 진단 → 상세페이지 재구성·제작 → 추천 적용 검토 | 스마트카드태그 상세페이지 상단(4:5 위쪽 기준) | 실제 작업물 · 망고트리 제작 |
+| 02 콘텐츠 만들 시간이 없어요 | 기획 → AI 도구로 초안·소재 → 디자이너 검수 | 페이지메이커 AI 이미지 화면(최대 580px) | 실제 화면 |
+| 03 고객 문의가 너무 많아요 | 질문·답변 정리 → 대화형 응대 화면 → 상담원 연결 기준 | 망고트리 AI 기획 대화 화면(최대 340px) | 실제 화면 · 대화형 화면 예시. 기획용 도우미이며, 쇼핑몰 상담 화면은 상담에서 구성한다고 명시 |
+| 04 데이터가 뭘 말하는지 몰라요 | 데이터 모으기 → 추이 확인 → 다음 할 일 정리 | guide5 실적 영역 확대(최대 580px) | 공식 가이드 이미지 일부 확대 · 값은 예시 |
+
+- **WORKS**: 기존 340px 저해상도 4개를 Codex가 수집한 고해상도 원본 크롭(cc8ccfe, `assets/usecase/manifest.json`)으로 바꿨다.
+  - 「실제 작업물 · 홈페이지/상세페이지/촬영」으로 표기했고, 「AI 자동 생성 결과를 보여주는 예시가 아닙니다」라고 명시했다.
+  - 이미지를 누르면 망고트리 원본 작업 페이지가 새 창으로 열린다.
+
+| 파일 | 크기 | 출처 |
+|---|---|---|
+| `smart-card-detail.webp` | 860×1625 | https://mangotree.co.kr/shop/item.php?it_id=1791434755 (시나리오 01) |
+| `seonghaeju-detail.webp` | 860×1500 | https://mangotree.co.kr/shop/item.php?it_id=1782460001 |
+| `montbeer-home.webp` | 1200×625 | https://mangotree.co.kr/shop/item.php?it_id=1782459525&pname=homepage |
+| `chueotang-photo.webp` | 1000×1500 | https://mangotree.co.kr/bbs/board.php?bo_table=gallery&wr_id=2824 |
+| `gapyeong-pinenuts-photo.webp` | 1000×1250 | https://mangotree.co.kr/bbs/board.php?bo_table=gallery&wr_id=2784 |
+
+- 이전 버전에 있던 usecase `#flow`(가이드 전체 이미지 2장) 구역은 없앴다.
+
+### 19-4. 포트폴리오 16개 → 48개 (각 분류 12개)
+
+- **원본**: `assets/portfolio/sources.json`
+  - Codex가 2026-10-30 망고트리 공개 포트폴리오(mangotree.co.kr)에서 직접 확인한 32개다(191949f, a2e1648, a512b1c).
+  - 항목마다 title·category·sourceUrl·listingUrl·imageUrl·크기·sha256을 기록했다.
+  - a512b1c에서 2개가 바뀌었다(흙마늘돼지갈비 → 성해주 전통주, 쌀조청강정 → 가평 잣). 최신 manifest로만 만들었고, 빠진 원본 2개(`detail-ddbc808c40be.jpg`, `shoot-dd20f4398208.jpg`)는 페이지에서 쓰지 않는다.
+  - 기존 16개는 그대로 두었다. 제목은 manifest 그대로이며, 성과 문구는 넣지 않았다.
+- **생성**: `tools/build_portfolio.py`(다시 실행해도 결과가 같음)가 썸네일과 카드를 만든다.
+  - 썸네일은 `assets/portfolio/thumbs/`, 400×541 JPEG 32개로 합계 약 0.9MB다(원본 32개는 약 9.4MB).
+  - 세로로 긴 상세·홈페이지 원본과 세로 촬영 사진은 위쪽 기준으로 자른다. 제목과 좌상단 워터마크가 남는다.
+  - 정사각형인 인쇄물·촬영 1개는 자르지 않고 아이보리 바탕 안에 전체를 넣는다.
+- **링크**
+  - 상세·홈페이지·인쇄 카드는 망고트리 원본 작업 페이지(새 창)로 간다.
+  - 촬영 카드는 원본 이미지(새 창)로 가고, 갤러리 목록 출처 링크를 따로 단다.
+- **더 보기**(`assets/site.js`)
+  - 분류마다 12개씩 보이고, 「더 보기 (12 / 48)」로 12개씩 늘어난다. 개수 표시는 분류 전체 값(전체 48, 분류별 12)이다.
+  - 더 보기를 누르면 새로 나온 첫 카드로 포커스가 이동한다.
+  - 분류를 바꾸면 다시 12개부터 보인다. 모든 이미지는 `loading="lazy"`라 처음 열 때 원본 이미지는 받지 않는다.
+- 주소 `#detail` `#shoot` `#home` `#print`로 들어오면 해당 분류가 켜지고 갤러리로 이동한다. 글꼴·이미지 로드 뒤에도 한 번 더 맞춰 모든 폭에서 80px에 착지한다.
+
+### 19-5. AI 모듈 분야별 참고 화면 (임시, 이후 교체 예정)
+
+- 6개 분류 제목 바로 아래에 참고 화면 1개씩을 넣었다. 36개 모듈 카드와 상세 창(모달)은 그대로다.
+  - **COMMERCE**: 망고트리 운영 플랫폼 페이지커넥트 실제 화면(`assets/work/pageconnect.jpg`). 영화 포스터 후보는 쓰지 않았다.
+  - **CREATIVE·AGENT·INSIGHT·FLOW·GROWTH**: Codex가 원본을 검증한 외부 공식 UI(d417a80, `assets/module-references/`).
+
+| 분류 | 제품 | 라이선스 | 출처 |
+|---|---|---|---|
+| CREATIVE | Penpot | MPL-2.0 | https://github.com/penpot/penpot-docs/blob/main/img/interface/workspace-light.webp |
+| AGENT | Flowise | Apache-2.0 | https://github.com/FlowiseAI/Flowise/blob/main/README.md |
+| INSIGHT | Apache Superset | Apache-2.0 | https://github.com/apache/superset/blob/master/README.md |
+| FLOW | Node-RED | Apache-2.0 | https://github.com/node-red/node-red/blob/main/README.md |
+| GROWTH | Matomo | GPL-3.0-or-later | https://github.com/matomo-org/matomo/blob/6.x-dev/plugins/Referrers/tests/UI/expected-screenshots/ReferrersPages_overview.png |
+
+- 외부 5개 표시:
+  - 「외부 UI 참고 · 추후 교체 예정」 배지와 제품명을 단다.
+  - 「망고트리 제품·연동·성과가 아닙니다」라고 쓴다.
+  - 출처, 라이선스, 고지(`NOTICE.md`), 원본 크기 링크를 단다.
+  - 목록 끝에 고지 문서와 `manifest.json` 안내를 둔다. 라이선스 원문은 `assets/module-references/licenses/`에 함께 있다.
+- 비율은 유지한다. 가로형은 16:10 틀에 `contain`, 세로형(Superset·Matomo)은 원본 비율 그대로 최대 620px이며, 모바일은 1열 `height:auto`다.
+
+### 19-6. 검증
+
+| 항목 | 결과 |
+|---|---|
+| 8개 페이지 × 1440·1024·390·320 | 이미지 깨짐·내부 링크 깨짐·가로 넘침·콘솔 오류·4xx 0건, axe WCAG 2.1 A/AA 0건 |
+| 본문 바로가기·모바일 메뉴 | 정상 |
+| 앵커 착지(새 페이지로 진입) | index `#flow`, products `#workflow`·`#agent`, usecase `#usecase`·`#works`·`#scen-4`, modules `#mod-3`·`#mod-5`, pricing `#diagnosis`·`#contact`, platforms `#tigl`, portfolio `#cases`·`#works` 모두 80px(320px의 `#mod-5`만 81px) |
+| 포트폴리오 | 48개(각 12), 이미지 48개 모두 로드·왜곡 0, 카드 링크 40개 모두 새 창 `noopener`, 로컬 원본 링크 8개 모두 200 |
+| 포트폴리오 더 보기 | 12 → 24 → 36 → 48 후 숨김 |
+| 포트폴리오 분류·해시 | 분류별 「12개 작업」·`aria-pressed`·해시 일치, `#detail` `#shoot` `#home` `#print` 진입 시 80px |
+| AI 모듈 상세 창 | 36개 모두 아이콘·설명, Enter·Space·Tab 갇힘·Escape·닫기·배경 클릭·포커스 복귀 정상 |
+| 무료진단 | 14문항 / 8문항, 공유 링크, 외부 POST 0건, 상담 신청은 메일 앱 안내 화면 |
+
+- **캡처** (`docs/review/`)
+  - `index-workflow-{1440,390}.jpg`, `products-workflow-{1440,390}.jpg`
+  - `pricing-plans-{1440,390}.jpg`
+  - `usecase-scenarios-{1440,390}.jpg`, `usecase-works-1440.jpg`
+  - `modules-references-{1440,390}.jpg`
+  - `portfolio-works-{1440,390}.jpg`

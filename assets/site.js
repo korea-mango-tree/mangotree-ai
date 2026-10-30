@@ -84,21 +84,36 @@
     var countEl=document.querySelector('[data-pf-count]');
     var emptyEl=document.querySelector('[data-pf-empty]');
     var keys=tabs.map(function(t){return t.dataset.f;});
-    function applyFilter(f){
-      var n=0;
+    /* 더 보기: 분류마다 12개씩 보여주고, 개수 표시는 분류 전체 값 */
+    var moreBtn=document.querySelector('[data-pf-more]'),moreN=document.querySelector('[data-pf-more-n]');
+    var STEP=12,limit=STEP,cur='all';
+    function applyFilter(f,keep){
+      var n=0,shown=0;
+      if(!keep)limit=STEP;
+      cur=f;
       tabs.forEach(function(t){
         var on=t.dataset.f===f;
         t.classList.toggle('on',on);
         t.setAttribute('aria-pressed',on?'true':'false');
       });
       cards.forEach(function(c){
-        var show=f==='all'||c.dataset.cat===f;
+        var match=f==='all'||c.dataset.cat===f;
+        if(match)n++;
+        var show=match&&(!moreBtn||n<=limit);
         c.hidden=!show;
-        if(show)n++;
+        if(show)shown++;
       });
       if(countEl)countEl.textContent=n+'개 작업';
       if(emptyEl)emptyEl.hidden=n>0;
+      if(moreBtn){moreBtn.hidden=shown>=n;if(moreN)moreN.textContent='('+shown+' / '+n+')';}
+      return shown;
     }
+    if(moreBtn)moreBtn.addEventListener('click',function(){
+      var before=limit;limit+=STEP;applyFilter(cur,true);
+      var visible=cards.filter(function(c){return !c.hidden;});
+      var first=visible[before];
+      if(first){var a=first.querySelector('a');if(a)a.focus();else{first.setAttribute('tabindex','-1');first.focus();}}
+    });
     tabs.forEach(function(t){
       t.addEventListener('click',function(){
         applyFilter(t.dataset.f);
@@ -116,7 +131,15 @@
     if(start&&start!=='all'&&keys.indexOf(start)>-1){
       applyFilter(start);
       var works=document.getElementById('works');
-      if(works)works.scrollIntoView();
+      if(works){
+        works.scrollIntoView();
+        /* 글꼴·이미지 로드로 위치가 밀리면 한 번 더 맞춤(사용자가 먼저 움직이면 생략) */
+        var moved=false;
+        ['wheel','touchstart','keydown','mousedown'].forEach(function(ev){window.addEventListener(ev,function(){moved=true;},{once:true,passive:true});});
+        var again=function(){if(!moved)works.scrollIntoView();};
+        if(document.fonts&&document.fonts.ready)document.fonts.ready.then(again);
+        window.addEventListener('load',again);
+      }
     }else{
       applyFilter('all');
     }
