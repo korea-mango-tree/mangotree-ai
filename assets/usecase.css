@@ -111,13 +111,3 @@
 .sk-bot span{font-size:13px;font-weight:600}
 .sk-human span{font-size:13px;color:#E8E3D8}
 .sk-bot::before,.sk-human::before{content:"↓";position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-weight:800;color:#161616;font-size:14px}
-
-/* 첫 사례는 모든 화면에서 BEFORE / AFTER 한 행 유지 */
-#scen-1 .ba-grid:focus-visible{outline:3px solid var(--charcoal);outline-offset:4px}
-@media(max-width:860px){
-  #scen-1 .ba-grid{grid-template-columns:minmax(280px,1fr) 40px minmax(280px,1fr);grid-template-rows:auto;overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:12px;scrollbar-color:#5A554C #EFEDE8}
-  #scen-1 .ba-arrow{transform:none}
-  #scen-1 .ba-visual{aspect-ratio:1/1;min-height:0}
-  #scen-1 .ba-shot>a{display:block;padding:0}
-  #scen-1 .ba-shot img{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);max-height:none;object-fit:contain}
-}
