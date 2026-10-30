@@ -80,3 +80,5 @@
   /* 포트폴리오 분류 필터: aria-pressed, 결과 개수, 빈 결과, 주소 #detail·#shoot·#home·#print 연동 */
 
 })();
+
+(()=>{const button=document.querySelector('[data-usecase-more]');if(!button)return;const items=[...document.querySelectorAll('[data-usecase-extra]')],count=document.querySelector('[data-usecase-more-count]');let shown=0;button.addEventListener('click',()=>{const next=items.slice(shown,shown+4);next.forEach(el=>el.hidden=false);shown+=next.length;count.textContent='('+(4+shown)+' / '+(4+items.length)+')';button.hidden=shown>=items.length;const first=next[0];if(first){first.tabIndex=-1;first.focus({preventScroll:true});first.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}});})();
