@@ -1,0 +1,7 @@
+.reading-progress{position:fixed;inset:0 0 auto;height:3px;background:#e5be00;z-index:10000;transform:scaleX(0);transform-origin:left;pointer-events:none}
+.x-work,.mod,.wf-step,.dx-pain,.dx-module-connect a{transition:transform .22s ease,box-shadow .22s ease}
+.is-hovered{transform:translateY(-5px);box-shadow:0 14px 28px rgba(22,22,22,.1)}
+button.is-pressed,.btn.is-pressed,.nav-ai.is-pressed,.nav-cta.is-pressed{transform:scale(.97)}
+.filter-pop{animation:filter-pop .3s ease both;animation-delay:var(--pop-delay,0ms)}
+@keyframes filter-pop{from{opacity:.65;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.is-hovered,.is-pressed{transform:none!important}.filter-pop{animation:none}.x-work,.mod,.wf-step,.dx-pain,.dx-module-connect a{transition:none}}
