@@ -9,6 +9,8 @@
 button.is-pressed,.btn.is-pressed,.nav-ai.is-pressed,.nav-cta.is-pressed{transform:scale(.97)}
 .filter-pop{animation:filter-pop .3s ease both;animation-delay:var(--pop-delay,0ms)}
 .mango-enter{animation:mango-enter .85s cubic-bezier(.16,1,.3,1) backwards;animation-delay:var(--enter-delay,0ms)}
+.scroll-copy-wait{opacity:.12;translate:0 28px}
+@media(prefers-reduced-motion:reduce){.scroll-copy-wait{opacity:1;translate:none}}
 @keyframes mango-enter{from{opacity:.15;translate:0 32px}to{opacity:1;translate:0 0}}
 .pf-card,.h-case,.ba-card,.h-plat-list a{transition:transform .3s ease,box-shadow .3s ease}
 .h-case-img,.x-work figure,.pf-card figure,.ba-shot,.x-hw-frame{overflow:hidden}
