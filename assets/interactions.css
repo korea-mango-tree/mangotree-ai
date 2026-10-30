@@ -3,5 +3,13 @@
 .is-hovered{transform:translateY(-5px);box-shadow:0 14px 28px rgba(22,22,22,.1)}
 button.is-pressed,.btn.is-pressed,.nav-ai.is-pressed,.nav-cta.is-pressed{transform:scale(.97)}
 .filter-pop{animation:filter-pop .3s ease both;animation-delay:var(--pop-delay,0ms)}
+.mango-enter{animation:mango-enter .85s cubic-bezier(.16,1,.3,1) backwards;animation-delay:var(--enter-delay,0ms)}
+@keyframes mango-enter{from{opacity:.15;translate:0 32px}to{opacity:1;translate:0 0}}
+.pf-card,.h-case,.ba-card,.h-plat-list a{transition:transform .3s ease,box-shadow .3s ease}
+.h-case-img,.x-work figure,.pf-card figure,.ba-shot,.x-hw-frame{overflow:hidden}
+.h-case-img img,.x-work img,.pf-card img,.ba-shot img,.x-hw-frame img{transition:scale .65s cubic-bezier(.2,.7,.3,1)}
+@media(hover:hover) and (pointer:fine){.h-case:hover img,.x-work:hover img,.pf-card:hover img,.ba-shot:hover img,.x-hw-frame:hover img{scale:1.045}.x-link:hover,.h-textlink:hover{text-decoration:underline;text-underline-offset:6px}}
+:is(.h-case,.x-work,.pf-card,.ba-shot,.x-hw-frame):focus-within{outline:2px solid #c9a500;outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.mango-enter{animation:none!important}.pf-card,.h-case,.ba-card,.h-plat-list a,.h-case-img img,.x-work img,.pf-card img,.ba-shot img,.x-hw-frame img{transition:none!important;scale:1!important}}
 @keyframes filter-pop{from{opacity:.65;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.is-hovered,.is-pressed{transform:none!important}.filter-pop{animation:none}.x-work,.mod,.wf-step,.dx-pain,.dx-module-connect a{transition:none}}
