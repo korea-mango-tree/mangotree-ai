@@ -289,7 +289,7 @@ body.mdl-lock{overflow:hidden}
 .x-uc-frame{display:block;border:1px solid rgba(22,22,22,.14);border-radius:16px;overflow:hidden;background:#fff;cursor:zoom-in}
 .x-uc-frame img{display:block;width:100%;height:auto}
 .x-uc-shot.tall .x-uc-frame{aspect-ratio:4/5}
-.x-uc-shot.tall .x-uc-frame img{height:100%;object-fit:cover;object-position:top}
+.x-uc-shot.tall .x-uc-frame img{height:100%;object-fit:contain;object-position:center}
 .x-uc-shot figcaption{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:12px}
 .x-uc-cite{font-size:13px;line-height:1.6;color:var(--ivory-ink)}
 .x-uc-cite a{text-decoration:underline;text-underline-offset:3px}
