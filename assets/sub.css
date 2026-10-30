@@ -341,3 +341,6 @@ body.mdl-lock{overflow:hidden}
 .dev-controls button{width:44px;height:44px;border:1px solid #bbb;border-radius:50%;background:#fff;cursor:pointer;font-size:22px}
 .dev-controls button:disabled{opacity:.35;cursor:default}
 @media(max-width:560px){.portfolio-page .x-hero{padding:100px 0 22px}.portfolio-page .x-hero-foot{margin-top:14px}.portfolio-page #works{padding-top:24px}.portfolio-page .x-dev>li{flex-basis:94%}}
+.connect-details{list-style:none;padding:0;margin:24px 0;display:grid;gap:18px}
+.connect-details li{display:grid;gap:6px;padding-top:16px;border-top:1px solid rgba(22,22,22,.15)}
+.connect-details b{font-size:16px}.connect-details span{font-size:15px;line-height:1.75;color:var(--ivory-ink)}
