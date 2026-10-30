@@ -354,3 +354,9 @@ body.mdl-lock{overflow:hidden}
 .ai-creative-gallery img{aspect-ratio:3/2;width:100%;height:auto;object-fit:cover;border-radius:20px}
 .ai-creative-gallery figcaption{font-size:16px;margin-top:12px}
 @media(max-width:560px){.ai-creative-gallery{grid-template-columns:1fr;gap:24px}}
+
+/* Script-controlled carousel without a horizontal scrolling surface. */
+.dev-carousel-viewport{overflow:hidden;width:100%;touch-action:pan-y}
+.portfolio-page .dev-carousel-viewport .x-dev{display:flex;gap:0;overflow:visible;scroll-snap-type:none;padding:0;transition:transform .4s ease;will-change:transform}
+.portfolio-page .dev-carousel-viewport .x-dev>li{flex:0 0 100%;min-width:0;scroll-snap-align:none}
+@media(prefers-reduced-motion:reduce){.portfolio-page .dev-carousel-viewport .x-dev{transition:none}}
