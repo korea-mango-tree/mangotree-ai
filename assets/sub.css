@@ -322,6 +322,6 @@ body.mdl-lock{overflow:hidden}
 .mod-ref-note{margin-top:32px;font-size:13.5px;line-height:1.7;color:var(--ivory-ink)}
 .mod-ref-note a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:860px){.sub .mod-ref{grid-template-columns:1fr}.mod-ref-frame{aspect-ratio:auto}.mod-ref-frame img{height:auto}}
-.sub .mod-ref.tall{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+@media(min-width:861px){.sub .mod-ref.tall{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
 .mod-ref.tall .mod-ref-frame{aspect-ratio:auto;max-width:620px}
 .mod-ref.tall .mod-ref-frame img{height:auto}
