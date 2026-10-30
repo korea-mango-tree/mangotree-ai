@@ -258,3 +258,22 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 .h-flow-head h2{font-size:clamp(32px,4vw,56px);line-height:1.15;letter-spacing:-.05em}
 .h-flow-head p:not(.h-kicker){font-size:16.5px;line-height:1.75;color:#5A554C;margin-top:20px}
 @media(max-width:760px){.h-flow{padding:88px 0}.h-flow-head{margin-bottom:40px}}
+
+/* Brand scrollbars: native scrolling and keyboard controls remain intact. */
+:root{--scroll-track:#f2f0e9;--scroll-thumb:#55534e;--scroll-hover:#b99400}
+*{scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--scroll-track)}
+@supports selector(::-webkit-scrollbar){
+  *{scrollbar-width:auto;scrollbar-color:auto}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--scroll-track);border-radius:999px}
+  ::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:3px solid var(--scroll-track);border-radius:999px;min-height:40px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--scroll-hover);border-width:2px}
+  ::-webkit-scrollbar-thumb:active{background:#8a7000}
+  ::-webkit-scrollbar-corner{background:var(--scroll-track)}
+}
+@media(forced-colors:active){
+  *{scrollbar-width:auto;scrollbar-color:auto}
+  ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:Canvas}
+  ::-webkit-scrollbar-thumb{background:ButtonText;border-color:Canvas}
+  ::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active{background:Highlight}
+}
