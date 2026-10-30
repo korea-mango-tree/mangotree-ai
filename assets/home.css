@@ -150,8 +150,8 @@
 .h-plat-list .h-plat-name{color:var(--charcoal)}
 .h-plat-list .h-plat-name>span{font-size:15px;color:var(--ivory-ink)}
 
-/* 첫 화면 오른쪽: 편백하다 제품 연출 이미지 1장(10:7). 배경·구도는 Higgsfield 생성본,
-   병 라벨은 원본 제품 사진 픽셀을 합성해 문구를 그대로 보존(docs 21절). 제목보다 튀지 않는 크기 */
+/* 첫 화면 오른쪽: Higgsfield로 만든 3D 연출 이미지 1장(10:7, docs 22절).
+   브라우저 화면과 상품 상자를 노란 리본이 잇는 장면, 글자·로고 없음. 제목보다 튀지 않는 크기 */
 .h-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 440px;grid-template-areas:"label label" "title panel" "foot foot";column-gap:64px;align-items:end}
 .h-label{grid-area:label}.h-hero-title{grid-area:title}.h-hero-panel{grid-area:panel}.h-hero-foot{grid-area:foot}
 .h-hero-panel{margin:0;width:100%;aspect-ratio:660/462;border-radius:16px;overflow:hidden;background:#F5F0E6}
