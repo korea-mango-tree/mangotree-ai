@@ -1,0 +1,113 @@
+/* 활용사례 전용: 도입 전(BEFORE)·도입 후(AFTER) 비교
+   BEFORE는 회색, AFTER는 망고 옐로. 색만이 아니라 BEFORE/AFTER 글자와 「도입 전/후」 문구로도 구분한다.
+   BEFORE 도식은 HTML·CSS로 그린 간단한 업무 예시이며 실제 고객 화면이 아니다. 흐리게 처리하지 않는다. */
+.ba-note{font-weight:600;color:var(--charcoal)!important}
+.ba-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--charcoal)}
+.ba-case{padding:56px 0 52px;border-bottom:1px solid rgba(22,22,22,.16)}
+.ba-head{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:baseline;gap:4px 0}
+.ba-head .x-quote,.ba-head h3{grid-column:2}
+.ba-head h3{font-size:clamp(19px,1.7vw,23px);letter-spacing:-.03em;margin-top:6px}
+
+/* 같은 크기 2열 + 가운데 화살표 */
+.ba-grid{display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);align-items:stretch;margin-top:32px}
+.ba-card{display:flex;flex-direction:column;border-radius:20px;padding:28px 28px 26px;min-width:0}
+.ba-card.before{background:#EFEDE8;border:1px solid #D9D5CC;color:#2E2B26}
+.ba-card.after{background:#FFF7C2;border:2px solid var(--mango);color:var(--charcoal)}
+.ba-arrow{align-self:center;justify-self:center;width:40px;height:40px;border-radius:50%;background:var(--charcoal);position:relative}
+.ba-arrow::after{content:"";position:absolute;left:13px;top:14px;width:10px;height:10px;border-top:2.5px solid #fff;border-right:2.5px solid #fff;transform:rotate(45deg)}
+
+.ba-label{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700}
+.ba-tag{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:8px;font-size:13px;font-weight:800;letter-spacing:.08em}
+.before .ba-tag{background:#5A554C;color:#fff}
+.after .ba-tag{background:var(--charcoal);color:var(--mango)}
+
+/* 흐름 칩 */
+.ba-flow{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;margin:16px 0 18px;padding:0;counter-reset:baf}
+.ba-flow li{counter-increment:baf;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;padding:7px 12px;border-radius:999px}
+.ba-flow li::before{content:counter(baf);display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:11.5px;font-weight:800}
+.ba-flow li+li{margin-left:22px;position:relative}
+.ba-flow li+li::after{content:"→";position:absolute;left:-18px;font-weight:700}
+.before .ba-flow li{background:#fff;border:1px solid #CFCAC0}
+.before .ba-flow li::before{background:#8A857B;color:#fff}
+.before .ba-flow li+li::after{color:#8A857B}
+.after .ba-flow li{background:var(--mango);border:1px solid #E5CE00}
+.after .ba-flow li::before{background:var(--charcoal);color:var(--mango)}
+
+/* 같은 크기의 그림 영역 */
+.ba-visual{margin:0;aspect-ratio:1/1;border-radius:14px;overflow:hidden;display:grid;place-items:center}
+.before .ba-visual{background:#fff;border:1px dashed #BDB7AC}
+.after .ba-visual{background:#fff;border:1px solid rgba(22,22,22,.14)}
+.ba-shot{grid-template-rows:minmax(0,1fr);place-items:stretch}
+.ba-shot>a{position:relative;display:block;min-height:0;overflow:hidden;cursor:zoom-in}
+.ba-shot img{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);object-fit:contain}
+
+.ba-points{list-style:none;display:grid;gap:8px;margin:20px 0 0;padding:0}
+.ba-points li{position:relative;padding-left:22px;font-size:15.5px;line-height:1.6}
+.ba-points li::before{position:absolute;left:0;top:0;font-weight:800}
+.before .ba-points li::before{content:"–";color:#6B665D}
+.after .ba-points li::before{content:"✓";color:var(--charcoal)}
+
+.ba-sum{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-top:24px;padding:16px 20px;border-radius:12px;background:var(--charcoal);color:#fff;font-size:16px;line-height:1.6}
+.ba-sum b{color:var(--mango);font-size:13px;letter-spacing:.06em;white-space:nowrap}
+.ba-case .x-rel{margin-top:18px}
+
+/* BEFORE 도식 (HTML·CSS) */
+.ba-sketch{width:100%;height:100%;display:grid;place-items:center;padding:24px}
+.sk-page{width:min(100%,300px);display:grid;gap:8px;padding:20px;border:1.5px solid #BDB7AC;border-radius:10px;background:#FAFAF8}
+.sk-page b,.sk-page span{display:block;font-size:14px;line-height:1.3;padding:8px 10px;background:#ECEAE4;border-radius:6px;color:#3B3832;font-weight:600}
+.sk-page i,.sk-repeat i,.sk-files i{font-style:normal;font-size:13px;font-weight:700;color:#5A554C;text-align:center;margin-top:6px}
+.sk-repeat{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sk-repeat i{grid-column:1/-1}
+.sk-item{display:grid;gap:6px;padding:12px 10px;border:1.5px solid #BDB7AC;border-radius:10px;background:#FAFAF8}
+.sk-item b{font-size:14px;color:#2E2B26}
+.sk-item span{font-size:13px;padding:6px 8px;border-radius:6px;background:#ECEAE4;color:#3B3832;font-weight:600}
+.sk-chat{width:min(100%,320px);display:grid;gap:10px}
+.sk-chat span{justify-self:start;max-width:85%;font-size:14px;font-weight:600;padding:9px 14px;border-radius:14px 14px 14px 4px;background:#ECEAE4;color:#2E2B26;border:1px solid #D2CDC3}
+.sk-chat span:nth-child(even){justify-self:end;border-radius:14px 14px 4px 14px}
+.sk-chat b{justify-self:center;margin-top:8px;font-size:13.5px;padding:8px 14px;border-radius:999px;background:#5A554C;color:#fff}
+.sk-files{width:min(100%,320px);display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sk-files span{display:grid;place-items:center;min-height:72px;font-size:14px;font-weight:700;color:#2E2B26;background:#FAFAF8;border:1.5px dashed #A9A397;border-radius:10px}
+.sk-files span:nth-child(1){transform:rotate(-3deg)}
+.sk-files span:nth-child(2){transform:rotate(2deg) translateY(8px)}
+.sk-files span:nth-child(3){transform:rotate(2deg)}
+.sk-files span:nth-child(4){transform:rotate(-2deg) translateY(6px)}
+.sk-files i{grid-column:1/-1;margin-top:12px}
+
+/* 태블릿 이하: 도입 전 → 도입 후 세로 */
+@media(max-width:860px){
+  .ba-head{grid-template-columns:48px minmax(0,1fr)}
+  .ba-grid{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 48px auto}
+  .ba-arrow{transform:rotate(90deg)}
+  .ba-visual{aspect-ratio:auto}
+  .before .ba-visual{min-height:260px}
+  .ba-shot>a{display:grid;place-items:center;padding:12px}
+  .ba-shot img{position:static;width:100%;height:auto;max-height:496px;object-fit:contain}
+}
+@media(max-width:560px){
+  .ba-case{padding:40px 0}
+  .ba-head{grid-template-columns:1fr}
+  .ba-head .x-num{margin-bottom:6px}
+  .ba-head .x-quote,.ba-head h3{grid-column:1}
+  .ba-card{padding:22px 18px 20px;border-radius:16px}
+  .ba-flow li{font-size:13px;padding:6px 10px}
+  .ba-flow li+li{margin-left:20px}
+  .ba-sketch{padding:16px}
+  .sk-repeat{gap:6px}
+  .sk-item{padding:10px 6px}
+  .sk-item span{font-size:12px;padding:5px 6px}
+  .ba-points li{font-size:15px}
+  .ba-sum{font-size:15px;padding:14px 16px}
+}
+
+/* AFTER 도식 (시나리오 03: 문의 분류 → 먼저 응대 → 상담원 연결) */
+.after .ba-visual .ba-sketch{background:#fff}
+.sk-route{width:min(100%,340px);display:grid;gap:12px;justify-items:center}
+.sk-q{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.sk-q span{font-size:13.5px;font-weight:700;padding:7px 12px;border-radius:999px;background:#FFF7C2;border:1px solid #E5CE00;color:#161616}
+.sk-bot,.sk-human{width:100%;display:grid;gap:4px;text-align:center;padding:14px 16px;border-radius:12px;position:relative}
+.sk-bot{background:var(--mango);color:#161616}
+.sk-human{background:#161616;color:#fff}
+.sk-bot b,.sk-human b{font-size:15.5px}
+.sk-bot span{font-size:13px;font-weight:600}
+.sk-human span{font-size:13px;color:#E8E3D8}
+.sk-bot::before,.sk-human::before{content:"↓";position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-weight:800;color:#161616;font-size:14px}
