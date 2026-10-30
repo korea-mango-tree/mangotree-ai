@@ -111,3 +111,13 @@
 .sk-bot span{font-size:13px;font-weight:600}
 .sk-human span{font-size:13px;color:#E8E3D8}
 .sk-bot::before,.sk-human::before{content:"↓";position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-weight:800;color:#161616;font-size:14px}
+
+/* Detail-page comparison uses landscape visuals at every viewport. */
+#scen-1 .ba-visual{aspect-ratio:16/10;min-height:0}
+#scen-1 .ba-shot>a{display:block;padding:0}
+#scen-1 .ba-shot img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:top}
+#scen-1 .ba-sketch{padding:12px}
+#scen-1 .sk-page{width:100%;max-width:360px;grid-template-columns:1fr 1fr;padding:12px;gap:6px}
+#scen-1 .sk-page b,#scen-1 .sk-page span{font-size:12px;padding:6px}
+#scen-1 .sk-page i{font-size:11px}
+@media(max-width:380px){#scen-1 .sk-page{padding:6px;gap:3px}#scen-1 .sk-page b,#scen-1 .sk-page span{font-size:10px;padding:4px}}
