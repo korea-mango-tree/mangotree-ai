@@ -26,19 +26,19 @@
 .h-hero-title em{font-style:normal;color:var(--mango)}
 .h-hero-foot{display:grid;grid-template-columns:minmax(0,560px) auto;justify-content:space-between;align-items:end;gap:28px 48px;margin-top:56px;padding-top:32px;border-top:1px solid rgba(245,240,230,.16)}
 .h-hero-sub{font-size:clamp(16px,1.5vw,19px);line-height:1.75;color:var(--on-dark-2)}
-.h-collage{max-width:var(--maxw);margin:72px auto 0;padding:0 32px;display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:14px;align-items:start}
+.h-collage{max-width:var(--maxw);margin:72px auto 0;padding:0 32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
 .h-collage figure{position:relative;margin:0;height:360px;border-radius:14px 14px 0 0;overflow:hidden;background:var(--charcoal-2)}
-.h-collage .c2,.h-collage .c4{margin-top:56px;height:304px}
-.h-collage .c1 img{object-position:53% 56%}
+/* 작업물 3장: 같은 폭 3열, 가운데만 살짝 내려 리듬을 준다 */
+.h-collage figure{height:380px}
+.h-collage .c3{margin-top:48px;height:332px}
 .h-collage img{width:100%;height:100%;object-fit:cover;object-position:left top}
 .h-collage .c3 img{object-position:center}
 .h-collage figcaption{position:absolute;left:12px;bottom:12px;font-size:12.5px;font-weight:700;color:var(--charcoal);background:var(--ivory);padding:4px 10px;border-radius:999px}
 @media(max-width:960px){
   .h-hero{padding-top:128px}
   .h-hero-foot{grid-template-columns:1fr}
-  .h-collage{grid-template-columns:1fr 1fr 1fr;margin-top:56px}
-  .h-collage .c1{grid-column:1 / -1;height:240px}
-  .h-collage figure{height:220px}.h-collage .c2,.h-collage .c4{margin-top:0;height:220px}
+  .h-collage{margin-top:56px;gap:12px}
+  .h-collage figure,.h-collage .c3{margin-top:0;height:260px}
   }
 @media(max-width:560px){
   .h-hero{padding-top:112px}
@@ -46,10 +46,11 @@
   .h-hero-title{font-size:clamp(36px,11.2vw,46px);line-height:1.14}
   .h-hero-foot{margin-top:32px;padding-top:24px}
   .h-hero-cta .btn{flex:1 1 100%}
-  .h-collage{grid-template-columns:1fr 1fr;gap:10px;margin-top:40px;padding:0 20px}
-  .h-collage .c1{height:150px}
-  .h-collage figure,.h-collage .c2{height:170px}
-  .h-collage .c4{display:none}
+  /* 모바일: 상세페이지를 왼쪽 세로로 크게, 나머지 두 장은 오른쪽에 위아래 */
+  .h-collage{grid-template-columns:1fr 1fr;grid-template-rows:150px 150px;gap:10px;margin-top:40px;padding:0 20px;align-items:stretch}
+  .h-collage figure,.h-collage .c3{height:auto;margin-top:0}
+  .h-collage img{position:absolute;inset:0}
+  .h-collage .c2{grid-row:1 / 3}
 }
 
 /* 2. 핵심 서비스 */
@@ -166,8 +167,6 @@
 /* 검증된 화면이 없는 항목: 브랜드 없는 중립 블록으로 정렬만 맞춤 */
 .h-plat-ph{flex:none;width:112px;aspect-ratio:240/333;border-radius:12px;background:var(--ivory-2);border:1px solid rgba(22,22,22,.08)}
 @media(max-width:560px){.h-plat-ph{width:80px}}
-/* 제품 촬영(c1): 좁은 화면에서도 두 병과 제품명이 잘리지 않게 3:2 비율 유지 */
-@media(max-width:960px){.h-collage .c1{height:auto;aspect-ratio:3/2}}
 /* 페이지메이커 공식 아이콘: 원본 80px, 40px로만 표시 */
 .pm-icon{width:40px;height:40px;border-radius:10px}
 .h-plat-ph.has-icon{display:grid;place-items:center}
