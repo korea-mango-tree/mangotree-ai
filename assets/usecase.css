@@ -121,3 +121,8 @@
 #scen-1 .sk-page b,#scen-1 .sk-page span{font-size:12px;padding:6px}
 #scen-1 .sk-page i{font-size:11px}
 @media(max-width:380px){#scen-1 .sk-page{padding:6px;gap:3px}#scen-1 .sk-page b,#scen-1 .sk-page span{font-size:10px;padding:4px}}
+/* Strong scenario numbering. */
+.ba-head{grid-template-columns:104px minmax(0,1fr)}
+.ba-head .x-num{font-size:clamp(44px,5vw,64px);font-weight:800;line-height:1;letter-spacing:-.05em;color:var(--charcoal);font-variant-numeric:tabular-nums}
+@media(max-width:860px){.ba-head{grid-template-columns:80px minmax(0,1fr)}.ba-head .x-num{font-size:48px}}
+@media(max-width:560px){.ba-head{grid-template-columns:1fr}.ba-head .x-num{font-size:44px;margin-bottom:16px}}
