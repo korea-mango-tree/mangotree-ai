@@ -17,7 +17,6 @@ const titleIO=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersec
 const $progress=$('<div class="reading-progress" aria-hidden="true"></div>').appendTo('body');let scheduled=false;
 function update(){const span=document.documentElement.scrollHeight-innerHeight;$progress.css('transform','scaleX('+(span>0?Math.min(1,Math.max(0,scrollY/span)):0)+')');scheduled=false;}
 $(window).on('scroll.mango resize.mango',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update);}});update();
-const cards='.x-work,.pf-card,.mod,.wf-step,.dx-pain,.dx-module-connect a,.h-case,.h-plat-list a,.ba-card';
 // Animate on entry without hiding content while waiting for JavaScript.
 if('IntersectionObserver' in window){
 const textTargets='main h2,main h3,.h-row-title,.h-head p,.x-head p,.h-row-body p,.h-hero-sub,.x-hero-foot p,.ba-head .x-quote,.ba-sum,.x-final p,.about-history p,.about-grid p';
@@ -26,7 +25,6 @@ const io=new IntersectionObserver(entries=>{entries.filter(e=>e.isIntersecting).
 $(textTargets+','+visuals).filter(function(){return !$(this).parents('.pf-card,.h-case,.ba-card,.x-work,.mod,.wf-step,.x-hw,.h-row-title').length;}).each(function(){if(!motion.matches&&this.matches(textTargets)&&this.getBoundingClientRect().top>innerHeight)$(this).addClass('scroll-copy-wait');io.observe(this);});
 $(document).on('animationend.mango','.mango-enter',function(){$(this).removeClass('mango-enter');});
 }
-$(document).on('mouseenter.mango',cards,function(){if(!motion.matches&&matchMedia('(hover: hover)').matches)$(this).addClass('is-hovered');}).on('mouseleave.mango',cards,function(){$(this).removeClass('is-hovered');});
 $(document).on('pointerdown.mango','button,.btn,.nav-ai,.nav-cta',function(){if(!motion.matches)$(this).addClass('is-pressed');});
 $(document).on('pointerup.mango pointercancel.mango',()=>$('.is-pressed').removeClass('is-pressed'));
 $(window).on('blur.mango',()=>$('.is-pressed').removeClass('is-pressed'));
