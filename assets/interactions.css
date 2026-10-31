@@ -1,0 +1,31 @@
+.reading-progress{position:fixed;inset:0 0 auto;height:3px;background:#e5be00;z-index:10000;transform:scaleX(0);transform-origin:left;pointer-events:none}
+.title-mask{display:inline-block;overflow:hidden;overflow:clip;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.title-letter{display:inline-block}
+.title-mask-play .title-letter{animation:title-rise .75s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--letter-delay,0ms)}
+@keyframes title-rise{from{transform:translateY(115%);opacity:0}to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.title-mask-play .title-letter{animation:none!important;transform:none;opacity:1}}
+.x-work,.mod,.wf-step,.dx-pain,.dx-module-connect a{transition:transform .22s ease,box-shadow .22s ease}
+
+button.is-pressed,.btn.is-pressed,.nav-ai.is-pressed,.nav-cta.is-pressed{transform:scale(.97)}
+.filter-pop{animation:filter-pop .3s ease both;animation-delay:var(--pop-delay,0ms)}
+.mango-enter{animation:mango-enter .85s cubic-bezier(.16,1,.3,1) backwards;animation-delay:var(--enter-delay,0ms)}
+.scroll-copy-wait{opacity:.12;translate:0 28px}
+@media(prefers-reduced-motion:reduce){.scroll-copy-wait{opacity:1;translate:none}}
+@keyframes mango-enter{from{opacity:.15;translate:0 32px}to{opacity:1;translate:0 0}}
+.pf-card,.h-case,.ba-card,.h-plat-list a{transition:transform .3s ease,box-shadow .3s ease}
+.h-case-img,.x-work figure,.pf-card figure,.ba-shot,.x-hw-frame{overflow:hidden}
+.h-case-img{padding:20px;border-radius:18px}
+.h-case-img img{border-radius:12px}
+.h-case-pair{gap:32px;margin-top:32px}
+.x-works{gap:36px 28px}
+.x-work figure{padding:12px}
+.x-work figcaption{margin-top:20px}
+.x-hw-frame{padding:16px}
+.ba-shot>a{margin:8px}
+@media(max-width:760px){.h-case-img{padding:12px}.h-case-pair{gap:24px;margin-top:24px}.x-works{gap:28px 16px}.x-work figure{padding:8px}.x-hw-frame{padding:10px}.ba-shot>a{margin:4px}}
+.h-case-img img,.x-work img,.pf-card img,.ba-shot img,.x-hw-frame img{transition:scale .65s cubic-bezier(.2,.7,.3,1)}
+@media(hover:hover) and (pointer:fine){.h-case-img:hover img,.x-work img:hover,.pf-card img:hover,.ba-shot img:hover,.x-hw-frame img:hover{scale:1.045}.x-link:hover,.h-textlink:hover{text-decoration:underline;text-underline-offset:6px}}
+:is(.h-case,.x-work,.pf-card,.ba-shot,.x-hw-frame):focus-within{outline:2px solid #c9a500;outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.mango-enter{animation:none!important}.pf-card,.h-case,.ba-card,.h-plat-list a,.h-case-img img,.x-work img,.pf-card img,.ba-shot img,.x-hw-frame img{transition:none!important;scale:1!important}}
+@keyframes filter-pop{from{opacity:.65;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.is-hovered,.is-pressed{transform:none!important}.filter-pop{animation:none}.x-work,.mod,.wf-step,.dx-pain,.dx-module-connect a{transition:none}}

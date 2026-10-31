@@ -1,0 +1,279 @@
+/* 모든 페이지 공통: 건너뛰기 링크·포커스·메뉴·문의 버튼·모션 감소.
+   각 페이지의 인라인 <style> 뒤에 불러와 같은 선택자를 덮어씁니다. */
+
+.skip-link{position:absolute;left:16px;top:-80px;z-index:200;background:var(--ink);color:#fff;font-size:15px;font-weight:700;padding:12px 18px;border-radius:10px;transition:top .15s}
+.skip-link:focus{top:12px}
+main:focus{outline:none}
+
+/* 키보드 포커스: 마우스 클릭에는 표시하지 않음 */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+.btn-dark:focus-visible,.nav-cta:focus-visible{outline-color:var(--yellow-2)}
+
+/* 현재 위치 */
+.nav-links a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px}
+
+/* 모바일 메뉴 버튼: 48px 터치 영역 */
+.burger{width:48px;height:48px;align-items:center;justify-content:center;padding:0;margin-right:-12px}
+.burger span{transition:transform .2s,opacity .2s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:960px){
+  .nav-links.open{top:76px;padding:8px 20px 16px;gap:0}
+  .nav-links.open a{display:flex;align-items:center;min-height:48px;font-size:16px}
+  .nav-links.open .nav-cta-m{display:flex}
+}
+.nav-cta-m{display:none}
+.nav-links .nav-cta-m a{justify-content:center;margin-top:8px;padding:0 20px;background:var(--ink);color:#fff;border-radius:10px;font-weight:700}
+
+/* 도입 문의 버튼(우측 하단) */
+.contact-fab{position:fixed;bottom:28px;right:28px;z-index:96;display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 20px 0 16px;border-radius:999px;background:var(--ink);color:#fff;font-size:15px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.16);transition:background .2s}
+.contact-fab:hover{background:#000}
+.contact-fab svg{width:20px;height:20px;flex:none}
+.totop{bottom:92px}
+@media(max-width:720px){
+  .contact-fab{bottom:16px;right:16px;height:48px;width:48px;padding:0;justify-content:center}
+  .contact-fab .klabel{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .totop{bottom:76px;right:16px;width:48px;height:48px}
+}
+
+/* 푸터 링크: 모바일 터치 영역 */
+@media(max-width:720px){.fcol a{display:flex;align-items:center;min-height:44px}}
+
+/* JS가 실행되지 않아도 내용이 보이도록: .reveal 숨김은 site.js가 켠 뒤에만 적용 */
+.reveal{opacity:1;transform:none}
+html.reveal-on .reveal:not(.in){opacity:0;transform:translateY(24px)}
+
+/* 모션 감소 */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html.reveal-on .reveal:not(.in){opacity:1;transform:none}
+}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== 디자인 시스템 (2026-10 리뉴얼) =====
+   흰색·차콜·노랑 유지. 한글 제목은 굵기 700·자간 -0.035em·행간 1.3으로 정돈하고,
+   섹션 제목은 왼쪽 정렬, 서브페이지 첫 화면은 낮고 단단하게. */
+:root{--r-card:20px;--r-btn:12px;--yellow-ink:#5C4A00;--maxw:1360px}
+/* 헤더와 본문 좌우 기준선을 맞춤 */
+.wrap,.wrap-lg{max-width:1360px}
+body{font-size:16.5px;line-height:1.75}
+h1,h2{font-weight:700;letter-spacing:-.035em;line-height:1.3;text-wrap:balance}
+h3,h4{letter-spacing:-.025em;line-height:1.4}
+p{text-wrap:pretty}
+
+/* 눈썹 문구: 노란 막대 + 회색 대문자 */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--gray);margin-bottom:16px}
+.eyebrow::before{content:"";width:18px;height:3px;border-radius:2px;background:var(--yellow-2);flex:none}
+
+/* 섹션 리듬·제목 */
+.block{padding:120px 0}
+.block.tight{padding:72px 0}
+.sec-head{max-width:none;margin:0 0 56px;text-align:left;display:grid;gap:0}
+.sec-head h2{font-size:clamp(28px,3.4vw,44px);line-height:1.3;max-width:760px}
+.sec-head p{font-size:clamp(16px,1.5vw,18px);margin-top:16px;max-width:640px}
+@media(max-width:760px){.block{padding:72px 0}.block.tight{padding:48px 0}.sec-head{margin-bottom:36px}}
+
+/* 서브페이지 첫 화면: 왼쪽 정렬, 낮은 높이, 바로 아래 같은 눈썹 문구는 숨김 */
+.page-hero{padding:148px 0 64px;text-align:left;background:linear-gradient(180deg,var(--soft) 0%,#fff 100%);border-bottom:1px solid var(--line)}
+.page-hero h1{font-size:clamp(34px,4.4vw,56px);line-height:1.25;letter-spacing:-.04em;max-width:900px}
+.page-hero p{font-size:clamp(16px,1.6vw,19px);margin:18px 0 0;max-width:640px}
+.page-hero + .block,.page-hero + section{padding-top:72px}
+.page-hero + .block .sec-head .eyebrow,.page-hero + section .sec-head .eyebrow{display:none}
+@media(max-width:760px){.page-hero{padding:112px 0 40px}.page-hero + .block,.page-hero + section{padding-top:48px}}
+
+/* 버튼: 높이 52px(모바일 48px 이상) */
+.btn{min-height:52px;border-radius:var(--r-btn);padding:0 26px;justify-content:center;font-size:16px}
+.btn-primary{background:var(--yellow);color:var(--on-yellow)}
+.btn-primary:hover{background:var(--yellow-2)}
+.nav-cta{min-height:44px;border-radius:10px}
+@media(max-width:520px){.hero-ctas .btn,.final-ctas .btn{flex:1 1 100%}}
+
+/* 카드 공통 */
+.f3,.svc,.pkg,.pf-card,.mod-cat,.pitem,.mcard,.dx-dom{border-radius:var(--r-card)}
+
+/* 푸터 */
+footer{padding:64px 0 40px}
+.fcol a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+
+/* 플랫폼 카드(홈·플랫폼 페이지 공통) */
+.plat-grid{gap:20px}
+.platcard{display:block;text-align:left;color:inherit;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:20px 20px 22px;transition:border-color .2s,box-shadow .2s}
+a.platcard:hover{border-color:var(--ink);box-shadow:var(--sh)}
+.plat-phone{background:var(--soft);border:0;box-shadow:none;border-radius:16px;padding:18px 26px 0;margin-bottom:18px;overflow:hidden;height:250px}
+.platcard:hover .plat-phone{transform:none;box-shadow:none}
+.plat-phone img{border-radius:14px 14px 0 0;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.pmeta{display:flex;flex-direction:column;gap:2px}
+.pmeta .pt{font-size:18px;font-weight:700;letter-spacing:-.025em}
+.pmeta .ps{font-size:14px;color:var(--gray)}
+@media(max-width:900px){.plat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.plat-grid{gap:12px}.plat-phone{height:190px;padding:12px 14px 0}.platcard{padding:12px 12px 16px}.pmeta .pt{font-size:16px}.pmeta .ps{font-size:12.5px}}
+
+
+/* 서비스 카드 공통 바탕 */
+.svc{box-shadow:none;border:1px solid var(--line)}
+.svc-viz{background:var(--soft)}
+.svc:hover{transform:none}
+
+/* AI 모듈 페이지: 좁은 화면에서 개수 배지가 넘치지 않도록 줄바꿈 */
+@media(max-width:420px){.mod-cat-head{flex-wrap:wrap;gap:12px}.mod-cat-head .cnt{margin-left:0}.mod-cat{padding:20px}}
+
+/* 서비스 카드 그림: 브랜드 색(노랑·회색·차콜)으로 통일 */
+.vz-thumbs span{background:linear-gradient(135deg,#FFF3A3,#FEE500)}
+.vz-thumbs span:nth-child(2){background:linear-gradient(135deg,#EDEDE8,#D7D7D0)}
+.vz-thumbs span:nth-child(3){background:linear-gradient(135deg,#3A3A3A,#191919)}
+.vz-chart b.g{background:var(--ink)}
+
+/* 채널 */
+.clients{padding:88px 0}
+.clients .ch{text-align:left}
+.clients h2 em{color:var(--yellow)}
+.clogo{height:76px}
+@media(max-width:560px){.clients{padding:64px 0}.clogo{height:60px;padding:10px}}
+
+
+/* 마지막 행동 유도 */
+.final{padding:0 0 120px}
+.final-card{text-align:left;padding:72px 64px;display:grid;gap:0}
+.final-card h2{font-size:clamp(28px,3.6vw,44px);line-height:1.3;max-width:720px}
+.final-card p{margin:16px 0 32px;max-width:560px;color:#4A4200}
+.final-ctas{justify-content:flex-start}
+.final-card .btn-line{background:transparent;border-color:rgba(25,25,25,.35)}
+.final-card .btn-line:hover{border-color:var(--ink);background:rgba(255,255,255,.3)}
+@media(max-width:720px){.final{padding-bottom:72px}.final-card{padding:44px 24px;border-radius:24px}}
+
+/* 포트폴리오 페이지: 분류 탭 왼쪽 정렬·48px, 모바일 2열 */
+.pf-tabs{justify-content:flex-start}
+.pf-tab{min-height:44px}
+.pf-tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pf-card{box-shadow:none}
+.pf-cap h4{font-size:15.5px;font-weight:700}
+@media(max-width:520px){
+  .pf-tabs{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px 28px;padding:0 20px 4px;scrollbar-width:none}
+  .pf-tab{flex:none}
+  .pf-gal{grid-template-columns:repeat(2,1fr);gap:12px}
+  .pf-cap{padding:10px 12px 12px}.pf-cap h4{font-size:13.5px}
+}
+
+/* 진단 페이지: 왼쪽 정렬한 섹션 제목에 맞춰 예시 결과·FAQ도 왼쪽 기준선에 */
+.dx-sample,.dx-faq{margin-left:0}
+
+/* 크림 섹션·대표 사례(홈·포트폴리오 공통) */
+/* 크림 섹션 */
+.block.cream{background:#FBF8F0}
+/* 대표 사례 */
+.case-list{display:grid;gap:20px}
+.case{display:grid;grid-template-columns:1.5fr 1fr;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden}
+.case-img{background:#F2F2EF;overflow:hidden;aspect-ratio:715/322}
+.case-img img{width:auto;height:100%;max-width:none;object-fit:cover;object-position:left center}
+.case-body{padding:36px 36px;display:flex;flex-direction:column;justify-content:center}
+.case-tag{font-size:13px;font-weight:700;color:var(--gray)}
+.case h3{font-size:clamp(24px,2.4vw,32px);font-weight:700;margin:6px 0 10px}
+.case p{font-size:16px;color:var(--ink-2)}
+.case-src{display:block;margin-top:10px;font-size:13px;color:var(--gray)}
+.svc-list{margin-top:28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-top:1px solid #E9E3D2;padding-top:24px}
+.svc-list-h{font-size:14px;font-weight:700;color:var(--gray)}
+.svc-list ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.svc-list a{display:inline-flex;align-items:baseline;gap:8px;min-height:44px;align-items:center;padding:0 16px;border:1px solid #E9E3D2;border-radius:999px;background:#fff;font-size:15px}
+.svc-list a:hover{border-color:var(--ink)}
+.svc-list a span{font-size:13px;color:var(--gray)}
+@media(max-width:900px){.case{grid-template-columns:1fr}.case-body{padding:24px}}
+@media(max-width:560px){.case-img{aspect-ratio:auto;height:200px}.case-body{padding:20px}.case p{font-size:15px}.svc-list{gap:12px}.svc-list a span{display:none}}
+
+/* 대비: 보조 회색(#A3A3A3)은 흰 배경에서 4.5:1 미달이라 글자에는 진한 회색을 사용 */
+.svc-head .num,.fcol h5,.ws-h,.foot-bottom,.wkpi .v{color:var(--gray)}
+
+/* 모바일 메뉴: 가로 화면 등 낮은 화면에서도 모든 링크·CTA에 닿도록 내부 스크롤 */
+@media(max-width:960px){
+  .nav-links.open{max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+}
+
+/* 첫 화면에 진단·문의 버튼이 이미 있는 동안은 떠 있는 문의 버튼을 숨김(site.js) */
+.contact-fab{transition:opacity .2s,visibility .2s,background .2s}
+body.fab-off .contact-fab{opacity:0;visibility:hidden;pointer-events:none}
+
+/* 진단 페이지 모바일 하단 고정 CTA 위로 문의·맨위로 버튼을 올림 */
+@media(max-width:760px){body.dx-has-sticky .totop{bottom:calc(146px + env(safe-area-inset-bottom))}}
+
+/* 플랫폼 페이지: 5개 카드, 앵커 이동 시 헤더에 가리지 않게, 화면이 확인되지 않은 항목은 중립 블록 */
+.plat-grid-5{grid-template-columns:repeat(5,1fr)}
+.platcard{scroll-margin-top:96px}
+.plat-ph{display:block;width:100%;height:100%;min-height:220px;border-radius:14px 14px 0 0;background:#ECEAE4}
+@media(max-width:1100px){.plat-grid-5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){.plat-grid-5{grid-template-columns:repeat(2,1fr)}}
+.platcard .pdesc{font-size:14px;color:var(--ink-2);line-height:1.6;margin-top:10px}
+.platcard .plink{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font-size:14.5px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+/* 페이지메이커 공식 아이콘: 원본 80px, 40px로만 표시 */
+.pm-icon{width:40px;height:40px;border-radius:10px}
+.plat-ph.has-icon{display:grid;place-items:center}
+.h-plat-list .h-plat-ph .pm-icon,.plat-phone .plat-ph .pm-icon{width:40px;height:40px;max-width:40px;aspect-ratio:1;border:0;border-radius:10px;box-shadow:none;object-fit:contain;transform:none}
+
+/* 화면낭독기 안내용으로 스크립트가 포커스를 옮기는 제목에는 윤곽선을 그리지 않음 */
+h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:none}
+
+/* 헤더 오른쪽 묶음: AI 기획(외부 새 창) · 무료 진단 · 메뉴 버튼 */
+.nav-act{display:flex;align-items:center;gap:10px;flex:none}
+.nav-ai{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;border-radius:10px;background:var(--yellow,#FEE500);color:#161616;font-size:14px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;border:1.5px solid #161616}
+.nav-ai:hover{background:#FFD600}
+.nav-ai:focus-visible{outline:2px solid #161616;outline-offset:3px}
+.nav-ai-ic{font-weight:700}
+@media(max-width:960px){.nav-act{gap:6px}.nav-ai{min-height:40px;padding:0 12px;font-size:13.5px}}
+@media(max-width:360px){.nav{gap:12px}.nav-ai{padding:0 11px}.nav-ai-ic{display:none}.logo{gap:6px}.logo img{height:20px}.logo .plus{font-size:12px;padding:2px 6px}}
+
+/* 작업 흐름(실제 화면·공식 가이드 예시): 큰 화면, 원본 비율, 번호·짧은 설명·다음 단계 */
+.wf{list-style:none;margin:0;padding:0;display:grid;gap:56px 40px}
+.wf-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wf-4{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.wf-step figure{margin:0}
+.wf-shot{display:grid;place-items:center;aspect-ratio:16/10;background:#fff;border:1px solid rgba(22,22,22,.14);border-radius:14px;overflow:hidden;cursor:zoom-in}
+.wf-shot img{display:block;width:100%;height:100%;object-fit:contain}
+.wf-body{display:block;padding-top:20px}
+.wf-n{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#FEE500;color:#161616;font-size:14px;font-weight:800;margin-right:10px;vertical-align:middle}
+.wf-badge{display:inline-block;vertical-align:middle;font-size:12.5px;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid rgba(22,22,22,.22);color:#161616;background:#fff}
+.wf-badge.guide{background:#EFEDE7;border-style:dashed}
+.wf-step h3{font-size:clamp(22px,2.1vw,28px);letter-spacing:-.04em;line-height:1.25;margin-top:14px;color:inherit}
+.wf-step p{font-size:16px;line-height:1.7;margin-top:10px;color:#4A4740;max-width:560px}
+.wf-step .wf-src{font-size:13.5px;color:#5A554C;margin-top:12px}
+.wf-src a{text-decoration:underline;text-underline-offset:3px;display:inline-block;min-height:24px}
+.wf-next{font-size:14px!important;font-weight:700;color:#161616!important;margin-top:14px!important}
+.wf-next.end{color:#5A554C!important;font-weight:600}
+.wf-more{align-self:center;background:#F5F0E6;border-radius:14px;padding:32px}
+.wf-more .wf-n{margin-bottom:6px}
+.wf-4 .wf-shot{aspect-ratio:4/3;cursor:pointer}
+.wf-4 .wf-body{padding-top:14px}
+.wf-4 h3{font-size:18px;margin-top:10px}
+.wf-4 h3 a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+@media(max-width:960px){.wf-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+  .wf-2{grid-template-columns:1fr;gap:48px}
+  .wf-2 .wf-shot{aspect-ratio:auto}
+  .wf-2 .wf-shot img{height:auto}
+}
+@media(max-width:420px){.wf-4{grid-template-columns:1fr 1fr;gap:20px 14px}.wf-4 .wf-badge{font-size:11px;padding:4px 8px}.wf-4 .wf-n{width:30px;height:30px;font-size:12.5px;margin-right:6px}}
+/* 메인: 흐름 구역 */
+.h-flow{background:#fff;color:#161616;padding:144px 0}
+.h-flow-head{max-width:760px;margin-bottom:64px}
+.h-flow-head h2{font-size:clamp(32px,4vw,56px);line-height:1.15;letter-spacing:-.05em}
+.h-flow-head p:not(.h-kicker){font-size:16.5px;line-height:1.75;color:#5A554C;margin-top:20px}
+@media(max-width:760px){.h-flow{padding:88px 0}.h-flow-head{margin-bottom:40px}}
+
+/* Brand scrollbars: native scrolling and keyboard controls remain intact. */
+:root{--scroll-track:#f2f0e9;--scroll-thumb:#55534e;--scroll-hover:#b99400}
+*{scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--scroll-track)}
+@supports selector(::-webkit-scrollbar){
+  *{scrollbar-width:auto;scrollbar-color:auto}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--scroll-track);border-radius:999px}
+  ::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:3px solid var(--scroll-track);border-radius:999px;min-height:40px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--scroll-hover);border-width:2px}
+  ::-webkit-scrollbar-thumb:active{background:#8a7000}
+  ::-webkit-scrollbar-corner{background:var(--scroll-track)}
+}
+@media(forced-colors:active){
+  *{scrollbar-width:auto;scrollbar-color:auto}
+  ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:Canvas}
+  ::-webkit-scrollbar-thumb{background:ButtonText;border-color:Canvas}
+  ::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active{background:Highlight}
+}
