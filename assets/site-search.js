@@ -8,7 +8,7 @@ let scrollAnchor=Math.max(0,window.scrollY),scrollPending=false;
 function followScroll(){scrollPending=false;const y=Math.max(0,window.scrollY),delta=y-scrollAnchor;if(dock.hidden){scrollAnchor=y;return;}if(y<=24||Math.abs(delta)>=12){const hide=y>24&&delta>0&&!dock.contains(document.activeElement);dock.classList.toggle('is-scroll-hidden',hide);dock.inert=hide;dock.setAttribute('aria-hidden',String(hide));scrollAnchor=y;}}
 window.addEventListener('scroll',()=>{if(!scrollPending){scrollPending=true;requestAnimationFrame(followScroll);}},{passive:true});
 const data=[
-['ChatGPT·Claude 원격 활용 지원','챗GPT 클로드 설정 교육 관리 원격 문제 해결','products.html#remote-support'],
+['ChatGPT·Claude 원격 활용 지원','챗GPT 클로드 설정 교육 관리 원격 문제 해결','products.html#ai-assistant'],
 ['AI 제품','상세페이지 콘텐츠 제작 상담 데이터 업무 자동화','products.html'],
 ['AI CREATIVE · 콘텐츠 제작','촬영 합성 이미지 영상 상세페이지','products.html#creative'],
 ['AI COMMERCE · 커머스','상품 추천 매출 쇼핑몰','products.html#commerce'],
