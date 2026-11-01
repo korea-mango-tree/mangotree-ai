@@ -375,4 +375,4 @@ body.mdl-lock{overflow:hidden}
 
 /* Detailed-page work gets a tall, top-aligned preview without image distortion. */
 .x-work[data-cat="detail"] img{aspect-ratio:1/2.4;object-fit:cover;object-position:center top}
-.x-work[data-cat="detail"] img[src^="assets/inline/"]{object-fit:contain}
+.x-work[data-cat="detail"] img[src^="assets/inline/"]{aspect-ratio:340/460;object-fit:contain}
