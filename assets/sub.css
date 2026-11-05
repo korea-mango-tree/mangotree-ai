@@ -390,3 +390,6 @@ body.mdl-lock{overflow:hidden}
 .x-addon-more{margin:0 0 14px;font-size:14px}
 .x-addon-more a{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:360px){.x-addon .btn{font-size:14px;padding-left:12px;padding-right:12px}}
+/* 제품: 채널 운영 카드의 월 금액 */
+.x-ch-price{margin-top:14px!important;font-size:22px!important;font-weight:800;letter-spacing:-.03em;color:var(--charcoal)!important}
+.x-ch-price small{font-size:13px;font-weight:600;color:var(--ivory-ink);margin-left:4px}
