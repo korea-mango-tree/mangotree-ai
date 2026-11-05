@@ -382,3 +382,11 @@ body.mdl-lock{overflow:hidden}
 .x-channels>li .x-feats{margin-top:16px}
 .x-channels>li>.x-link{margin-top:auto;padding-top:16px;align-self:flex-start}
 .x-ch4 li{background:var(--mango);border-color:var(--mango);color:var(--charcoal)}
+
+/* 요금제: 부가 서비스(채널 운영·AI 도구 관리) — 금액은 견적 */
+.x-addon h3{font-size:21px}
+.x-price.x-quote{font-size:19px;font-weight:800;letter-spacing:-.03em}
+.x-price.x-quote small{font-weight:600}
+.x-addon-more{margin:0 0 14px;font-size:14px}
+.x-addon-more a{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:360px){.x-addon .btn{font-size:14px;padding-left:12px;padding-right:12px}}
