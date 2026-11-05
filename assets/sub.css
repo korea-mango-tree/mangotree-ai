@@ -369,10 +369,16 @@ body.mdl-lock{overflow:hidden}
 
 /* 제품: ChatGPT·Claude 도입과 원격 관리 (4단계) */
 .x-concepts.x-four{grid-template-columns:repeat(4,minmax(0,1fr))}
-.x-assist-note{margin-top:36px;font-size:13.5px;line-height:1.7;color:var(--ivory-ink)}
+.x-assist-note{max-width:880px;margin-top:36px;font-size:13.5px;line-height:1.7;color:var(--ivory-ink)}
 @media(max-width:1100px){.x-concepts.x-four{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:860px){.x-concepts.x-four{grid-template-columns:1fr}}
 
 /* Detailed-page work gets a tall, top-aligned preview without image distortion. */
 .x-work[data-cat="detail"] img{aspect-ratio:1/2.4;object-fit:cover;object-position:center top}
 .x-work[data-cat="detail"] img[src^="assets/inline/"]{aspect-ratio:340/460;object-fit:contain}
+
+/* 제품: AI 인스타그램·블로그·숏폼 채널 운영 (3개 상품 카드) */
+.x-channels>li{display:flex;flex-direction:column}
+.x-channels>li .x-feats{margin-top:16px}
+.x-channels>li>.x-link{margin-top:auto;padding-top:16px;align-self:flex-start}
+.x-ch4 li{background:var(--mango);border-color:var(--mango);color:var(--charcoal)}
