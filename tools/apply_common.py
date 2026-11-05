@@ -16,7 +16,7 @@ AI_PLAN = ('<a class="nav-ai" href="https://page-writer-dckreoozc-mtree712-6778s
            'AI 기획<span class="sr-only"> (새 창에서 열림)</span><span class="nav-ai-ic" aria-hidden="true">↗</span></a>')
 
 PAGES = ['index', 'products', 'modules', 'platforms', 'usecase', 'portfolio', 'pricing', 'diagnosis']
-NAV = [('products', '제품'), ('modules', 'AI 모듈'), ('platforms', '플랫폼'),
+NAV = [('products', 'AI 컨설팅'), ('modules', 'AI 모듈'), ('platforms', '플랫폼'),
        ('usecase', '활용사례'), ('portfolio', '포트폴리오'), ('pricing', '요금제')]
 DESC = {
     'index': '상세페이지·콘텐츠 제작부터 검색·추천·상담, 매출 분석까지. 커머스의 제작·판매·운영을 하나로 연결하는 망고트리 AI+. 무료 진단으로 먼저 필요한 AI를 확인하세요.',

@@ -277,3 +277,26 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
   ::-webkit-scrollbar-thumb{background:ButtonText;border-color:Canvas}
   ::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active{background:Highlight}
 }
+
+/* ===== 모바일 최적화 (문서 30절) =====
+   헤더: 로고 이미지가 눌리지 않게 고정하고, 좁은 화면에서 요소를 줄여 AI+ 배지와 「AI 기획」 버튼이 겹치지 않게 한다.
+   터치 영역: 로고·보조 버튼·펼치기 버튼을 44px 높이 이상으로. */
+#header .logo,footer .logo{flex:none;min-height:44px}
+#header .logo img,footer .logo img{flex:none;width:auto;max-width:none}
+.hero-video-controls a{display:inline-flex;align-items:center;min-height:44px}
+.dxpage .dx-sub-cta{min-height:44px;padding:10px 0}
+.dx-privacy summary,.dx-consent details summary{padding:10px 0;min-height:44px}
+@media(max-width:420px){
+  #header .logo{gap:6px}
+  #header .logo img{height:18px}
+  #header .logo .plus{font-size:12px;padding:2px 6px}
+  .nav-act{gap:4px}
+  .nav-ai{min-height:40px;padding:0 10px;font-size:13px}
+  .nav-ai-ic{display:none}
+  .site-search-toggle{width:34px}
+  .burger{width:44px;margin-right:-8px}
+}
+@media(max-width:380px){.search-dock-close{width:32px}}
+@media(max-width:360px){#header .logo .plus{display:none}}
+/* 데스크톱 좁은 폭(961~1180px): 메뉴명이 길어져도 로고·버튼과 붙지 않게 메뉴 간격을 줄임 */
+@media(min-width:961px) and (max-width:1180px){.nav-links{gap:18px}.nav-links a{font-size:14.5px}}
