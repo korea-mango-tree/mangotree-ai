@@ -399,3 +399,21 @@ body.mdl-lock{overflow:hidden}
 .x-ops h2{font-size:clamp(20px,1.8vw,24px);letter-spacing:-.03em;margin-top:18px;color:#fff}
 .x-ops p{font-size:15.5px;line-height:1.7;margin-top:10px;color:#E8E3D8}
 @media(max-width:860px){.x-ops{grid-template-columns:1fr;gap:14px;margin-top:40px}.x-ops li{padding:26px 22px}}
+
+/* 요금제: 마케팅 요금제 카드 설명, AI 도구 관리 가로형 카드 */
+.x-addon-desc{font-size:14.5px;line-height:1.65;color:var(--ink-2);margin-top:10px}
+.x-addon-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:center;border:1px solid rgba(22,22,22,.16);border-radius:20px;padding:32px;background:#fff}
+.x-addon-main h3{font-size:24px;letter-spacing:-.03em}
+.x-addon-main>p{font-size:15.5px;line-height:1.7;color:var(--ink-2);margin-top:8px}
+.x-addon-main .x-feats{margin-top:14px}
+.x-addon-main .x-addon-more{margin:14px 0 0}
+.x-addon-side{display:flex;flex-direction:column;gap:14px;min-width:240px}
+.x-addon-side .x-price{margin-top:0}
+@media(max-width:760px){.x-addon-row{grid-template-columns:1fr;padding:24px 20px}.x-addon-side{min-width:0}}
+/* 제품: 마케팅 요금제 안내 띠 */
+.x-mkt-band{padding-top:72px;padding-bottom:72px}
+.x-mkt-box{display:flex;align-items:center;justify-content:space-between;gap:24px 48px;flex-wrap:wrap;background:var(--mango);border-radius:24px;padding:40px}
+.x-mkt-box h2{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.04em;line-height:1.25}
+.x-mkt-box p:not(.x-kicker){margin-top:12px;font-size:15.5px;line-height:1.7;max-width:640px}
+@media(max-width:560px){.x-mkt-box{padding:28px 22px}.x-mkt-box .btn{width:100%;justify-content:center}}
+@media(min-width:1101px){.x-plans.x-mkt{grid-template-columns:repeat(3,minmax(0,1fr))}}
