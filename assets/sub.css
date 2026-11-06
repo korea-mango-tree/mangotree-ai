@@ -417,3 +417,9 @@ body.mdl-lock{overflow:hidden}
 .x-mkt-box p:not(.x-kicker){margin-top:12px;font-size:15.5px;line-height:1.7;max-width:640px}
 @media(max-width:560px){.x-mkt-box{padding:28px 22px}.x-mkt-box .btn{width:100%;justify-content:center}}
 @media(min-width:1101px){.x-plans.x-mkt{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* 모듈·플랫폼·활용사례 첫 화면: 자동 진행 실제 화면(애니메이션 WebP, 움직임 줄이기면 정지 화면) */
+.x-browser.x-screen{max-width:960px;margin-top:48px;box-shadow:0 24px 60px -30px rgba(22,22,22,.35)}
+.x-screen picture{display:block}
+.x-screen img{display:block;width:100%;height:auto;aspect-ratio:960/600;background:#fff}
+@media(max-width:760px){.x-browser.x-screen{margin-top:32px;border-radius:12px}.x-screen .x-bar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}}
