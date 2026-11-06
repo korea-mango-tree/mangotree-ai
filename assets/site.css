@@ -300,3 +300,4 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 @media(max-width:360px){#header .logo .plus{display:none}}
 /* 데스크톱 좁은 폭(961~1180px): 메뉴명이 길어져도 로고·버튼과 붙지 않게 메뉴 간격을 줄임 */
 @media(min-width:961px) and (max-width:1180px){.nav-links{gap:18px}.nav-links a{font-size:14.5px}}
+.wf-shot picture{display:block;width:100%;height:100%}

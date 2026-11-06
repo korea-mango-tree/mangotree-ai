@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 BASE = 'https://korea-mango-tree.github.io/mangotree-ai/'
 MAIL = 'mailto:mtree712@gmail.com?subject=%5B%EB%A7%9D%EA%B3%A0%ED%8A%B8%EB%A6%AC%20AI%2B%5D%20%EB%8F%84%EC%9E%85%20%EB%AC%B8%EC%9D%98'  # [망고트리 AI+] 도입 문의
 
-AI_PLAN = ('<a class="nav-ai" href="https://page-writer-dckreoozc-mtree712-6778s-projects.vercel.app/" target="_blank" rel="noopener noreferrer">'
+AI_PLAN = ('<a class="nav-ai" href="https://page-writer-six.vercel.app/" target="_blank" rel="noopener noreferrer">'
            'AI 기획<span class="sr-only"> (새 창에서 열림)</span><span class="nav-ai-ic" aria-hidden="true">↗</span></a>')
 
 PAGES = ['index', 'products', 'modules', 'platforms', 'usecase', 'portfolio', 'pricing', 'diagnosis']
