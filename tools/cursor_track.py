@@ -5,10 +5,10 @@
   이벤트: 원본 영상 기준 "초,x,y,종류" 를 ; 로 이어 쓴다. 종류 c=클릭, m=이동만
           예) "0.3,630,250,c;3.8,878,88,c"
   배율·ox·oy: 원본 좌표를 1920x1080 화면 좌표로 옮기는 값(원본*배율+ox).
-커서는 각 이벤트 시각에 그 위치에 도착하고, 클릭이면 노란 원이 퍼진다.
+커서는 각 이벤트 시각에 그 위치에 도착하고, 클릭이면 파란 원이 퍼진다. 커서 뒤에는 파란 그림자를 깐다.
 """
 import sys, subprocess
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 out, dur, W, H, sc, ox, oy, ss, sp, ev = sys.argv[1:11]
 dur = float(dur); W = int(W); H = int(H); sc = float(sc); ox = float(ox); oy = float(oy); ss = float(ss); sp = float(sp)
@@ -35,6 +35,19 @@ def make_cursor(scale=1.0):
     d.line(p + [p[0]], fill=(20, 20, 20, 255), width=int(2.2 * s))
     return big.resize((size, size), Image.LANCZOS)
 CUR = make_cursor(); CUR_DOWN = make_cursor(0.86)
+# 커서 뒤 파란 그림자(빛 번짐): 커서 모양을 파랗게 칠해 흐리게 퍼뜨린다
+BLUE = (37, 120, 255)
+def make_glow(c):
+    pad = 36
+    a = c.split()[3]
+    g = Image.new('RGBA', (c.width + pad * 2, c.height + pad * 2), (0, 0, 0, 0))
+    m = Image.new('L', g.size, 0); m.paste(a, (pad, pad))
+    m = m.filter(ImageFilter.MaxFilter(13)).filter(ImageFilter.GaussianBlur(14))
+    m = m.point(lambda v: min(255, int(v * 1.25)))
+    g.putalpha(m); g = Image.composite(Image.new('RGBA', g.size, BLUE + (255,)), g, m)
+    g.putalpha(m)
+    return g, pad
+GLOW, GPAD = make_glow(CUR); GLOW_DOWN, _ = make_glow(CUR_DOWN)
 
 def ease(u):
     u = max(0.0, min(1.0, u))
@@ -68,10 +81,12 @@ for i in range(n):
             if k == 'c' and t <= T < t + 0.45:
                 a = (T - t) / 0.45
                 r = 14 + 54 * a
-                d.ellipse([x - r, y - r, x + r, y + r], outline=(255, 229, 0, int(255 * (1 - a))), width=8)
-                d.ellipse([x - 13, y - 13, x + 13, y + 13], fill=(255, 229, 0, int(200 * (1 - a))))
+                d.ellipse([x - r, y - r, x + r, y + r], outline=BLUE + (int(255 * (1 - a)),), width=9)
+                d.ellipse([x - 13, y - 13, x + 13, y + 13], fill=BLUE + (int(170 * (1 - a)),))
                 down = down or (T - t) < 0.15
         c = CUR_DOWN if down else CUR
+        g = GLOW_DOWN if down else GLOW
+        fr.alpha_composite(g, (int(p[0]) - 2 - GPAD + 4, int(p[1]) - 2 - GPAD + 6))
         fr.alpha_composite(c, (int(p[0]) - 2, int(p[1]) - 2))
     proc.stdin.write(fr.tobytes())
 proc.stdin.close(); proc.wait()
