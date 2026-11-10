@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오후의 한 잔 · AFTERNOON COFFEE (가상 브랜드 시연)</title>
+<meta name="description" content="가상 브랜드 「오후의 한 잔」 카페 홍보 랜딩 페이지 — 제작 시연용 데모입니다.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--cream:#F6EEDF;--cream-2:#EFE3CD;--brown:#3B2418;--brown-2:#5C3A27;--ink:#2A1A11;--muted:#7A6152;--orange:#E8742A;--orange-2:#F39A55;--white:#FFFBF4}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.demo-bar{background:var(--brown);color:var(--cream);font-size:13px;font-weight:600;text-align:center;padding:9px 16px;letter-spacing:.02em}
+.demo-bar b{color:var(--orange-2)}
+header{position:sticky;top:0;z-index:10;background:rgba(246,238,223,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(59,36,24,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:19px;color:var(--brown)}
+.logo small{display:block;font-size:10px;letter-spacing:.24em;font-weight:700;color:var(--orange)}
+.logo-mark{width:34px;height:34px;border-radius:50%;background:var(--brown);display:grid;place-items:center}
+.nav ul{display:flex;gap:28px;list-style:none;font-weight:600;font-size:15px}
+.nav ul a{color:var(--brown-2)}
+.nav ul a:hover{color:var(--orange)}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-weight:700;font-size:16px;padding:15px 26px;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-main{background:var(--orange);color:#fff}
+.btn-main:hover{background:#D9621A}
+.btn-line{border:2px solid var(--brown);color:var(--brown)}
+.nav .btn{padding:10px 18px;font-size:14px}
+/* 첫 화면 */
+.hero{padding:72px 0 96px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.kicker{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.28em;color:var(--orange);margin-bottom:22px}
+.hero h1{font-size:clamp(52px,8.4vw,116px);line-height:1.02;letter-spacing:-.06em;font-weight:900;color:var(--brown)}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p.lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);margin:28px 0 36px;max-width:500px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero-art{position:relative;aspect-ratio:1;max-width:520px;justify-self:end;width:100%}
+.hero-art .sun{position:absolute;inset:6% 6% auto auto;width:68%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--orange-2),var(--orange));opacity:.95}
+.hero-art svg{position:relative;width:100%;height:100%}
+.steam path{stroke:var(--brown-2);stroke-width:7;stroke-linecap:round;fill:none;opacity:.55;animation:rise 3.6s ease-in-out infinite}
+.steam path:nth-child(2){animation-delay:.6s}.steam path:nth-child(3){animation-delay:1.2s}
+@keyframes rise{0%{transform:translateY(14px);opacity:0}40%{opacity:.6}100%{transform:translateY(-18px);opacity:0}}
+.marquee{background:var(--brown);color:var(--cream);overflow:hidden;white-space:nowrap;padding:16px 0;font-weight:800;font-size:clamp(18px,2.2vw,26px);letter-spacing:-.02em}
+.marquee span{display:inline-block;animation:slide 22s linear infinite;padding-right:48px}
+.marquee i{font-style:normal;color:var(--orange-2);margin:0 18px}
+@keyframes slide{to{transform:translateX(-50%)}}
+section{scroll-margin-top:72px}
+.sec{padding:112px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+.sec h2{font-size:clamp(36px,5vw,64px);line-height:1.08;letter-spacing:-.05em;font-weight:900;color:var(--brown)}
+.sec h2 em{font-style:normal;color:var(--orange)}
+.sec .sub{color:var(--muted);font-size:17px;max-width:420px}
+/* 소개 */
+.about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.about-card{background:var(--white);border-radius:24px;padding:32px 28px;border:1px solid rgba(59,36,24,.08)}
+.about-card .num{font-size:14px;font-weight:800;color:var(--orange);letter-spacing:.1em}
+.about-card h3{font-size:24px;letter-spacing:-.03em;margin:14px 0 10px;color:var(--brown)}
+.about-card p{color:var(--muted);font-size:16px}
+/* 메뉴 */
+#menu{background:var(--cream-2)}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.menu-card{background:var(--white);border-radius:28px;overflow:hidden;border:1px solid rgba(59,36,24,.08);transition:transform .3s}
+.menu-card:hover{transform:translateY(-6px)}
+.menu-art{aspect-ratio:4/3;display:grid;place-items:center}
+.menu-art svg{width:62%;height:auto}
+.m1 .menu-art{background:#F3D9B8}.m2 .menu-art{background:#E9C9A8}.m3 .menu-art{background:#F7C9A0}
+.menu-body{padding:26px 28px 30px}
+.menu-body .tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--orange);margin-bottom:8px}
+.menu-body h3{font-size:26px;letter-spacing:-.04em;color:var(--brown)}
+.menu-body h3 small{display:block;font-size:13px;letter-spacing:.12em;color:var(--muted);font-weight:700;margin-top:4px}
+.menu-body p{color:var(--muted);margin-top:12px;font-size:16px}
+/* 공간 */
+.space-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.space-art{background:var(--brown);border-radius:32px;aspect-ratio:5/4;position:relative;overflow:hidden}
+.space-art svg{position:absolute;inset:0;width:100%;height:100%}
+.space-list{list-style:none;display:grid;gap:18px;margin-top:32px}
+.space-list li{display:flex;gap:16px;align-items:flex-start;padding:20px 22px;background:var(--white);border-radius:18px;border:1px solid rgba(59,36,24,.08)}
+.space-list b{display:block;color:var(--brown);font-size:18px;letter-spacing:-.02em}
+.space-list span{color:var(--muted);font-size:15px}
+.dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--orange);margin-top:7px}
+/* 하단 */
+.closing{background:var(--orange);color:#fff;text-align:center;padding:96px 0}
+.closing h2{font-size:clamp(36px,6vw,80px);line-height:1.05;letter-spacing:-.06em;font-weight:900}
+.closing p{font-size:18px;opacity:.9;margin:18px 0 32px}
+.closing .btn{background:var(--brown);color:var(--cream)}
+footer{background:var(--brown);color:#E6D6C2;padding:40px 0;font-size:14px}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.foot .badge{background:var(--orange);color:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px}
+@media(max-width:960px){
+  .hero-grid,.space-grid{grid-template-columns:1fr}
+  .hero-art{justify-self:center;max-width:400px}
+  .about-grid,.menu-grid{grid-template-columns:1fr}
+  .nav ul{display:none}
+  .sec{padding:80px 0}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .hero{padding:44px 0 64px}
+  .cta .btn{flex:1 1 100%;justify-content:center}
+  .nav .btn{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar">가상 브랜드 · 제작 시연용 — <b>실제 매장이 아닙니다</b> (주소·연락처·가격·예약 없음)</div>
+<header>
+  <nav class="wrap nav" aria-label="주요 메뉴">
+    <a href="#top" class="logo"><span class="logo-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 9h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6V9z" fill="#F6EEDF"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17" stroke="#F6EEDF" stroke-width="2" fill="none"/></svg></span><span>오후의 한 잔<small>AFTERNOON COFFEE</small></span></a>
+    <ul>
+      <li><a href="#about">소개</a></li>
+      <li><a href="#menu">시그니처</a></li>
+      <li><a href="#space">공간</a></li>
+    </ul>
+    <a href="#menu" class="btn btn-main">메뉴 보기</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker">AFTERNOON COFFEE</span>
+        <h1>오후 세 시,<br><em>한 잔</em>의<br>여유.</h1>
+        <p class="lead">바쁜 하루 한가운데, 잠시 멈춰 앉는 자리. 천천히 내린 커피와 햇살이 머무는 창가에서 오후를 다시 시작하세요.</p>
+        <div class="cta">
+          <a href="#menu" class="btn btn-main">시그니처 메뉴 보기 →</a>
+          <a href="#space" class="btn btn-line">공간 둘러보기</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <svg viewBox="0 0 400 400">
+          <g class="steam"><path d="M160 120c-14-18 14-28 0-48"/><path d="M200 112c-14-18 14-28 0-48"/><path d="M240 120c-14-18 14-28 0-48"/></g>
+          <ellipse cx="200" cy="330" rx="150" ry="22" fill="#3B2418" opacity=".18"/>
+          <path d="M95 150h210v80a90 90 0 0 1-90 90h-30a90 90 0 0 1-90-90z" fill="#FFFBF4" stroke="#3B2418" stroke-width="8"/>
+          <path d="M305 175h18a38 38 0 0 1 0 76h-24" fill="none" stroke="#3B2418" stroke-width="8"/>
+          <ellipse cx="200" cy="150" rx="105" ry="20" fill="#5C3A27" stroke="#3B2418" stroke-width="8"/>
+          <path d="M175 148c10-10 40-10 50 0-10 10-40 10-50 0z" fill="#F39A55"/>
+          <path d="M120 240h160" stroke="#E8742A" stroke-width="8" stroke-linecap="round"/>
+          <ellipse cx="200" cy="322" rx="140" ry="16" fill="#E8742A"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><span>SLOW BREW <i>●</i> 오후의 한 잔 <i>●</i> AFTERNOON COFFEE <i>●</i> 햇살 좋은 창가 <i>●</i> SLOW BREW <i>●</i> 오후의 한 잔 <i>●</i> AFTERNOON COFFEE <i>●</i> 햇살 좋은 창가 <i>●</i> </span></div>
+
+  <section class="sec" id="about" aria-labelledby="aboutTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="aboutTitle">천천히,<br><em>제대로</em> 한 잔.</h2>
+        <p class="sub">「오후의 한 잔」은 하루의 쉼표가 되는 작은 동네 카페를 상상해 만든 가상 브랜드입니다.</p>
+      </div>
+      <div class="about-grid">
+        <article class="about-card"><span class="num">01</span><h3>느린 추출</h3><p>한 잔씩 손으로 내려 향이 살아 있는 커피를 지향합니다.</p></article>
+        <article class="about-card"><span class="num">02</span><h3>오후의 빛</h3><p>통창으로 들어오는 오후 햇살을 공간의 중심에 두었습니다.</p></article>
+        <article class="about-card"><span class="num">03</span><h3>머무는 자리</h3><p>혼자 오기 좋고, 둘이 오면 더 좋은 편안한 좌석을 그렸습니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="menu" aria-labelledby="menuTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="menuTitle">시그니처<br><em>메뉴</em> 3</h2>
+        <p class="sub">오후의 한 잔을 대표하는 세 가지 메뉴입니다. (시연용 예시, 가격·판매 정보 없음)</p>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-card m1">
+          <div class="menu-art" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M50 70h100l-10 100H60z" fill="#FFFBF4" stroke="#3B2418" stroke-width="6"/><path d="M56 100h88l-6 66H62z" fill="#5C3A27"/><path d="M56 100h88" stroke="#F6EEDF" stroke-width="8"/><ellipse cx="100" cy="70" rx="52" ry="10" fill="#FFFBF4" stroke="#3B2418" stroke-width="6"/></svg></div>
+          <div class="menu-body"><span class="tag">SIGNATURE 01</span><h3>오후의 라떼<small>AFTERNOON LATTE</small></h3><p>부드러운 우유 거품 위에 은은한 단맛을 더한 대표 라떼.</p></div>
+        </article>
+        <article class="menu-card m2">
+          <div class="menu-art" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M40 90h110v30a45 45 0 0 1-45 45h-20a45 45 0 0 1-45-45z" fill="#FFFBF4" stroke="#3B2418" stroke-width="6"/><path d="M150 100h10a16 16 0 0 1 0 32h-12" fill="none" stroke="#3B2418" stroke-width="6"/><ellipse cx="95" cy="90" rx="55" ry="11" fill="#3B2418"/><path d="M20 172h160" stroke="#3B2418" stroke-width="6" stroke-linecap="round"/><g stroke="#3B2418" stroke-width="5" stroke-linecap="round" fill="none" opacity=".6"><path d="M80 66c-6-8 6-12 0-22"/><path d="M106 66c-6-8 6-12 0-22"/></g></svg></div>
+          <div class="menu-body"><span class="tag">SIGNATURE 02</span><h3>슬로우 핸드드립<small>SLOW HAND DRIP</small></h3><p>천천히 내려 산뜻한 향과 깔끔한 끝맛을 살린 드립 커피.</p></div>
+        </article>
+        <article class="menu-card m3">
+          <div class="menu-art" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M62 50h76l-8 120H70z" fill="#FFFBF4" stroke="#3B2418" stroke-width="6" opacity=".95"/><path d="M66 96h68l-5 70H71z" fill="#E8742A"/><path d="M68 70h64l-2 26H66z" fill="#5C3A27"/><rect x="80" y="104" width="16" height="16" rx="3" fill="#FFFBF4" opacity=".7"/><rect x="104" y="124" width="14" height="14" rx="3" fill="#FFFBF4" opacity=".7"/><path d="M120 30l-12 40" stroke="#3B2418" stroke-width="6" stroke-linecap="round"/></svg></div>
+          <div class="menu-body"><span class="tag">SIGNATURE 03</span><h3>오렌지 에이드 콜드브루<small>ORANGE COLD BREW</small></h3><p>상큼한 오렌지와 차갑게 우린 커피가 층을 이루는 여름 음료.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="space" aria-labelledby="spaceTitle">
+    <div class="wrap space-grid">
+      <div class="space-art" aria-hidden="true">
+        <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+          <rect x="60" y="40" width="380" height="220" rx="16" fill="#F39A55"/>
+          <path d="M250 40v220M60 150h380" stroke="#3B2418" stroke-width="10"/>
+          <circle cx="360" cy="105" r="34" fill="#FFFBF4" opacity=".85"/>
+          <rect x="0" y="300" width="500" height="100" fill="#2A1A11"/>
+          <rect x="120" y="250" width="260" height="18" rx="9" fill="#E8742A"/>
+          <rect x="160" y="268" width="12" height="70" fill="#E8742A"/><rect x="328" y="268" width="12" height="70" fill="#E8742A"/>
+          <path d="M186 232h36v18a18 18 0 0 1-18 18h0a18 18 0 0 1-18-18z" fill="#FFFBF4"/>
+          <path d="M280 236h30v14a15 15 0 0 1-15 15h0a15 15 0 0 1-15-15z" fill="#FFFBF4"/>
+          <path d="M40 200c20-40 50-40 50 0v120H40z" fill="#5C3A27"/><circle cx="60" cy="190" r="26" fill="#7FA06A"/><circle cx="82" cy="172" r="20" fill="#8DB277"/>
+        </svg>
+      </div>
+      <div>
+        <h2 id="spaceTitle">햇살이<br>머무는 <em>공간</em></h2>
+        <ul class="space-list">
+          <li><span class="dot"></span><div><b>통창 앞 긴 테이블</b><span>오후 빛을 가장 오래 받는 자리를 상상했습니다.</span></div></li>
+          <li><span class="dot"></span><div><b>둘이 앉는 낮은 소파</b><span>대화가 편한 높이와 거리로 배치한 좌석입니다.</span></div></li>
+          <li><span class="dot"></span><div><b>창가의 작은 정원</b><span>초록 식물이 공간에 숨을 더합니다.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="closeTitle">
+    <div class="wrap">
+      <h2 id="closeTitle">오늘 오후,<br>한 잔 어때요?</h2>
+      <p>시그니처 메뉴부터 천천히 둘러보세요.</p>
+      <a href="#menu" class="btn">메뉴 다시 보기 ↑</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span><b>오후의 한 잔 · AFTERNOON COFFEE</b> — 실존하지 않는 가상 브랜드입니다.</span>
+    <span class="badge">가상 브랜드 · 제작 시연용</span>
+  </div>
+</footer>
+</body>
+</html>
