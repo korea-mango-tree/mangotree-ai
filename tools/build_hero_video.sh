@@ -2,8 +2,9 @@
 # 메인 첫 화면 영상 합치기
 # 사용법: tools/build_hero_video.sh <원본 폴더> [출력 폴더]
 #   원본 폴더에 clips.tsv가 있어야 한다. 탭으로 구분하고, 한 줄에 장면 하나:
-#     파일명<TAB>시작초<TAB>길이초
+#     파일명<TAB>시작초<TAB>길이초[<TAB>바탕색]
 #     예) 01-blog.mp4	3.5	9
+#         08-mail-kakao.mp4	0	8.9	0x1f2328   (세로 화면은 가운데 두고 양옆을 바탕색으로 채움)
 #   장면은 적힌 순서대로 붙고, 장면 사이는 0.5초 겹쳐 넘어간다.
 # 출력: hero-main-1080.mp4, hero-main-720.mp4, hero-main-720.webm, hero-main-poster.jpg
 #   첫 화면 배경용이라 소리는 뺀다(자동재생은 음소거여야 한다).
@@ -17,11 +18,11 @@ trap 'rm -rf "$TMP"' EXIT
 
 n=0
 durs=()
-while IFS=$'\t' read -r f ss len; do
+while IFS=$'\t' read -r f ss len bg; do
   [[ -z "${f:-}" || "$f" == \#* ]] && continue
-  # 1920x1080·30fps로 맞춘다(비율이 다르면 위아래나 양옆에 검은 띠).
+  # 1920x1080·30fps로 맞춘다(비율이 다르면 위아래나 양옆을 바탕색으로 채움, 기본 검정).
   ffmpeg -nostdin -loglevel error -y -ss "$ss" -t "$len" -i "$SRC/$f" -an \
-    -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=black,fps=30,format=yuv420p,setsar=1" \
+    -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=${bg:-black},fps=30,format=yuv420p,setsar=1" \
     -c:v libx264 -preset veryfast -crf 16 "$TMP/c$n.mp4"
   durs+=("$len")
   n=$((n+1))
