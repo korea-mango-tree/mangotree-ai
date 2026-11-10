@@ -1347,3 +1347,16 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - platforms.html 6곳(meta description·og description·바로가기·섹션 제목), index.html 플랫폼 카드, 사이트 검색 항목명을 바꿨다.
 - 링크 주소(`#avatar-live`)는 기존 링크가 깨지지 않도록 그대로 두었다.
 - 본문의 "아바타 호스트" 같은 기능 설명 문구는 그대로 두었다.
+
+## 61. 메뉴명을 다시 「AI 컨설팅」으로, 페이지 문구 조정 (2026-11-10)
+
+- **사용자 요청**: 「AI 제품」보다 「AI 컨설팅」이 낫다. 내용도 조금 고친다.
+- 56절의 메뉴명 변경을 되돌렸다. 9개 페이지 헤더·푸터·메인 링크, products.html title·og:title, 사이트 검색 항목명이 다시 「AI 컨설팅」이다.
+- **products.html 문구를 컨설팅 흐름에 맞게 조정**
+  - kicker: PRODUCTS → AI CONSULTING
+  - h1: "필요한 AI만 골라 / 6가지 AI 제품" → "우리 업무에 맞는 AI, / 진단부터 도입까지"
+  - 소개 문구와 meta·og description: 진단·상담으로 먼저 정하고, 필요한 것부터 작게 도입해 넓혀 가는 흐름으로 바꿨다.
+  - 바로가기에 「교육·컨설팅 실적」(#education-consulting)을 추가했다.
+  - COMPARE 제목: "한눈에 비교하는 6가지 AI 제품" → "한눈에 보는 6가지 AI 도입 영역"
+  - HOW IT WORKS 제목: "제품별 활용 방식" → "영역별 활용 방식". 설명의 "제품이" → "각 영역이"
+- 수치·실적은 새로 넣지 않았다.
