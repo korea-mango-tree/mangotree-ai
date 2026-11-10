@@ -126,3 +126,12 @@
 .ba-head .x-num{font-size:clamp(44px,5vw,64px);font-weight:800;line-height:1;letter-spacing:-.05em;color:var(--charcoal);font-variant-numeric:tabular-nums}
 @media(max-width:860px){.ba-head{grid-template-columns:80px minmax(0,1fr)}.ba-head .x-num{font-size:48px}}
 @media(max-width:560px){.ba-head{grid-template-columns:1fr}.ba-head .x-num{font-size:44px;margin-bottom:16px}}
+/* 01 After: 긴 상세페이지를 프레임 안에서 위→아래로 자동 이동해 끝까지 보여 줌(거리·시간은 usecase-scroll.js가 계산) */
+#scen-1 .ba-shot img.ba-scroll{inset:0 0 auto 0;height:auto;object-fit:fill;will-change:transform;transform:translateY(0)}
+#scen-1 .ba-shot img.ba-scroll.is-run{animation:baScroll var(--dur,12s) ease-in-out infinite}
+#scen-1 .ba-shot img.ba-scroll.is-paused{animation-play-state:paused}
+@keyframes baScroll{0%,12%{transform:translateY(0)}50%,62%{transform:translateY(var(--dist,0px))}100%{transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+  #scen-1 .ba-shot>a{overflow-y:auto;overscroll-behavior:contain}
+  #scen-1 .ba-shot img.ba-scroll{position:static;animation:none!important;transform:none}
+}
