@@ -227,7 +227,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 .wf-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .wf-4{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
 .wf-step figure{margin:0}
-.wf-shot{display:grid;place-items:center;aspect-ratio:16/10;background:#fff;border:1px solid rgba(22,22,22,.14);border-radius:14px;overflow:hidden;cursor:zoom-in}
+.wf-shot{display:grid;place-items:center;aspect-ratio:16/10;background:#fff;border:1px solid rgba(22,22,22,.14);border-radius:14px;overflow:hidden}
 .wf-shot img{display:block;width:100%;height:100%;object-fit:contain}
 .wf-body{display:block;padding-top:20px}
 .wf-n{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#FEE500;color:#161616;font-size:14px;font-weight:800;margin-right:10px;vertical-align:middle}
@@ -241,7 +241,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 .wf-next.end{color:#5A554C!important;font-weight:600}
 .wf-more{align-self:center;background:#F5F0E6;border-radius:14px;padding:32px}
 .wf-more .wf-n{margin-bottom:6px}
-.wf-4 .wf-shot{position:relative;aspect-ratio:16/9;cursor:pointer}
+.wf-4 .wf-shot{position:relative;aspect-ratio:16/9}
 .wf-4 .wf-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .wf-4 .wf-body{padding-top:14px}
 .wf-4 h3{font-size:18px;margin-top:10px}
