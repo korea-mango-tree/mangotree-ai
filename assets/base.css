@@ -56,3 +56,11 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:64px 0 40
 .totop{position:fixed;bottom:92px;right:28px;width:48px;height:48px;border-radius:50%;background:#fff;color:var(--ink);border:1px solid var(--line-2);cursor:pointer;display:grid;place-items:center;box-shadow:var(--sh);opacity:0;visibility:hidden;transition:opacity .28s,visibility .28s;z-index:95}
 .totop.show{opacity:1;visibility:visible}
 .totop svg{width:19px;height:19px}
+
+/* 푸터 운영 SNS(블로그·인스타그램·유튜브) */
+.foot-sns{list-style:none;margin:16px 0 0;padding:0;display:flex;gap:8px}
+.foot-sns a{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;color:#5f5a52;border:1px solid rgba(22,22,22,.12);background:#fff;transition:color .2s,border-color .2s,background .2s,transform .2s}
+.foot-sns svg{width:22px;height:22px}
+.foot-sns a:hover{color:#161616;border-color:#161616;background:#FFE500;transform:translateY(-2px)}
+.foot-sns a:focus-visible{outline:3px solid #161616;outline-offset:2px;color:#161616}
+@media(prefers-reduced-motion:reduce){.foot-sns a{transition:none}.foot-sns a:hover{transform:none}}

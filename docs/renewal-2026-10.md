@@ -1160,3 +1160,19 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 「특허와 오시는 길」: 특허 2건은 이름만 넣었다(번호는 넣지 않음). 춘천 본사·가평 지사 주소와 대표전화를 넣고, 회사소개 원문과 회사소개서 PDF로 연결했다.
   - 「상위 10%」 같은 근거 없는 홍보 문구, 스튜디오 사진, 새 수치는 넣지 않았다.
 - **검증 (1440·390, 9개 페이지)**: 서브메뉴가 CTA 바로 위에 있고, 링크 2개·새 창 속성이 맞다. 가로 넘침·오류 0. 최근 변경(VS, 활용사례 01·02, 모듈 에디터, 교육·컨설팅)은 그대로다.
+
+## 47. 푸터 운영 SNS 아이콘 (2026-11-10)
+
+- **사용자 요청**: 공통 푸터 브랜드 영역에 운영 SNS 3개를 작은 아이콘으로 넣는다.
+- **링크**(주소 그대로)
+  - 네이버 블로그 `https://blog.naver.com/mtree712`
+  - 인스타그램 `https://www.instagram.com/mangotree_official/`
+  - 유튜브 `https://www.youtube.com/@%EB%A7%9D%EA%B3%A0%ED%8A%B8%EB%A6%AC-j3h`
+- **구현**
+  - 푸터 로고·문구 아래에 가로로 배치했다(`ul.foot-sns`).
+  - 아이콘은 인라인 SVG다: 블로그는 「N」 사각형, 인스타그램은 카메라, 유튜브는 재생 버튼.
+  - 클릭 영역 44×44px. 마우스를 올리면 노란 배경, 키보드 포커스는 검은 외곽선이 보인다.
+  - 각 링크에 aria-label·title 「망고트리 ○○ (새 창)」, `target="_blank" rel="noopener noreferrer"`
+  - 스타일은 `assets/base.css`, `assets/diagnosis.css`(진단 페이지용)에 넣었다.
+- **대상**: index·products·modules·platforms·usecase·portfolio·pricing·diagnosis·about 9개 페이지. `demo-cafe.html`은 제외했다.
+- **검증 (1440·390)**: 9개 페이지 모두 링크 3개의 주소·새 창·rel·44px가 맞다. 가로 넘침·오류 0. 회사소개|제작문의 서브메뉴는 그대로 있다.
