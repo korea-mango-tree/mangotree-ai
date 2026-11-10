@@ -6,7 +6,7 @@ function make(){video=document.createElement('video');video.muted=true;video.loo
  const s1=document.createElement('source');s1.src=big?'assets/video/hero-main-1080.mp4':'assets/video/hero-main-720.mp4';s1.type='video/mp4';
  const s2=document.createElement('source');s2.src='assets/video/hero-main-720.webm';s2.type='video/webm';
  video.append(s1,s2);mount.append(video);video.addEventListener('timeupdate',sync);video.addEventListener('seeked',sync);}
-const SCENES=[[0,'네이버 블로그 글 작성·발행'],[3.72,'인스타그램 피드 업로드·좋아요·댓글'],[7.28,'AI 아바타 라이브커머스 진행'],[9.48,'네이버 검색광고 캠페인 설정·OFF'],[12.68,'스마트스토어 리뷰 답글 등록'],[15.15,'스마트스토어 상품정보 입력'],[19.85,'카카오톡 업무 알림 전송(연출 예시)'],[21.88,'랜딩페이지 제작·배포(가상 브랜드 시연)']];
+const SCENES=[[0,'네이버 블로그 글 작성·발행'],[2.75,'인스타그램 피드 업로드·좋아요·댓글'],[5.29,'AI 아바타 라이브커머스 진행'],[6.92,'네이버 검색광고 캠페인 설정·OFF'],[9.35,'스마트스토어 리뷰 답글 등록'],[11.15,'스마트스토어 상품정보 입력'],[14.58,'랜딩페이지 제작·배포(가상 브랜드 시연)']];
 const now=document.getElementById('heroAiNow'),task=document.getElementById('heroAiTask');let last='';
 function sync(){if(!video||!task)return;const t=video.currentTime;let label=SCENES[0][1];for(const s of SCENES){if(t>=s[0])label=s[1];}if(label!==last){task.textContent=label;last=label;}}
 function setPlaying(next){playing=next;if(next){if(!video)make();const p=video.play();if(p&&p.catch)p.catch(()=>{});}else if(video){video.pause();}
