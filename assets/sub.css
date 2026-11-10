@@ -424,3 +424,7 @@ body.mdl-lock{overflow:hidden}
 /* 요금제 플랜 3개(COMMERCE·GROWTH·ENTERPRISE): 3열, 좁은 화면 1열 */
 #pricing .x-plans{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:860px){#pricing .x-plans{grid-template-columns:1fr;row-gap:28px}}
+
+/* 상담문의 가격 표시 */
+.x-ch-price small{display:block;margin:6px 0 0}
+.x-price-ask b{font-size:clamp(26px,2.4vw,32px)}
