@@ -1176,3 +1176,12 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 스타일은 `assets/base.css`, `assets/diagnosis.css`(진단 페이지용)에 넣었다.
 - **대상**: index·products·modules·platforms·usecase·portfolio·pricing·diagnosis·about 9개 페이지. `demo-cafe.html`은 제외했다.
 - **검증 (1440·390)**: 9개 페이지 모두 링크 3개의 주소·새 창·rel·44px가 맞다. 가로 넘침·오류 0. 회사소개|제작문의 서브메뉴는 그대로 있다.
+
+## 48. 「원격 관리 상담하기」 → 카카오톡 1:1 상담 (2026-11-10)
+
+- **사용자 요청**: 「원격 관리 상담하기」를 누르면 망고트리 카카오톡 채널 1:1 대화로 연결한다.
+- **변경**: 메일(mailto) 링크였던 두 곳을 `https://pf.kakao.com/_BxelfC/chat`으로 바꿨다. `target="_blank" rel="noopener noreferrer"`이고, 화면 낭독기용 「카카오톡 1:1 상담, 새 창」 안내를 넣었다.
+  - `products.html#ai-assistant`(ChatGPT·Claude 도입과 원격 관리): 텍스트 링크, 화살표 → ↗
+  - `pricing.html#addons`(부가 서비스): 검은 버튼
+- 「원격 활용 지원 알아보기」, 「서비스 소개 보기」 등 안내 링크와 다른 CTA는 그대로 두었다.
+- **검증 (1440·390)**: 두 링크의 href·새 창·rel 확인. 카카오 메시지는 보내지 않았다.
