@@ -9,3 +9,6 @@
 
 /* 좁은 모바일: 가운데 검색창이 오른쪽 버튼과 겹치지 않게 여백·글자를 조금 줄임 */
 @media(max-width:380px){.search-dock-open{padding:14px 8px 14px 10px;gap:6px;font-size:12px}.search-dock-close{width:28px;margin-right:2px}.search-dock svg{width:17px}}
+
+/* 하단 검색 말풍선을 없앤 대신 상단 돋보기를 PC에서도 보인다 */
+.site-search-toggle{display:grid}

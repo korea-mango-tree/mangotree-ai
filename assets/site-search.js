@@ -2,7 +2,7 @@
 const nav=document.querySelector('.nav-act');if(!nav)return;
 const icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>';
 const top=document.createElement('button');top.type='button';top.className='site-search-toggle';top.setAttribute('aria-label','사이트 검색 열기');top.innerHTML=icon;nav.insertBefore(top,nav.querySelector('.burger'));
-const dock=document.createElement('div');dock.className='search-dock';dock.innerHTML='<button type="button" class="search-dock-open" aria-label="서비스 검색 또는 AI 기획 시작">'+icon+'<span>어떤 도움이 필요하세요?</span><b>검색 · AI 기획</b></button><button type="button" class="search-dock-close" aria-label="하단 검색 말풍선 닫기">×</button>';document.body.append(dock);document.body.classList.add('has-search-dock');
+const dock=document.createElement('div');dock.className='search-dock';dock.innerHTML='<button type="button" class="search-dock-open" aria-label="서비스 검색 또는 AI 기획 시작">'+icon+'<span>어떤 도움이 필요하세요?</span><b>검색 · AI 기획</b></button><button type="button" class="search-dock-close" aria-label="하단 검색 말풍선 닫기">×</button>';dock.hidden=true;/* 하단 가운데 검색 말풍선은 사용자 지시로 띄우지 않는다. 검색은 상단 돋보기 버튼으로 연다 */
 dock.querySelector('.search-dock-close').onclick=()=>{dock.hidden=true;document.body.classList.remove('has-search-dock');};
 let scrollAnchor=Math.max(0,window.scrollY),scrollPending=false;
 function followScroll(){scrollPending=false;const y=Math.max(0,window.scrollY),delta=y-scrollAnchor;if(dock.hidden){scrollAnchor=y;return;}if(y<=24||Math.abs(delta)>=12){const hide=y>24&&delta>0&&!dock.contains(document.activeElement);dock.classList.toggle('is-scroll-hidden',hide);dock.inert=hide;dock.setAttribute('aria-hidden',String(hide));scrollAnchor=y;}}
