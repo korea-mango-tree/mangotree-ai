@@ -38,7 +38,7 @@
 .before .ba-visual{background:#fff;border:1px dashed #BDB7AC}
 .after .ba-visual{background:#fff;border:1px solid rgba(22,22,22,.14)}
 .ba-shot{grid-template-rows:minmax(0,1fr);place-items:stretch}
-.ba-shot>span{position:relative;display:block;min-height:0;overflow:hidden}
+.ba-shot>a,.ba-shot>span{position:relative;display:block;min-height:0;overflow:hidden}
 .ba-shot img{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);object-fit:contain}
 
 .ba-points{list-style:none;display:grid;gap:8px;margin:20px 0 0;padding:0}
@@ -80,7 +80,7 @@
   .ba-arrow{transform:rotate(90deg)}
   .ba-visual{aspect-ratio:auto}
   .before .ba-visual{min-height:260px}
-  .ba-shot>span{display:grid;place-items:center;padding:12px}
+  .ba-shot>a,.ba-shot>span{display:grid;place-items:center;padding:12px}
   .ba-shot img{position:static;width:100%;height:auto;max-height:496px;object-fit:contain}
 }
 @media(max-width:560px){
@@ -114,7 +114,7 @@
 
 /* Detail-page comparison uses landscape visuals at every viewport. */
 #scen-1 .ba-visual{aspect-ratio:16/10;min-height:0}
-#scen-1 .ba-shot>span{display:block;padding:0}
+#scen-1 .ba-shot>a,#scen-1 .ba-shot>span{display:block;padding:0}
 #scen-1 .ba-shot img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:top}
 #scen-1 .ba-sketch{padding:12px}
 #scen-1 .sk-page{width:100%;max-width:360px;grid-template-columns:1fr 1fr;padding:12px;gap:6px}
@@ -132,7 +132,7 @@
 #scen-1 .ba-shot img.ba-scroll.is-paused{animation-play-state:paused}
 @keyframes baScroll{0%,12%{transform:translateY(0)}50%,62%{transform:translateY(var(--dist,0px))}100%{transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){
-  #scen-1 .ba-shot>span{overflow-y:auto;overscroll-behavior:contain}
+  #scen-1 .ba-shot>a,#scen-1 .ba-shot>span{overflow-y:auto;overscroll-behavior:contain}
   #scen-1 .ba-shot img.ba-scroll{position:static;animation:none!important;transform:none}
 }
 /* 02 After: 사진 1장 → 여러 콘텐츠 구성 예시(16:10 가로 비주얼). After 칸만 16:10 */
