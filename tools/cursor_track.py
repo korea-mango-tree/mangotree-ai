@@ -5,7 +5,7 @@
   이벤트: 원본 영상 기준 "초,x,y,종류" 를 ; 로 이어 쓴다. 종류 c=클릭, m=이동만
           예) "0.3,630,250,c;3.8,878,88,c"
   배율·ox·oy: 원본 좌표를 1920x1080 화면 좌표로 옮기는 값(원본*배율+ox).
-커서는 각 이벤트 시각에 그 위치에 도착하고, 클릭이면 노란 원이 퍼진다. 커서 뒤에는 파란 그림자를 깐다.
+커서는 각 이벤트 시각에 그 위치에 도착하고, 클릭이면 노란 원이 퍼진다. (파란 그림자는 GLOW_ON 으로 켜고 끈다. 지금은 끔)
 """
 import sys, subprocess
 from PIL import Image, ImageDraw, ImageFilter
@@ -48,6 +48,7 @@ def make_glow(c):
     g.putalpha(m)
     return g, pad
 GLOW, GPAD = make_glow(CUR); GLOW_DOWN, _ = make_glow(CUR_DOWN)
+GLOW_ON = False  # 파란 그림자 끔(사용자 지시). 켜려면 True
 
 def ease(u):
     u = max(0.0, min(1.0, u))
@@ -85,8 +86,9 @@ for i in range(n):
                 d.ellipse([x - 13, y - 13, x + 13, y + 13], fill=(255, 229, 0, int(210 * (1 - a))))
                 down = down or (T - t) < 0.15
         c = CUR_DOWN if down else CUR
-        g = GLOW_DOWN if down else GLOW
-        fr.alpha_composite(g, (int(p[0]) - 2 - GPAD + 4, int(p[1]) - 2 - GPAD + 6))
+        if GLOW_ON:
+            g = GLOW_DOWN if down else GLOW
+            fr.alpha_composite(g, (int(p[0]) - 2 - GPAD + 4, int(p[1]) - 2 - GPAD + 6))
         fr.alpha_composite(c, (int(p[0]) - 2, int(p[1]) - 2))
     proc.stdin.write(fr.tobytes())
 proc.stdin.close(); proc.wait()
