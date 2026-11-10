@@ -135,3 +135,8 @@
   #scen-1 .ba-shot>a{overflow-y:auto;overscroll-behavior:contain}
   #scen-1 .ba-shot img.ba-scroll{position:static;animation:none!important;transform:none}
 }
+/* 02 After: 사진 1장 → 여러 콘텐츠 구성 예시(16:10 가로 비주얼). After 칸만 16:10 */
+@media(min-width:1200px){#scen-2 .ba-visual{aspect-ratio:16/10;min-height:0}}
+@media(min-width:861px){#scen-2 .ba-multi>a{display:block;padding:0;cursor:pointer}#scen-2 .ba-multi img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain}}
+@media(max-width:860px){#scen-2 .ba-multi>a{padding:0}#scen-2 .ba-multi img{max-height:none}}
+#scen-2 .ba-multi{background:#f8fafc}
