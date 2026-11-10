@@ -1,0 +1,27 @@
+/* AI 교육·컨설팅 실적(products.html#education-consulting) */
+.edu-sec{background:#fff}
+.edu-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:start}
+.edu-copy h2{font-size:clamp(30px,3.6vw,48px);line-height:1.18;letter-spacing:-.05em}
+.edu-copy h2 em{font-style:normal;color:#161616;background:linear-gradient(transparent 62%,var(--mango,#FFE500) 62%)}
+.edu-lead{font-size:16.5px;line-height:1.8;color:var(--ink-2,#4A4740);margin-top:18px;max-width:560px}
+.edu-topics{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.edu-topics li{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:var(--ivory,#F5F0E6);font-size:14.5px;font-weight:700}
+.edu-topics b{font-size:12px;color:#8a7f5a}
+.edu-profile{margin-top:26px;padding:20px 22px;border-radius:18px;border:1px solid rgba(22,22,22,.12)}
+.edu-profile h3{font-size:16px;letter-spacing:-.02em}
+.edu-profile ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.edu-profile li{position:relative;padding-left:14px;font-size:14.5px;color:#3f3b34}
+.edu-profile li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--mango,#FFE500);box-shadow:0 0 0 1px #c9b400}
+.edu-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:22px}
+.edu-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) ;grid-template-rows:auto;gap:10px}
+.edu-photos figure{position:relative;margin:0;border-radius:14px;overflow:hidden;aspect-ratio:1;background:#eee}
+.edu-photos img{display:block;width:100%;height:100%;object-fit:cover}
+.edu-photos .edu-main{grid-column:1/-1;aspect-ratio:16/10}
+.edu-photos .edu-main img{object-position:50% 22%}
+.edu-photos figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font-size:12px;line-height:1.4}
+.edu-photos figcaption b{display:block;font-size:13px}
+.edu-photos .edu-main figcaption{font-size:13.5px;padding:30px 16px 14px}.edu-photos .edu-main figcaption b{font-size:16px}
+@media(min-width:861px){.edu-photos{grid-template-columns:repeat(4,minmax(0,1fr))}.edu-photos .edu-main{aspect-ratio:16/9}}
+@media(max-width:860px){.edu-grid{grid-template-columns:1fr;gap:32px}}
+@media(max-width:560px){.edu-photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.edu-photos figcaption{font-size:11px;padding:18px 8px 8px}.edu-photos figcaption b{font-size:12px}.edu-cta .btn{flex:1 1 100%;justify-content:center}}
+@media(min-width:861px){.edu-photos figure:not(.edu-main) figcaption span{display:none}.edu-photos figure:not(.edu-main) figcaption b{font-size:12.5px}}
