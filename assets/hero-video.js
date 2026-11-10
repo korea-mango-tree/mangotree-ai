@@ -16,8 +16,13 @@ function place(){if(!now)return;const stage=now.parentElement,bg=stage.querySele
  let L=ox+SCREEN_TL[0]*k+10,T=oy+SCREEN_TL[1]*k+10;
  if(L<12){const br=button.getBoundingClientRect(),sr=stage.getBoundingClientRect();L=br.left-sr.left;T=br.top-sr.top-now.offsetHeight-10;}
  const maxL=W-now.offsetWidth-12;L=Math.max(12,Math.min(L,maxL));T=Math.max(12,T);
+ // 제목·문구·버튼과 겹치면(주로 모바일·태블릿) 영상 재생 버튼 옆으로 옮긴다
+ const sr=stage.getBoundingClientRect(),nw=now.offsetWidth,nh=now.offsetHeight;
+ const hit=(l,t)=>[...stage.querySelectorAll('.h-label,.h-hero-title,.h-hero-sub,.h-hero-cta>*,#heroVideoToggle')].some(e=>{const r=e.getBoundingClientRect(),x=r.left-sr.left,y=r.top-sr.top;return l<x+r.width+6&&l+nw>x-6&&t<y+r.height+6&&t+nh>y-6;});
+ if(hit(L,T)){const br=button.getBoundingClientRect(),bx=br.left-sr.left,by=br.top-sr.top+(br.height-nh)/2;
+  L=bx+br.width+10<=W-12-nw?bx+br.width+10:bx-10-nw;T=by;}
  now.style.transform='translate('+Math.round(L)+'px,'+Math.round(T)+'px)';now.classList.add('is-placed');}
-addEventListener('resize',place);
+addEventListener('resize',place);addEventListener('load',place);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);if('ResizeObserver' in window&&now)new ResizeObserver(()=>place()).observe(now.parentElement);
 function setPlaying(next){playing=next;if(next){if(!video)make();const p=video.play();if(p&&p.catch)p.catch(()=>{});}else if(video){video.pause();}
  button.textContent=next?'영상 멈추기':'영상 재생';if(now)now.classList.toggle('is-paused',!next);button.setAttribute('aria-pressed',String(next));}
 button.addEventListener('click',()=>setPlaying(!playing));place();reduced.addEventListener('change',()=>{if(reduced.matches)setPlaying(false);});setPlaying(!reduced.matches);
