@@ -20,6 +20,8 @@ const data=[
 ['페이지메이커','상세페이지 자동 제작 pagemaker','platforms.html#pagemaker'],
 ['페이지커넥트','인플루언서 마케팅 공동구매 배체사','platforms.html#pageconnect'],
 ['티글','신선식품 커머스 tigl','platforms.html#tigl'],
+['AI 아바타 라이브','라이브커머스 관광가이드 캐릭터 아바타 호스트','platforms.html#avatar-live'],
+['바이브웍스','AI 녹음기 스마트융복합 VIBEWORX 전사 요약 번역','platforms.html#vibeworx'],
 ['활용사례 · Before / After','비포 애프터 도입 전후','usecase.html'],
 ['포트폴리오 · 제작 작업물','갤러리 촬영 디자인 홈페이지 영상','portfolio.html#works'],
 ['앱·플랫폼 개발 사례','개발 앱 플랫폼','portfolio.html#cases'],

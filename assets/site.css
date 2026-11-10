@@ -241,7 +241,8 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 .wf-next.end{color:#5A554C!important;font-weight:600}
 .wf-more{align-self:center;background:#F5F0E6;border-radius:14px;padding:32px}
 .wf-more .wf-n{margin-bottom:6px}
-.wf-4 .wf-shot{aspect-ratio:4/3;cursor:pointer}
+.wf-4 .wf-shot{position:relative;aspect-ratio:16/9;cursor:pointer}
+.wf-4 .wf-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .wf-4 .wf-body{padding-top:14px}
 .wf-4 h3{font-size:18px;margin-top:10px}
 .wf-4 h3 a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}

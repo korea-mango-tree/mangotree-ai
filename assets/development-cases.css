@@ -21,3 +21,5 @@
 @media(hover:hover) and (pointer:fine){.portfolio-page .x-devimg:hover img{scale:1.025}}
 @media(max-width:900px){.portfolio-page .x-dev>li{grid-template-columns:1fr}.portfolio-page .x-dev .x-devimg{min-height:0;padding:72px 24px 32px}.portfolio-page .x-dev .x-devtxt{padding:28px}.portfolio-page .x-dev p.dev-lead{font-size:20px}.dev-visual-label{top:20px;left:24px;right:24px}.dev-visual-label b{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.portfolio-page .x-devimg img{transition:none;scale:1!important}}
+
+.portfolio-page .x-devimg img.dev-phones{border-radius:0;box-shadow:none;filter:drop-shadow(0 18px 26px #34204c26)}

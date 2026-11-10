@@ -1019,3 +1019,37 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 「월 99,000원부터」 → 「월 299,000원부터」로 바꿨다(첫 화면 문구, meta·og 설명).
   - 플랜 목록은 데스크톱 3열, 860px 이하 1열이다.
 - **검증 (1440·1024·390·320)**: 3개 카드 높이 일치, 비교 상자 0개, 가로 넘침·오류·axe 0건이다.
+
+## 40. 운영 플랫폼 실제 화면 재캡처, AI 아바타 라이브·바이브웍스 추가, 앱 개발 사례 4건 (2026-11-10)
+
+- **사용자 요청**
+  - 페이지커넥트의 저화질 화면을 pageconnect.co.kr 실제 화면으로 바꾼다.
+  - 오늘밤엔·망고티켓 서비스 화면을 홈페이지 스크린샷으로 다시 반영한다.
+  - 활용사례 01~04 이미지를 가로 와이드로 줄이고, 잘리지 않게 한다.
+  - AI 아바타 플랫폼(라이브커머스·관광가이드)과 바이브웍스 AI 녹음기(스마트융복합)를 추가한다.
+  - 포트폴리오 앱·플랫폼 개발 사례를 Google Play 앱 4개(바이브웍스·재미글로벌·허브패밀리·오늘밤엔)로 바꾼다.
+- **캡처 방법**: Playwright(내장 크롬), 2배 해상도. 크롬 확장(Claude in Chrome)은 이 클라우드 세션에 도구가 없어 쓰지 못했다. 환경 `mangotree-ai`에 각 사이트와 CDN·이미지 호스트를 허용했다.
+- **이미지 크기**: 실제 표시 크기의 약 2배로 맞췄다.
+
+| 파일 | 출처 | 크기 | 쓰는 곳 |
+|---|---|---|---|
+| `assets/work/pageconnect.jpg` | pageconnect.co.kr 첫 화면 | 1600×900 | 메인 플랫폼 목록, 모듈 COMMERCE, 플랫폼 #pageconnect |
+| `assets/workflows/pageconnect-link.jpg` | pageconnect.co.kr/con/link (커넥트 상품 링크 목록) | 1600×900 | 활용사례 03, 메인 03 확대 링크 |
+| `assets/screens/flow-step3.webp`·`-poster.jpg` | 커넥트 목록을 내려 보는 화면 | 960×600, 34장 | 메인 흐름 03 |
+| `assets/screens/platforms-flow.webp` | 기존 앞부분 60장 + 페이지커넥트 첫 화면 22장(옛 이용가이드 구간 교체) | 960×600, 82장 | 플랫폼 첫 화면 |
+| `assets/work/oneulbamn-mobile.jpg` | oneulbamn.com 모바일(390px) | 480×666 | 메인 플랫폼 목록, 플랫폼 #oneulbamn |
+| `assets/work/mangoticket-mobile.jpg` | mangoticket.co.kr 모바일(유튜브 영상 칸은 숨기고 캡처) | 480×666 | 메인 플랫폼 목록, 플랫폼 #mangoticket |
+| `assets/work/avatar-live.jpg` | characterfront.vercel.app/live (초기 안내 건너뛰고 아바타 등장 후) | 1600×900 | 플랫폼 #avatar-live, 메인 목록 |
+| `assets/work/vibeworx.jpg` | vibeworx.co.kr 첫 화면 | 1600×900 | 플랫폼 #vibeworx, 메인 목록 |
+| `assets/workflows/ai-planning-wide.jpg` | 기존 AI 기획 캡처 위쪽 16:9 | 680×383 | 활용사례 01 |
+| `assets/workflows/ecommerce-statistics-wide.jpg` | 기존 통계 대시보드 위쪽 16:9 | 1280×720 | 활용사례 04 |
+| `assets/work/app-*.webp` | Google Play 스크린샷 3장 조합(투명 배경) | 1320×751 | 포트폴리오 개발 사례 4건 |
+| `assets/work/app-oneulbamn-wide.webp`·`app-jaeme-wide.webp` | Google Play 스크린샷 5장 조합 | 1500×676·1460×690 | 메인 SELECTED WORK |
+
+- **삭제한 옛 이미지**: `connect-guide4.jpg`·`guide4-link-crop.jpg`(이용가이드 확대본, 흐림), `inline/655d12ce7582.jpg`·`inline/48fac7165d48.jpg`(240×333 서비스 화면), `oneulbamn-app-screens.jpg`·`commerce-app-screens.jpg`(회사소개서 수록).
+- **페이지커넥트 주소**: 바로가기 링크와 브라우저 틀 주소를 baechesa.kr → pageconnect.co.kr로 바꿨다.
+- **활용사례 01~04**: 상자를 4:3 → 16:9로 줄였다. 이미지를 상자에 꽉 맞추고(`position:absolute; object-fit:contain`) 세로로 긴 01·04는 와이드 이미지를 따로 만들었다. 이전에는 이미지 높이가 상자보다 커서 아래가 잘렸다.
+- **플랫폼 페이지**: 06 AI 아바타 라이브(라이브커머스 · 관광가이드), 07 바이브웍스(스마트융복합 · AI 녹음기)를 추가했다. 바로가기, meta 설명, 첫 화면 문구(「5개 플랫폼」 → 「플랫폼과 AI 서비스」), 사이트 검색 목록도 함께 바꿨다. 아바타 라이브 화면의 상품은 사이트에 표시된 대로 테스트 상품(실제 결제 없음)이다.
+- **메인**: 플랫폼 목록에 두 항목을 추가했다. SELECTED WORK의 오늘밤엔 이미지는 앱 스크린샷으로 바꿨고, 「커머스 앱 구축 사례」 카드는 재미글로벌로 바꿨다.
+- **포트폴리오**: 개발 사례를 01 바이브웍스 → 02 재미글로벌 → 03 허브패밀리 → 04 오늘밤엔 순서로 넣었다. 설명은 각 Google Play 앱 소개문을 따랐고, 버튼은 Google Play 페이지로 연결된다(새 창). 기존 「커머스 앱 구축」 사례는 뺐다.
+- **검증 (1440·390)**: 콘솔 오류 0건, 가로 넘침 0건, 포트폴리오 슬라이드 1/4~4/4 정상이다. axe 색 대비 경고는 스크롤 등장 효과 직전 상태에서 잡히는 기존 경고와 같은 종류이고, 변경 전과 개수가 같다(플랫폼 페이지만 새 사례 2건 몫으로 +2).
