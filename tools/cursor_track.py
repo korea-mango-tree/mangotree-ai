@@ -5,7 +5,7 @@
   이벤트: 원본 영상 기준 "초,x,y,종류" 를 ; 로 이어 쓴다. 종류 c=클릭, m=이동만
           예) "0.3,630,250,c;3.8,878,88,c"
   배율·ox·oy: 원본 좌표를 1920x1080 화면 좌표로 옮기는 값(원본*배율+ox).
-커서는 각 이벤트 시각에 그 위치에 도착하고, 클릭이면 파란 원이 퍼진다. 커서 뒤에는 파란 그림자를 깐다.
+커서는 각 이벤트 시각에 그 위치에 도착하고, 클릭이면 노란 원이 퍼진다. 커서 뒤에는 파란 그림자를 깐다.
 """
 import sys, subprocess
 from PIL import Image, ImageDraw, ImageFilter
@@ -81,8 +81,8 @@ for i in range(n):
             if k == 'c' and t <= T < t + 0.45:
                 a = (T - t) / 0.45
                 r = 14 + 54 * a
-                d.ellipse([x - r, y - r, x + r, y + r], outline=BLUE + (int(255 * (1 - a)),), width=9)
-                d.ellipse([x - 13, y - 13, x + 13, y + 13], fill=BLUE + (int(170 * (1 - a)),))
+                d.ellipse([x - r, y - r, x + r, y + r], outline=(255, 229, 0, int(255 * (1 - a))), width=9)
+                d.ellipse([x - 13, y - 13, x + 13, y + 13], fill=(255, 229, 0, int(210 * (1 - a))))
                 down = down or (T - t) < 0.15
         c = CUR_DOWN if down else CUR
         g = GLOW_DOWN if down else GLOW
