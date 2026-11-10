@@ -11,7 +11,7 @@
 set -euo pipefail
 SRC=${1:?원본 폴더}
 OUT=${2:-assets/video}
-XF=0.5
+XF=${XF:-0.5}
 mkdir -p "$OUT"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
