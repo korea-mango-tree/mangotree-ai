@@ -64,3 +64,6 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:64px 0 40
 .foot-sns a:hover{color:#161616;border-color:#161616;background:#FFE500;transform:translateY(-2px)}
 .foot-sns a:focus-visible{outline:3px solid #161616;outline-offset:2px;color:#161616}
 @media(prefers-reduced-motion:reduce){.foot-sns a{transition:none}.foot-sns a:hover{transform:none}}
+
+/* 투명 로고: 원본 래스터는 그대로 두고 위아래 투명 여백만 CSS로 잘라 보이게 함(내용 영역 2000x311, 위쪽 178px) */
+img.logo-t{aspect-ratio:2000/311;width:auto;object-fit:cover;object-position:0 49.86%;background:none}
