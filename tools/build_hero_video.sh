@@ -2,10 +2,12 @@
 # 메인 첫 화면 영상 합치기
 # 사용법: tools/build_hero_video.sh <원본 폴더> [출력 폴더]
 #   원본 폴더에 clips.tsv가 있어야 한다. 탭으로 구분하고, 한 줄에 장면 하나:
-#     파일명<TAB>시작초<TAB>길이초[<TAB>바탕색[<TAB>배속]]   (배속 2 = 2배 빠르게, 결과 길이 = 길이초/배속)
+#     파일명<TAB>시작초<TAB>길이초[<TAB>바탕색[<TAB>배속[<TAB>커서]]]   (배속 2 = 2배 빠르게, 결과 길이 = 길이초/배속)
+#     바탕색을 비울 때는 - 를 쓴다. 커서: 원본 기준 "초,x,y,c|m;…" (tools/cursor_track.py 참고)
 #     예) 01-blog.mp4	3.5	9
 #         08-mail-kakao.mp4	0	8.9	0x1f2328   (세로 화면은 가운데 두고 양옆을 바탕색으로 채움)
-#   장면은 적힌 순서대로 붙고, 장면 사이는 0.5초 겹쳐 넘어간다.
+#   장면은 적힌 순서대로 붙고, 장면 사이는 XF초(기본 0.5) 겹쳐 넘어간다.
+#   같은 파일에서 바로 이어지는 구간(앞 줄 끝 = 다음 줄 시작)은 겹치지 않고 그대로 이어 붙인다(속도만 바뀜).
 # 출력: hero-main-1080.mp4, hero-main-720.mp4, hero-main-720.webm, hero-main-poster.jpg
 #   첫 화면 배경용이라 소리는 뺀다(자동재생은 음소거여야 한다).
 set -euo pipefail
@@ -17,18 +19,44 @@ TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
 n=0
-durs=()
-while IFS=$'\t' read -r f ss len bg sp; do
+durs=(); files=(); starts=(); ends=()
+while IFS=$'\t' read -r f ss len bg sp cur; do
   sp=${sp:-1}; [[ "${bg:-}" == "-" ]] && bg=""
   [[ -z "${f:-}" || "$f" == \#* ]] && continue
   # 1920x1080·30fps로 맞춘다(비율이 다르면 위아래나 양옆을 바탕색으로 채움, 기본 검정).
   ffmpeg -nostdin -loglevel error -y -ss "$ss" -t "$len" -i "$SRC/$f" -an \
     -vf "setpts=PTS/$sp,scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=${bg:-black},fps=30,format=yuv420p,setsar=1" \
     -c:v libx264 -preset veryfast -crf 16 "$TMP/c$n.mp4"
-  durs+=("$(python3 -c "print(round($len/$sp,3))")")
+  d=$(python3 -c "print(round($len/$sp,3))")
+  if [[ -n "${cur:-}" ]]; then
+    wh=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$SRC/$f")
+    geo=$(python3 -c "w,h=map(int,'$wh'.split(','));s=min(1920/w,1080/h);print(s,(1920-round(w*s))//2,(1080-round(h*s))//2)")
+    python3 "$(dirname "$0")/cursor_track.py" "$TMP/k$n.mov" "$d" 1920 1080 $geo "$ss" "$sp" "$cur"
+    ffmpeg -nostdin -loglevel error -y -i "$TMP/c$n.mp4" -i "$TMP/k$n.mov" -filter_complex "[0:v][1:v]overlay=0:0:shortest=1,format=yuv420p" -c:v libx264 -preset veryfast -crf 16 "$TMP/o$n.mp4"
+    mv "$TMP/o$n.mp4" "$TMP/c$n.mp4"
+  fi
+  durs+=("$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$TMP/c$n.mp4")")
+  files+=("$f"); starts+=("$ss"); ends+=("$(python3 -c "print(round($ss+$len,3))")")
   n=$((n+1))
 done < "$SRC/clips.tsv"
 (( n > 0 )) || { echo "clips.tsv에 장면이 없습니다" >&2; exit 1; }
+
+# 같은 파일에서 바로 이어지는 구간을 하나로 묶는다(이어 붙이기)
+g=0; gd=(); : > "$TMP/list0.txt"
+for ((i=0;i<n;i++)); do
+  if (( i > 0 )) && [[ "${files[$i]}" == "${files[$((i-1))]}" ]] && python3 -c "import sys;sys.exit(0 if abs(${starts[$i]}-${ends[$((i-1))]})<0.01 else 1)"; then :; else
+    (( i > 0 )) && g=$((g+1)) && : > "$TMP/list$g.txt"
+  fi
+  echo "file '$TMP/c$i.mp4'" >> "$TMP/list$g.txt"
+done
+G=$((g+1))
+for ((j=0;j<G;j++)); do
+  ffmpeg -nostdin -loglevel error -y -f concat -safe 0 -i "$TMP/list$j.txt" -c copy "$TMP/g$j.mp4"
+  gd+=("$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$TMP/g$j.mp4")")
+done
+n=$G
+for ((j=0;j<n;j++)); do mv "$TMP/g$j.mp4" "$TMP/c$j.mp4"; done
+durs=("${gd[@]}")
 
 # 장면 사이 겹쳐 넘기기(xfade)
 inputs=() ; filter="" ; prev="[0:v]" ; off=0
