@@ -196,7 +196,7 @@
 @media(max-width:560px){.h-video-hero{padding-top:64px!important}.hero-video-stage{min-height:640px;padding:44px 0 24px}.h-video-hero .h-hero-title{font-size:clamp(36px,9.5vw,52px)}.hero-video-controls{justify-content:flex-start}.hero-video-bg iframe{width:1210px;height:681px}}
 
 /* 첫 화면: 실사 사무실 전체 배경 영상(오른쪽 모니터 안에 실제 수행 화면) */
-.hero-video-bg>img,.hero-video-bg video{object-position:70% 50%}
+.hero-video-bg>img,.hero-video-bg video{object-position:100% 28%}
 .h-video-hero .h-hero-title{max-width:760px}
 .h-video-hero .h-hero-foot{max-width:760px;grid-template-columns:1fr;border-top-color:rgba(255,255,255,.22)}
-@media(max-width:860px){.hero-video-bg>img,.hero-video-bg video{object-position:78% 50%}.hero-video-stage::after{background:linear-gradient(180deg,rgba(10,8,6,.72) 0%,rgba(10,8,6,.55) 55%,rgba(10,8,6,.35) 100%)}}
+@media(max-width:860px){.hero-video-bg>img,.hero-video-bg video{object-position:100% 50%}.hero-video-stage::after{background:linear-gradient(180deg,rgba(10,8,6,.72) 0%,rgba(10,8,6,.55) 55%,rgba(10,8,6,.35) 100%)}}

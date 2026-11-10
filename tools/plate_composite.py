@@ -3,7 +3,7 @@
 
 사용: plate_composite.py 배경.jpg 화면영상.mp4 출력.mp4 "x0,y0 x1,y1 x2,y2 x3,y3" [확대비율]
   네 점: 배경 사진 위 모니터 화면의 왼쪽위, 오른쪽위, 오른쪽아래, 왼쪽아래 꼭짓점(배경 원본 픽셀 기준).
-  확대비율: 천천히 다가갔다가 돌아오는 최대 확대(기본 1.04). 처음과 끝이 같아 반복 재생이 자연스럽다. 1이면 고정.
+  확대비율: 천천히 다가갔다가 돌아오는 최대 확대(기본 1.04). 오른쪽 끝을 기준으로 확대해 오른쪽 모니터가 잘리지 않는다. 처음과 끝이 같아 반복 재생이 자연스럽다. 1이면 고정.
 출력: 1920x1080·30fps, 화면영상과 같은 길이, 소리 없음.
 """
 import sys, subprocess, tempfile, os
@@ -39,7 +39,7 @@ fc = (
     f"[2:v]format=gray[msk];[scr][msk]alphamerge[scrm];"
     f"[0:v][scrm]overlay=0:0:format=auto,scale={W*2}:{H*2},"
     # 화면 유리 느낌: 아주 옅은 반사광은 생략, 밝기만 살짝 낮춰 배경과 어울리게
-    f"zoompan=z='1+({zoom}-1)*(1-cos(2*PI*on/{n}))/2':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps=30,"
+    f"zoompan=z='1+({zoom}-1)*(1-cos(2*PI*on/{n}))/2':x='iw-iw/zoom':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps=30,"
     f"format=yuv420p[v]"
 )
 subprocess.run(['ffmpeg', '-nostdin', '-loglevel', 'error', '-y', '-loop', '1', '-t', str(dur), '-i', bg, '-i', screen,
