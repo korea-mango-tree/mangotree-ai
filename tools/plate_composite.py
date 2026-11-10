@@ -42,7 +42,7 @@ fc = (
     f"zoompan=z='1+({zoom}-1)*(1-cos(2*PI*on/{n}))/2':x='iw-iw/zoom':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps=30,"
     f"format=yuv420p[v]"
 )
-subprocess.run(['ffmpeg', '-nostdin', '-loglevel', 'error', '-y', '-loop', '1', '-t', str(dur), '-i', bg, '-i', screen,
-                '-loop', '1', '-t', str(dur), '-i', mask, '-filter_complex', fc, '-map', '[v]', '-t', str(dur),
+subprocess.run(['ffmpeg', '-nostdin', '-loglevel', 'error', '-y', '-loop', '1', '-framerate', '30', '-t', str(dur), '-i', bg, '-i', screen,
+                '-loop', '1', '-framerate', '30', '-t', str(dur), '-i', mask, '-filter_complex', fc, '-map', '[v]', '-t', str(dur),
                 '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', out], check=True)
 print(out, dur)
