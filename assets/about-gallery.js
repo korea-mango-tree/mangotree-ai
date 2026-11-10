@@ -1,4 +1,4 @@
-// 회사소개: 인증서·공간 사진 확대 보기와 본사/지점 탭
+// 회사소개: 인증서·공간 사진 확대 보기
 (function () {
   var dlg = document.getElementById('aboutLightbox');
   if (!dlg) return;
@@ -42,23 +42,4 @@
     else if (e.key === 'ArrowRight') show(idx + 1);
   });
 
-  // 본사/지점 탭
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.space-tabs [role=tab]'));
-  function select(t) {
-    tabs.forEach(function (x) {
-      var on = x === t;
-      x.setAttribute('aria-selected', on ? 'true' : 'false');
-      x.tabIndex = on ? 0 : -1;
-      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
-    });
-  }
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { select(t); });
-    t.addEventListener('keydown', function (e) {
-      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (!d) return;
-      var n = tabs[(i + d + tabs.length) % tabs.length];
-      select(n); n.focus();
-    });
-  });
 })();
