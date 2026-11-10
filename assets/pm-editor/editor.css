@@ -59,17 +59,6 @@
 .pme .chat-in div p{min-height:38px}
 .pme .chat-in div span{display:flex;justify-content:space-between;color:var(--muted);font-size:18px}
 .pme .chat-in div span svg{color:var(--primary)}
-@media (max-width:1100px){.pme .app-body{grid-template-columns:64px 220px 1fr}
-.pme .chat{display:none}}
-@media (max-width:900px){.pme .editor-demo{padding:16px 0 90px}
-.pme .app-body{grid-template-columns:1fr;height:520px}
-.pme .rail,.pme .secs{display:none}
-.pme .page{width:300px}}
-@media (max-width:640px){.pme .app{border-radius:14px}
-.pme .app-top .ttl{font-size:12px;gap:8px}
-.pme .app-top .acts span:not(.dl){display:none}
-.pme .app-body{height:440px}
-.pme .page{width:240px}}
 .pme .rail button{width:52px;padding:8px 0;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--muted);transition:all .2s;position:relative}
 .pme .rail button:hover{background:#f8fafc;color:var(--fg)}
 .pme .rail button.on{color:var(--fg);background:var(--border-2);box-shadow:inset 3px 0 0 var(--primary)}
@@ -166,19 +155,6 @@
 .pme .cv-toast.show{opacity:1;transform:translate(-50%,0)}
 .pme .tpl-badge{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:4;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;box-shadow:0 6px 16px rgba(15,23,42,.12);display:none}
 .pme .tpl-badge.on{display:block}
-@media (max-width:900px){.pme .app-body{display:flex;flex-direction:column;height:auto}
-.pme .rail{display:flex;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--border);padding:8px;gap:4px;justify-content:flex-start}
-.pme .rail button{flex:none;width:64px}
-.pme .rail button.on{box-shadow:inset 0 -3px 0 var(--primary)}
-.pme .rail-hint{display:none}
-.pme .secs{display:flex;border-right:0;border-bottom:1px solid var(--border);max-height:280px;padding:14px;overflow-y:auto}
-.pme .tp{flex:none}
-.pme .tp .sec-list{max-height:150px;overflow-y:auto}
-.pme .canvas{height:460px}
-.pme .page{--ph:420px}}
-@media (max-width:640px){.pme .canvas{height:400px;padding:14px}
-.pme .page{--ph:372px}
-.pme .ggrid{gap:8px}}
 .pme .cmp{position:relative;width:320px;max-width:100%;aspect-ratio:1;margin-top:34px;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(15,23,42,.16);cursor:ew-resize;touch-action:none;user-select:none;background:conic-gradient(#e5e7eb 25%,#fff 0 50%,#e5e7eb 0 75%,#fff 0) 0 0/22px 22px}
 .pme .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .pme .cmp .before{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
@@ -194,3 +170,8 @@
 .pme-hero{margin-top:48px}
 .pme-hero .app{margin:0 auto;max-width:1240px}
 .pme-hero .pme-cap{max-width:1240px;margin:12px auto 0}
+
+/* 모바일에서도 데스크탑과 같은 화면: 1240px 고정 레이아웃을 폭에 맞춰 축소(assets/pm-editor/editor.js fitDesktop) */
+.pme .app-fit{margin:40px auto 0;max-width:1240px}
+.pme-hero .app-fit{margin:0 auto}
+.pme .app-fit>.app{width:1240px;max-width:none;margin:0;transform-origin:0 0}

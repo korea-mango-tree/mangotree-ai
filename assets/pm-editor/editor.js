@@ -121,4 +121,15 @@ const WORKS={0:{"t": "우리농원 10년 숙성 된장", "c": "식품", "src": "
   const step=()=>{ if(k<msgs.length){msgs[k++].classList.add('show');setTimeout(step,1300)} else {setTimeout(()=>{msgs.forEach(m=>m.classList.remove('show'));k=0;setTimeout(step,600)},5000)} };
   step();
 })();
+
+/* 모바일에서도 데스크탑과 같은 화면: 1240px 레이아웃 그대로 두고 폭에 맞춰 축소 */
+(() => {
+  const app=$('.app'); if(!app) return;
+  const W=1240, fit=document.createElement('div'); fit.className='app-fit';
+  app.parentNode.insertBefore(fit,app); fit.appendChild(app);
+  const apply=()=>{ const k=Math.min(1,fit.clientWidth/W);
+    app.style.transform=k<1?`scale(${k})`:''; fit.style.height=k<1?(app.offsetHeight*k)+'px':''; };
+  apply();
+  if('ResizeObserver' in window) new ResizeObserver(apply).observe(fit); else addEventListener('resize',apply);
+})();
 })();
