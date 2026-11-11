@@ -307,7 +307,7 @@ body.mdl-lock{overflow:hidden}
 .x-hw .x-wcat{display:block;font-size:13px;font-weight:700;color:var(--ivory-ink)}
 .x-hw .x-wname{display:block;font-size:19px;font-weight:700;letter-spacing:-.03em;margin-top:2px}
 .x-hw .x-wsrc{display:block;font-size:12.5px;color:var(--ivory-ink);margin-top:4px}
-@media(max-width:760px){.x-hworks{grid-template-columns:1fr;gap:36px}}
+@media(max-width:760px){.x-hworks{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}.x-hw.wide{grid-column:auto}.x-hw.wide .x-hw-frame{aspect-ratio:4/5}.x-hw.wide .x-hw-frame img{object-position:center top}.x-hw figcaption{margin-top:10px}.x-hw .x-wcat{font-size:12px}.x-hw .x-wname{font-size:15.5px}}
 
 /* AI 모듈 분야별 참고 화면 (자체 화면 1 + 외부 UI 참고 5, 임시) */
 .sub .mod-ref{margin:0 0 28px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px 32px;align-items:start}
