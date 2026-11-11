@@ -1416,3 +1416,17 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - `assets/home.css`에 `.h-case-img.pc-shot`(16:9, 위 기준)을 추가했다.
 - 재미글로벌은 포트폴리오 앱 개발 사례에 그대로 남아 있다. `assets/work/app-jaeme-wide.webp`는 메인에서만 빠졌다.
 - **검증**: 1440 카드 이미지 726×408, 390 350×197, 오류 0.
+
+## 66. 메인 페이지커넥트 카드: 여러 화면 가로 배치 (2026-11-11)
+
+- **사용자 요청**: 페이지커넥트도 오늘밤엔처럼 여러 장의 스크린샷을 가로로 보여 준다.
+- **새 캡처는 못 했다**
+  - pageconnect.co.kr은 연결이 끊기고, baechesa.kr은 프록시 403으로 막혀 있다.
+  - 네트워크 설정은 바꾸지 않고, 저장소에 있던 페이지커넥트 실제 화면 3장으로 만들었다.
+- **새 이미지**: `assets/work/pageconnect-wide.webp`(2477×948, 약 122KB). 각 화면을 같은 높이로 맞춰 연녹색 바탕에 가로로 붙였다.
+  1. 첫 화면: 광고 상담신청 배너·분류 메뉴(`assets/work/pageconnect.jpg`)
+  2. 커넥트 목록: 숙소 상품별 판매수익(`assets/workflows/pageconnect-link.jpg`)
+  3. 실적 리포트: 일별 실적·클릭 추이(`assets/workflows/connect-guide5.jpg`의 리포트 화면 부분. 안내용 빨간 강조 박스는 빼고 잘랐다)
+- 만드는 스크립트: `tools/pageconnect_strip.py`
+- index.html 카드 이미지·alt를 바꾸고, `.h-case-img.pc-shot` 비율을 2477/948로 바꿨다.
+- **검증**: 1440 726×278, 390 350×134, 오류 0.
