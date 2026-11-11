@@ -85,6 +85,8 @@
 .h-case-img.tall{height:300px}
 .h-case-img.app{aspect-ratio:715/322;min-height:0;height:auto;align-self:center}
 .h-case-img.app2{aspect-ratio:730/345}
+.h-case-img.pc-shot{aspect-ratio:16/9}
+.h-case-img.pc-shot img{object-position:center top}
 .h-case-img.app img{object-position:left center}
 .h-case-lg .h-case-link{align-items:center}
 .h-case-img.tall img{object-position:center top}
