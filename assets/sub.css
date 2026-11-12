@@ -488,3 +488,6 @@ body.mdl-lock{overflow:hidden}
 /* 활용사례 WORKS: 작업물 액자 안쪽 여백 제거(이미지가 둥근 칸을 꽉 채움). 더보기 작업물도 같게 */
 .x-hworks .x-hw-frame{padding:0}
 .x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{padding:0}
+/* 포트폴리오 작업물 간격 한 단계 줄임: 가로 28→24px·세로 40→32px(모바일 가로 16→12px·세로 32→24px) */
+.x-works.is-masonry{--mgap:32px;column-gap:24px}
+@media(max-width:760px){.x-works.is-masonry{--mgap:24px;column-gap:12px}}
