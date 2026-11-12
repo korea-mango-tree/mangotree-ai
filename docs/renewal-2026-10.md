@@ -1741,3 +1741,9 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - li 고정 높이는 풀었다.
   - 원본 PNG는 84×84라 약 1.2배 확대되어 보인다.
   - 1440(6열)·390(3열)에서 가로 스크롤 없음.
+
+## 89. 활용사례 첫 화면 브라우저도 pme-hero와 같은 폭·가운데 정렬 (2026-11-12)
+
+- **사용자 요청**: usecase.html x-hero의 x-browser를 AI 모듈 pme-hero와 같은 가로 크기, x는 가운데 정렬로 한다.
+- 87절에서 만든 `x-screen-wide` 클래스(최대 1240px, 좌우 margin auto)를 usecase.html figure에도 붙였다. CSS 변경은 없다.
+- **검증 (pme-hero와 x-browser의 left·width)**: 1920 340/1240, 1440 100/1240, 1024 32/960, 390 24/342로 모두 같다.
