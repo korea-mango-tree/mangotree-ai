@@ -105,7 +105,6 @@
 .h-case-pair{grid-template-columns:repeat(2,minmax(0,1fr))}
 .h-case-pair .h-case-img,.h-case-pair .h-case-img.app,.h-case-pair .h-case-img.tall{aspect-ratio:16/9;height:auto;min-height:0;align-self:stretch}
 .h-case-pair .h-case-img img{height:100%;object-position:left top}
-.h-case-img picture{display:block;width:100%;height:100%}
 @media(max-width:960px){
   .h-work{padding:88px 0}
   .h-case-lg .h-case-link,.h-case-pair{grid-template-columns:1fr}
