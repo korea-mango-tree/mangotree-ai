@@ -101,6 +101,14 @@
 .h-case-pair .h-case-link{flex:1;grid-template-rows:auto 1fr}
 .h-case-pair .h-case-text{justify-content:flex-start}
 .h-case-pair .h-case-go{margin-top:auto;padding-top:24px}
+/* 작업 사례 이미지: 카드 안 별도 둥근 상자 대신 카드 윗부분/왼쪽을 채우는 이미지 영역으로 */
+.h-case .h-case-img{border-radius:0}
+/* 아래 두 카드: 50:50, 이미지 영역 같은 16:9 높이 */
+.h-case-pair{grid-template-columns:repeat(2,minmax(0,1fr))}
+.h-case-pair .h-case-img,.h-case-pair .h-case-img.app,.h-case-pair .h-case-img.tall{aspect-ratio:16/9;height:auto;min-height:0;align-self:stretch}
+.h-case-pair .h-case-img img{height:100%}
+.h-case-pair .h-case-img.pc-shot{background:#e8f1ec}
+.h-case-pair .h-case-img.pc-shot img{object-fit:contain;object-position:center}
 @media(max-width:960px){
   .h-work{padding:88px 0}
   .h-case-lg .h-case-link,.h-case-pair{grid-template-columns:1fr}
