@@ -80,16 +80,17 @@ loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
   const POST_API='/api/post-images?url=';
   const isPost=u=>{try{const x=new URL(u);return /(^|\.)mangotree\.co\.kr$/.test(x.hostname)&&/^\/(bbs\/board|shop\/item)\.php$/.test(x.pathname);}catch(e){return false;}};
   let seq=0;
-  function addImg(src,alt){const i=el('img');i.alt=alt;i.decoding='async';i.src=src;
+  function addImg(src,alt,alt2){const i=el('img');i.alt=alt;i.decoding='async';i.src=src;
+    if(alt2&&alt2!==src)i.addEventListener('error',()=>{i.src=alt2;},{once:true});
     // 작은 원본(예: 340px 썸네일)은 1.5배까지만 키워 흐려지지 않게, 최대 560px
     i.addEventListener('load',()=>{i.style.width=Math.min(560,Math.round(i.naturalWidth*1.5))+'px';});stack.append(i);}
   async function loadPost(link,fallback,alt,my){
     status.textContent='게시물 이미지를 불러오는 중…';
     try{const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),9000);
       const r=await fetch(POST_API+encodeURIComponent(link),{signal:ctrl.signal,headers:{Accept:'application/json'}});clearTimeout(t);
-      const j=r.ok?await r.json():null,list=j&&Array.isArray(j.images)?j.images.map(safeUrl).filter(Boolean):[];
-      if(my!==seq)return;if(!list.length)throw new Error('이미지 없음');
-      stack.replaceChildren();list.forEach((src,k)=>addImg(src,k?'':alt));status.textContent='';
+      const j=r.ok?await r.json():null,list=j&&Array.isArray(j.images)?j.images.map(safeUrl):[],fb=j&&Array.isArray(j.fallbacks)?j.fallbacks.map(safeUrl):[];
+      if(my!==seq)return;if(!list.filter(Boolean).length)throw new Error('이미지 없음');
+      stack.replaceChildren();list.forEach((src,k)=>{if(src)addImg(src,k?'':alt,fb[k]);});status.textContent='';
     }catch(e){if(my!==seq)return;stack.replaceChildren();addImg(fallback,alt);status.textContent='';}
   }
   let opener=null;

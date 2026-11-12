@@ -1862,7 +1862,11 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - **추가 (같은 날): 게시판 읽기 페이지 내용 영역의 이미지만 가져와 보여 주고, 세로 스크롤바 표시**
   - 새 `api/post-images.js`(Vercel 서버 함수)
     - `GET /api/post-images?url=`로 mangotree.co.kr의 `bbs/board.php`(게시판 읽기)·`shop/item.php`(상품) 주소만 받는다. 다른 호스트·경로는 400.
-    - 서버에서 HTML을 읽어 내용 영역의 `<img>`만 고른다. 내용 영역 id는 그누보드 `#bo_v_con` 본문·`#bo_v_img` 첨부, 영카트 `#sit_inf_explan`·`#sit_inf`다.
+    - 서버에서 HTML을 읽어 내용 영역의 `<img>`만 고른다.
+      - 망고트리 사이트 테마(이윰빌더) 게시판: `.board-view-con` 본문, `.board-view-file-conts` 첨부. 배포본 진단으로 실제 구조를 확인했다.
+      - 그누보드 기본: `#bo_v_con`, `#bo_v_img`
+      - 영카트 상품: `#sit_inf_explan`, `#sit_inf`
+    - 그누보드가 만든 썸네일(`thumb-원본_가로x세로`)은 원본 주소로 바꿔 크게 보여 준다. 원본이 없으면 화면에서 썸네일로 대신한다(`fallbacks`).
     - 업로드 이미지(`/data/` 경로)만 남겨 스킨 아이콘을 뺐다. `data-src`도 읽는다.
     - 썸네일·원본이 같이 있으면 원본 기준으로 중복을 없앤다. 최대 60장, 1시간 캐시.
     - 브라우저가 다른 출처를 직접 읽으면 막히므로 같은 출처 API가 대신 읽는다.
@@ -1878,5 +1882,6 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
     - API 실패 → 카드 이미지로 대신 표시
     - 촬영 카드 → API 호출 없이 카드 이미지, 오류 0
   - **제약**
-    - 이 작업 환경에서는 mangotree.co.kr 접속이 막혀 실제 게시판 HTML 구조는 확인하지 못했다. 그누보드·영카트 기본 id 기준이다.
+    - 배포본에서 실제 페이지로 확인했다: 상품(it_id=1791434755) 이미지 2장, 게시판(gallery wr_id=2824) 본문 이미지 1장(원본 주소로 변환).
+    - 확인용 임시 debug 응답은 커밋 8bdca2c에 넣었다가 다음 커밋에서 지웠다.
     - Apache 배포(mangotreeai.mangotree.co.kr)에서는 /api가 막혀(.htaccess) 카드 이미지로 대신 보인다. Vercel 배포에서만 게시물 이미지가 나온다.

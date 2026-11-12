@@ -6,8 +6,9 @@
 
 const HOSTS = new Set(['mangotree.co.kr', 'www.mangotree.co.kr']);
 const PATHS = /^\/(bbs\/board\.php|shop\/item\.php)$/;
-// 내용 영역(그누보드 게시판 본문·첨부 이미지, 영카트 상품 상세설명)
-const CONTENT_IDS = ['bo_v_con', 'bo_v_img', 'sit_inf_explan', 'sit_inf'];
+// 내용 영역: 망고트리 사이트 테마(이윰빌더) 게시판 본문·첨부, 그누보드 기본 게시판, 영카트 상품 상세설명
+// '#id' 또는 '.class' 로 적는다. 앞에서부터 찾고, 같은 이미지는 한 번만.
+const CONTENT_AREAS = ['.board-view-con', '.board-view-file-conts', '#bo_v_con', '#bo_v_img', '#sit_inf_explan', '#sit_inf'];
 const MAX_IMAGES = 60;
 
 function targetUrl(raw) {
@@ -20,9 +21,13 @@ function targetUrl(raw) {
   } catch (_) { return null; }
 }
 
-// id="..." 로 시작하는 div 의 끝(짝이 맞는 </div>)까지 잘라낸다
-function block(html, id) {
-  const m = new RegExp('<(div|section|article)[^>]*\\bid\\s*=\\s*["\']' + id + '["\'][^>]*>', 'i').exec(html);
+// '#id' 또는 '.class' 로 지정한 요소의 시작부터 짝이 맞는 닫는 태그까지 잘라낸다
+function block(html, sel) {
+  const name = sel.slice(1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const attr = sel[0] === '#'
+    ? '\\bid\\s*=\\s*["\']' + name + '["\']'
+    : '\\bclass\\s*=\\s*["\'](?:[^"\']*\\s)?' + name + '(?:\\s[^"\']*)?["\']';
+  const m = new RegExp('<(div|section|article)\\b[^>]*' + attr + '[^>]*>', 'i').exec(html);
   if (!m) return '';
   const tag = m[1].toLowerCase();
   const re = new RegExp('<\\/?' + tag + '\\b[^>]*>', 'gi');
@@ -75,25 +80,21 @@ module.exports = async function handler(req, res) {
     return res.status(502).json({ error: 'upstream_failed' });
   }
 
-  // 진단용(임시): 내용 영역 id 를 찾기 위해 /data/ 이미지 위치와 view·con 관련 id·class 를 돌려준다
-  if (req.query && req.query.debug === '1') {
-    const ids = [...html.matchAll(/\b(id|class)\s*=\s*["']([^"']*(view|con|atc|article|content)[^"']*)["']/gi)].map((m) => m[1] + '=' + m[2]).slice(0, 120);
-    const imgs = [...html.matchAll(/<img\b[^>]*>/gi)].map((m) => ({ at: m.index, tag: m[0].slice(0, 200) })).filter((x) => /\/data\//.test(x.tag)).slice(0, 40);
-    return res.status(200).json({ len: html.length, ids, imgs });
-  }
   const seen = new Set();
   const images = [];
-  for (const id of CONTENT_IDS) {
-    for (const src of imagesIn(block(html, id), url.href)) {
-      // 첨부 썸네일(thumb-...)과 원본이 같이 있으면 원본을 우선
-      const key = src.replace(/\/thumb-([^/]+?)_\d+x\d+(\.\w+)$/, '/$1$2');
-      if (seen.has(key)) continue;
-      seen.add(key);
-      images.push(src);
+  const fallbacks = []; // 원본이 없을 때 쓸 원래 주소(썸네일)
+  for (const sel of CONTENT_AREAS) {
+    for (const src of imagesIn(block(html, sel), url.href)) {
+      // 그누보드가 만든 썸네일(thumb-원본이름_가로x세로.jpg)은 원본 주소로 바꿔 크게 보여 준다
+      const orig = src.replace(/\/thumb-([^/]+?)_\d+x\d+(\.\w+)$/, '/$1$2');
+      if (seen.has(orig)) continue;
+      seen.add(orig);
+      images.push(orig);
+      fallbacks.push(src);
       if (images.length >= MAX_IMAGES) break;
     }
   }
 
   res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
-  return res.status(200).json({ url: url.href, images });
+  return res.status(200).json({ url: url.href, images, fallbacks });
 };
