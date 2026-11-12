@@ -374,6 +374,13 @@ body.mdl-lock{overflow:hidden}
 /* Detailed-page work gets a tall, top-aligned preview without image distortion. */
 .x-work[data-cat="detail"] img{aspect-ratio:1/2.4;object-fit:cover;object-position:center top}
 .x-work[data-cat="detail"] img[src^="assets/inline/"]{aspect-ratio:340/460;object-fit:contain}
+/* API 썸네일(400x541)은 세로로 늘리면 좌우가 잘리므로 원본 비율 유지 */
+.x-work[data-cat="detail"] img[src^="http"]{aspect-ratio:400/541}
+/* Masonry: portfolio-pages.js 가 카드 높이만큼 grid-row-end:span N 을 지정해 빈칸 없이 쌓는다.
+   (JS 미동작 시 is-masonry 가 붙지 않아 기존 그리드 그대로). 세로 간격은 row-gap 대신 margin 으로. */
+.x-works.is-masonry{--mgap:36px;grid-auto-rows:2px;row-gap:0;align-items:start}
+.x-works.is-masonry>.x-work{margin-bottom:var(--mgap)}
+@media(max-width:760px){.x-works.is-masonry{--mgap:28px}}
 
 /* 제품: AI 인스타그램·블로그·숏폼 채널 운영 (3개 상품 카드) */
 .x-channels>li{display:flex;flex-direction:column}

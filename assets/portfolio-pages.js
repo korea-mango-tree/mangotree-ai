@@ -51,8 +51,20 @@ tabs.forEach(t=>t.addEventListener('click',()=>{category=t.dataset.f;page=1;hist
 return ()=>{cards=[...document.querySelectorAll('.pf-card')];page=1;render(false);};
 }
 
+// 퍼즐(masonry) 배치: 카드마다 실제 높이에 맞춰 grid-row-end:span N 을 준다(행 단위 2px, CSS .is-masonry).
+// ResizeObserver 로 이미지 로드·창 크기·탭 전환(숨김 해제) 때마다 다시 계산. 가로 순서는 그대로라 페이지 순서 유지.
+const masonry=(()=>{
+  if(!list||!window.ResizeObserver)return ()=>{};
+  const UNIT=2;
+  const fit=c=>{if(c.hidden)return;const h=c.getBoundingClientRect().height+parseFloat(getComputedStyle(c).marginBottom||0);c.style.gridRowEnd='span '+Math.max(1,Math.ceil(h/UNIT));};
+  const ro=new ResizeObserver(es=>es.forEach(e=>fit(e.target)));
+  list.classList.add('is-masonry');
+  return ()=>{ro.disconnect();list.querySelectorAll('.x-work').forEach(c=>{fit(c);ro.observe(c);});};
+})();
+masonry();
+
 // 정적 카드로 먼저 탭·페이지를 띄워 두고(로딩 중 61개 전부 노출 방지),
 // API 카드로 교체되면 같은 상태(탭·해시)로 다시 렌더한다. 실패 시 정적 카드 유지.
 const refresh=initGallery();
-loadFromApi().then(replaced=>{if(replaced)refresh();});
+loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
 })();
