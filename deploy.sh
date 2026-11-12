@@ -5,9 +5,12 @@
 # 서버의 clone 폴더 안에서 돌린다. GitHub 의 지정 브랜치 최신 커밋으로 맞춘다.
 # Apache 가 이 폴더를 그대로 서빙하므로(deploy/apache-mangotree-ai.conf) reload 는 필요 없다.
 #
-# 처음 한 번 (사이트 전용 사용자로):
+# 처음 한 번 (mangotreeai 사용자로):
 #   git clone https://github.com/korea-mango-tree/mangotree-ai.git ~/mangotree-ai
 #   chmod 711 ~            # Apache 가 홈 폴더를 지나갈 수 있게 (목록 보기는 막힘)
+#   ※ 사용자 생성 때 문서 폴더(예: ~/public_html)가 자동으로 잡히는 환경이면 그 폴더에 clone 한다
+#     (clone 은 빈 폴더에만 되므로 기본 index 파일 등이 있으면 먼저 비운다):
+#     git clone https://github.com/korea-mango-tree/mangotree-ai.git ~/public_html
 #
 # 사용법:
 #   ./deploy.sh              # main 최신으로
