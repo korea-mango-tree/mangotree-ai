@@ -127,13 +127,9 @@ const WORKS={0:{"t": "우리농원 10년 숙성 된장", "c": "식품", "src": "
   const app=$('.app'); if(!app) return;
   const W=1240, fit=document.createElement('div'); fit.className='app-fit';
   app.parentNode.insertBefore(fit,app); fit.appendChild(app);
-  // 좌우 여백 없이 화면 가로 폭을 꽉 채움: 감싼 상자를 문서 폭(스크롤바 제외)으로 펴고 그 폭에 맞춰 확대·축소
-  const host=fit.parentElement;
-  const apply=()=>{ const vw=document.documentElement.clientWidth, left=host.getBoundingClientRect().left;
-    fit.style.width=vw+'px'; fit.style.marginLeft=(-left)+'px';
-    const k=vw/W; app.style.transform=`scale(${k})`; fit.style.height=(app.offsetHeight*k)+'px'; };
+  const apply=()=>{ const k=Math.min(1,fit.clientWidth/W);
+    app.style.transform=k<1?`scale(${k})`:''; fit.style.height=k<1?(app.offsetHeight*k)+'px':''; };
   apply();
-  addEventListener('resize',apply);
-  if('ResizeObserver' in window) new ResizeObserver(apply).observe(host);
+  if('ResizeObserver' in window) new ResizeObserver(apply).observe(fit); else addEventListener('resize',apply);
 })();
 })();
