@@ -140,3 +140,67 @@
 @media(min-width:861px){#scen-2 .ba-multi>a{display:block;padding:0;cursor:pointer}#scen-2 .ba-multi img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain}}
 @media(max-width:860px){#scen-2 .ba-multi>a{padding:0}#scen-2 .ba-multi img{max-height:none}}
 #scen-2 .ba-multi{background:#f8fafc}
+/* ===== 활용사례 Before/After 도식 고도화(목업) ===== */
+.mk-phone,.mk-inbox,.mk-chat,.mk-files{font-family:inherit;color:#2E2B26}
+/* 01 BEFORE: 휴대폰 상세페이지 */
+.mk-phone{width:min(100%,240px);border:2px solid #BDB7AC;border-radius:24px;background:#FAFAF8;padding:12px 12px 16px;display:grid;gap:8px}
+.mk-ph-top{display:flex;justify-content:center}.mk-ph-top i{width:56px;height:6px;border-radius:999px;background:#D2CDC3}
+.mk-ph-img{height:72px;border-radius:8px;background:repeating-linear-gradient(45deg,#ECEAE4 0 8px,#E3E0D8 8px 16px);display:grid;place-items:center;font-size:12px;font-weight:700;color:#8a857c}
+.mk-spec{margin:0;display:grid;gap:4px}
+.mk-spec div{display:grid;grid-template-columns:72px 1fr;gap:6px;align-items:center}
+.mk-spec dt{font-size:12px;font-weight:700;color:#5A554C}
+.mk-spec dd{margin:0;height:12px;border-radius:4px;background:#E3E0D8}
+.mk-miss{margin:4px 0 0;display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.mk-miss span{font-size:12px;font-weight:700;padding:4px 8px;border-radius:999px;border:1px dashed #A9A397;color:#5A554C;background:#fff}
+/* 03 BEFORE: 문의함 */
+.mk-inbox{width:min(100%,340px);border:1.5px solid #BDB7AC;border-radius:14px;background:#FAFAF8;overflow:hidden}
+.mk-ib-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #E3E0D8;font-size:12px}
+.mk-ib-head b{font-size:16px}.mk-ib-head span{font-weight:700;color:#B4462E}
+.mk-inbox ul{list-style:none;margin:0;padding:4px 0}
+.mk-inbox li{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;padding:8px 16px;font-size:12px;border-bottom:1px dashed #E3E0D8}
+.mk-inbox li b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-inbox li em{font-style:normal;font-weight:700;text-align:center;padding:2px 0;border-radius:4px;font-size:12px}
+.mk-inbox .c-k{background:#FEE500;color:#3C1E1E}.mk-inbox .c-n{background:#03C75A;color:#fff}.mk-inbox .c-b{background:#E3E0D8;color:#3B3832}.mk-inbox .c-p{background:#5A554C;color:#fff}
+.mk-inbox li i{font-style:normal;font-weight:700;color:#B4462E}
+.mk-agent{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#ECEAE4;font-size:12px}
+.mk-av{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#5A554C;color:#fff;font-weight:800}
+.mk-more{margin-left:auto;font-weight:700;color:#5A554C}
+/* 03 AFTER: AI 상담 화면 */
+.mk-chat{width:min(100%,340px);border:1.5px solid #161616;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 12px 32px -16px rgba(22,22,22,.35)}
+.mk-ch-head{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#161616;color:#fff;font-size:12px}
+.mk-ch-head b{font-size:16px}.mk-ch-head span:last-child{margin-left:auto;color:#cfc9bd}
+.mk-dot{width:8px;height:8px;border-radius:50%;background:#3ECF6E}
+.mk-ch-body{padding:16px;display:grid;gap:8px;background:#F5F3EE}
+.mk-ch-body p{margin:0}
+.mk-me{justify-self:end;max-width:80%;font-size:12px;font-weight:600;padding:8px 12px;border-radius:14px 14px 4px 14px;background:#FEE500}
+.mk-tag{justify-self:center;font-size:12px;font-weight:700;color:#5A554C;padding:2px 8px;border-radius:999px;background:#ECE5D6}
+.mk-bot{justify-self:start;max-width:92%;padding:12px;border-radius:14px 14px 14px 4px;background:#fff;border:1px solid #E3E0D8;font-size:12px;line-height:1.55}
+.mk-track{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
+.mk-track span{font-size:12px;text-align:center;padding:4px 0;border-top:3px solid #E3E0D8;color:#8a857c;font-weight:600}
+.mk-track span.on{border-color:#161616;color:#161616}
+.mk-quick{display:flex;flex-wrap:wrap;gap:4px}
+.mk-quick span{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:#fff;border:1px solid #161616}
+.mk-quick span.hm{background:#161616;color:#fff}
+.mk-hand{font-size:12px;color:#5A554C;font-weight:600}
+/* 04 BEFORE: 흩어진 자료 창 */
+.mk-files{position:relative;width:min(100%,340px);aspect-ratio:1/1;max-height:100%}
+.mk-win{position:absolute;width:56%;border:1.5px solid #A9A397;border-radius:10px;background:#FAFAF8;padding:8px;box-shadow:0 8px 20px -12px rgba(22,22,22,.4)}
+.mk-win b{display:block;font-size:12px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E3E0D8}
+.mk-win.w1{left:0;top:4%;transform:rotate(-4deg)}
+.mk-win.w2{right:0;top:12%;transform:rotate(3deg)}
+.mk-win.w3{left:4%;top:50%;transform:rotate(2deg)}
+.mk-win.w4{right:2%;top:58%;transform:rotate(-3deg);background:#FFF7C2;border-color:#E5CE00}
+.mk-sheet{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}.mk-sheet i{height:10px;background:#E3E0D8}
+.mk-bars{display:flex;align-items:flex-end;gap:4px;height:48px}.mk-bars i{flex:1;background:#BDB7AC;border-radius:2px 2px 0 0}
+.mk-rows{display:grid;gap:4px}.mk-rows i{height:8px;border-radius:2px;background:#E3E0D8}
+.mk-win.memo p{margin:0;font-size:12px;line-height:1.5;font-weight:600}
+.mk-q{position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;font-size:12px;font-weight:800;padding:8px 16px;border-radius:999px;background:#5A554C;color:#fff}
+@media(max-width:860px){.mk-files{width:min(100%,320px)}}
+#scen-1 .mk-phone{width:min(100%,260px);padding:8px 12px 12px;gap:6px;border-radius:20px}
+#scen-1 .mk-ph-img{height:40px}
+#scen-1 .mk-spec{gap:2px}
+#scen-1 .mk-spec dt{font-size:12px;line-height:1.35}
+#scen-1 .mk-spec dd{height:8px}
+#scen-1 .mk-miss{margin-top:2px}
+#scen-1 .mk-miss span{padding:2px 8px}
+@media(max-width:860px){#scen-1 .before .ba-visual{aspect-ratio:auto}}
