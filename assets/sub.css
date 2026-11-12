@@ -485,3 +485,6 @@ body.mdl-lock{overflow:hidden}
 #works .x-more .btn{background:#fff;border:1.5px solid var(--charcoal);color:var(--charcoal)}
 #works .x-more .btn:hover{background:var(--charcoal);color:#fff}
 #works .x-more .btn:focus-visible{outline:3px solid var(--mango);outline-offset:3px}
+/* 활용사례 WORKS: 작업물 액자 안쪽 여백 제거(이미지가 둥근 칸을 꽉 채움). 더보기 작업물도 같게 */
+.x-hworks .x-hw-frame{padding:0}
+.x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{padding:0}
