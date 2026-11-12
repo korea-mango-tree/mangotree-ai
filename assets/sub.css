@@ -438,3 +438,7 @@ body.mdl-lock{overflow:hidden}
 /* 상담문의 가격 표시 */
 .x-ch-price small{display:block;margin:8px 0 0}
 .x-price-ask b{font-size:clamp(24px,2.4vw,32px)}
+/* AI 컨설팅 workflow: 이미지가 16:10 칸 안에 잘리지 않고 들어가도록(그리드 칸에서 height:100%가 먹지 않아 넘치던 문제) */
+#workflow .wf-shot{position:relative}
+#workflow .wf-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+@media(max-width:760px){#workflow .wf-shot img{position:static;height:auto}}
