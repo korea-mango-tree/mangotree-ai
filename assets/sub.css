@@ -491,3 +491,8 @@ body.mdl-lock{overflow:hidden}
 /* 포트폴리오 작업물 간격 한 단계 줄임: 가로 28→24px·세로 40→32px(모바일 가로 16→12px·세로 32→24px) */
 .x-works.is-masonry{--mgap:32px;column-gap:24px}
 @media(max-width:760px){.x-works.is-masonry{--mgap:24px;column-gap:12px}}
+/* 추가: 1.5단계 더 줄임(척도의 두 단계 사이 값). PC 가로 24→14px·세로 32→20px, 모바일 가로 12→6px·세로 24→14px */
+.x-works.is-masonry{--mgap:20px;column-gap:14px}
+@media(max-width:760px){.x-works.is-masonry{--mgap:14px;column-gap:6px}}
+/* 포트폴리오: 카드 figure의 투명 안쪽 여백(12px, 모바일 8px)이 눈에 보이는 간격을 키우고 있어 제거 → 이미지 사이 실제 간격 = 위 gap 값 */
+.x-works.is-masonry>.x-work figure{padding:0}
