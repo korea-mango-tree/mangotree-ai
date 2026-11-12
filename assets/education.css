@@ -25,3 +25,9 @@
 @media(max-width:860px){.edu-grid{grid-template-columns:1fr;gap:32px}}
 @media(max-width:560px){.edu-photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.edu-photos figcaption{font-size:12px;padding:16px 8px 8px}.edu-photos figcaption b{font-size:12px}.edu-cta .btn{flex:1 1 100%;justify-content:center}}
 @media(min-width:861px){.edu-photos figure:not(.edu-main) figcaption span{display:none}.edu-photos figure:not(.edu-main) figcaption b{font-size:12px}}
+/* 작은 사진을 누르면 큰 사진과 바뀜(assets/edu-gallery.js) */
+.edu-photos figure:not(.edu-main){cursor:pointer}
+.edu-photos figure:not(.edu-main):hover img{opacity:.88}
+.edu-photos figure:not(.edu-main):focus-visible{outline:3px solid #FEE500;outline-offset:2px}
+.edu-photos .edu-main figcaption span{display:block}
+.edu-photos figure:not(.edu-main) figcaption span{display:none}
