@@ -75,6 +75,12 @@ module.exports = async function handler(req, res) {
     return res.status(502).json({ error: 'upstream_failed' });
   }
 
+  // 진단용(임시): 내용 영역 id 를 찾기 위해 /data/ 이미지 위치와 view·con 관련 id·class 를 돌려준다
+  if (req.query && req.query.debug === '1') {
+    const ids = [...html.matchAll(/\b(id|class)\s*=\s*["']([^"']*(view|con|atc|article|content)[^"']*)["']/gi)].map((m) => m[1] + '=' + m[2]).slice(0, 120);
+    const imgs = [...html.matchAll(/<img\b[^>]*>/gi)].map((m) => ({ at: m.index, tag: m[0].slice(0, 200) })).filter((x) => /\/data\//.test(x.tag)).slice(0, 40);
+    return res.status(200).json({ len: html.length, ids, imgs });
+  }
   const seen = new Set();
   const images = [];
   for (const id of CONTENT_IDS) {
