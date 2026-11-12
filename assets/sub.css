@@ -454,3 +454,16 @@ body.mdl-lock{overflow:hidden}
 .sub .mod-cat>.mod-ref.tall .mod-ref-frame{max-width:none}
 .sub .mod-cat>.mod-grid{grid-area:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+/* mod-ref 높이를 mod-grid에 맞춤: 참고 화면은 칸 높이에 영향을 주지 않고(absolute) 오른쪽 목록 높이만큼 채움.
+   이미지가 칸보다 길면 assets/mod-ref-scroll.js 가 위→아래로 천천히 움직여 끝까지 보여 줌 */
+@media(min-width:961px){
+.sub .mod-cat{align-items:stretch}
+.sub .mod-cat>.mod-ref{display:block;position:relative;min-height:320px}
+.sub .mod-cat>.mod-ref .mod-ref-frame{position:absolute;inset:0;display:block;aspect-ratio:auto;max-width:none}
+.sub .mod-cat>.mod-ref .mod-ref-frame img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain}
+.sub .mod-cat>.mod-ref .mod-ref-frame img.is-tall{height:auto}
+.sub .mod-cat>.mod-ref .mod-ref-frame img.is-tall.is-run{animation:modRefScroll var(--dur,12s) ease-in-out infinite;will-change:transform}
+.sub .mod-cat>.mod-ref .mod-ref-frame img.is-tall.is-paused,.sub .mod-cat>.mod-ref:hover .mod-ref-frame img.is-tall{animation-play-state:paused}
+}
+@keyframes modRefScroll{0%,12%{transform:translateY(0)}50%,62%{transform:translateY(var(--dist,0px))}100%{transform:translateY(0)}}
+@media(min-width:961px) and (prefers-reduced-motion:reduce){.sub .mod-cat>.mod-ref .mod-ref-frame{overflow-y:auto}.sub .mod-cat>.mod-ref .mod-ref-frame img.is-tall{position:static;animation:none}}
