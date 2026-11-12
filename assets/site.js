@@ -1,0 +1,84 @@
+/* 모든 페이지 공통 동작: 헤더 그림자, 모바일 메뉴, 등장 효과, 맨 위로, 포트폴리오 필터 */
+(function(){
+  var doc=document.documentElement;
+  var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* 헤더 그림자 · 맨 위로 버튼 */
+  var header=document.getElementById('header');
+  var toTop=document.getElementById('toTop');
+  function onScroll(){
+    var y=window.scrollY;
+    if(header)header.classList.toggle('scrolled',y>16);
+    if(toTop)toTop.classList.toggle('show',y>420);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  if(toTop)toTop.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  });
+
+  /* 모바일 메뉴: aria-expanded, Escape 닫기, 포커스 반환 */
+  var burger=document.getElementById('burger');
+  var nav=document.getElementById('navLinks');
+  if(burger&&nav){
+    function setOpen(open,returnFocus){
+      nav.classList.toggle('open',open);
+      burger.setAttribute('aria-expanded',open?'true':'false');
+      burger.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');
+      if(open){var first=nav.querySelector('a');if(first)first.focus();}
+      else if(returnFocus)burger.focus();
+    }
+    burger.addEventListener('click',function(){setOpen(!nav.classList.contains('open'),false);});
+    nav.addEventListener('click',function(e){if(e.target.closest('a'))setOpen(false,false);});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&nav.classList.contains('open'))setOpen(false,true);
+    });
+    document.addEventListener('click',function(e){
+      if(nav.classList.contains('open')&&!nav.contains(e.target)&&!burger.contains(e.target))setOpen(false,false);
+    });
+    window.addEventListener('resize',function(){
+      if(window.innerWidth>960&&nav.classList.contains('open'))setOpen(false,false);
+    });
+  }
+
+
+  /* 첫 화면(히어로)에 주요 행동 버튼이 보이는 동안 떠 있는 문의 버튼을 감춤 */
+  var hero=document.querySelector('.hero, .h-hero, .dx-hero');
+  if(hero&&document.querySelector('.contact-fab')&&'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      document.body.classList.toggle('fab-off',es[0].isIntersecting);
+    },{rootMargin:'0px 0px -35% 0px'}).observe(hero);
+  }
+
+  /* 등장 효과: 지원·허용될 때만 숨김을 켜고, 이미 화면에 있는 요소는 바로 표시 */
+  var items=[].slice.call(document.querySelectorAll('.reveal'));
+  if(items.length&&!reduce&&'IntersectionObserver' in window){
+    var vh=window.innerHeight;
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    items.forEach(function(el,i){
+      if(el.getBoundingClientRect().top<vh){el.classList.add('in');return;}
+      el.style.transitionDelay=(i%4*55)+'ms';
+      io.observe(el);
+    });
+    doc.classList.add('reveal-on');
+  }
+
+  /* 주소 #앵커로 들어온 경우: 웹폰트·이미지가 늦게 로드되며 레이아웃이 밀리면 대상 위치를 한 번 더 맞춤.
+     사용자가 먼저 스크롤했다면 건드리지 않음 */
+  var hashTarget=null;
+  try{hashTarget=location.hash.length>1?document.getElementById(decodeURIComponent(location.hash.slice(1))):null;}catch(e){}
+  if(hashTarget){
+    var userMoved=false;
+    ['wheel','touchstart','keydown','mousedown'].forEach(function(ev){window.addEventListener(ev,function(){userMoved=true;},{once:true,passive:true});});
+    var realign=function(){if(!userMoved)hashTarget.scrollIntoView({behavior:'auto',block:'start'});};
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(realign);
+    window.addEventListener('load',realign);
+  }
+
+  /* 포트폴리오 분류 필터: aria-pressed, 결과 개수, 빈 결과, 주소 #detail·#shoot·#home·#print 연동 */
+
+})();
+
+(()=>{const button=document.querySelector('[data-usecase-more]');if(!button)return;const items=[...document.querySelectorAll('[data-usecase-extra]')],count=document.querySelector('[data-usecase-more-count]');let shown=0;button.addEventListener('click',()=>{const next=items.slice(shown,shown+4);next.forEach(el=>el.hidden=false);shown+=next.length;count.textContent='('+(4+shown)+' / '+(4+items.length)+')';button.hidden=shown>=items.length;const first=next[0];if(first){first.tabIndex=-1;first.focus({preventScroll:true});first.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}});})();

@@ -1,0 +1,94 @@
+/* 무료 기업진단 페이지 디자인 조정 (diagnosis.css → site.css 다음에 불러옴).
+   기능·마크업은 그대로 두고 색·타이포·여백만 메인과 맞춘다: 차콜 · 웜 아이보리 · 망고 옐로.
+   결과의 의미색(개선 필요=주황, 양호=초록)은 정보를 전달하므로 유지한다. */
+.dxpage{
+  --charcoal:#161616;--ivory:#F5F0E6;--ivory-2:#ECE5D6;--ivory-ink:#5A554C;--mango:#FEE500;
+}
+
+/* 첫 화면 */
+.dxpage .dx-hero{background:var(--ivory);padding:152px 0 88px;border-bottom:1px solid var(--ivory-2)}
+.dxpage .dx-hero h1{font-size:clamp(38px,5.6vw,84px);line-height:1.12;letter-spacing:-.055em;font-weight:700}
+.dxpage .dx-hero h1 .hl{background:linear-gradient(to top,var(--mango) 30%,transparent 30%);padding:0 .04em}
+.dxpage .eyebrow{color:var(--ivory-ink)}
+.dxpage .dx-hero .sub{font-size:clamp(16px,1.5vw,19px);color:var(--ivory-ink);line-height:1.75}
+.dxpage .dx-search input{min-height:56px;border:1.5px solid var(--charcoal);border-radius:12px;background:#fff}
+.dxpage .dx-search input:focus{outline:2px solid var(--charcoal);outline-offset:2px}
+.dxpage .dx-search .btn{min-height:56px}
+.dxpage .dx-meta span{background:#fff;border:1px solid var(--ivory-2);color:var(--charcoal)}
+.dxpage .dx-sub-cta{color:var(--charcoal)}
+@media(max-width:560px){.dxpage .dx-hero{padding:112px 0 56px}.dxpage .dx-hero h1{font-size:clamp(32px,9.6vw,42px)}}
+
+/* 섹션 리듬: 흰색과 아이보리 교대, 큰 왼쪽 정렬 제목 */
+.dxpage .block{padding:128px 0}
+.dxpage .block.soft{background:var(--ivory)}
+.dxpage .sec-head h2{font-size:clamp(30px,3.8vw,56px);line-height:1.18;letter-spacing:-.05em}
+.dxpage .sec-head p{color:var(--ivory-ink)}
+@media(max-width:760px){.dxpage .block{padding:80px 0}}
+
+/* 카드: 그림자 대신 얇은 선 */
+.dxpage .dx-pain,.dxpage .dx-dom,.dxpage .dx-flow li,.dxpage .dx-svcs div,.dxpage .dx-sample,.dxpage .dx-faq details{box-shadow:none;border:1px solid rgba(22,22,22,.14);border-radius:16px;background:#fff}
+.dxpage .dx-dom:hover{box-shadow:none;border-color:var(--charcoal)}
+.dxpage .dx-flow li .n,.dxpage .dg-c .n{background:var(--mango)!important;color:var(--charcoal);border:0}
+.dxpage .dx-works figure{box-shadow:none;border:1px solid rgba(22,22,22,.12)}
+
+/* 마지막 행동 유도: 메인과 같은 노란 면 */
+.dxpage .dx-final{background:var(--mango);padding:112px 0}
+.dxpage .dx-final .sec-head h2,.dxpage .dx-final h2{color:var(--charcoal)}
+.dxpage .dx-final .btn-primary{background:var(--charcoal);color:#fff}
+.dxpage .dx-final .btn-primary:hover{background:#000}
+.dxpage .dx-final .btn-line{background:transparent;border-color:rgba(22,22,22,.4);color:var(--charcoal)}
+
+/* 설문 패널 */
+.dxpage .dx-panel{background:rgba(22,22,22,.6)}
+.dxpage .dx-box{border-radius:20px;box-shadow:none}
+.dxpage .dx-top{border-bottom:1px solid var(--ivory-2)}
+.dxpage .dx-prog{height:6px;background:var(--ivory)}
+.dxpage .dx-prog i{background:var(--charcoal)}
+.dxpage .dx-qmeta .dom{color:var(--charcoal)}
+.dxpage .dx-opt span{border:1.5px solid rgba(22,22,22,.18);border-radius:12px;min-height:56px}
+.dxpage .dx-opt span::before{border-color:rgba(22,22,22,.3)}
+.dxpage .dx-opt:hover span{border-color:var(--charcoal)}
+.dxpage .dx-opt input:checked+span{border-color:var(--charcoal);background:var(--ivory)}
+.dxpage .dx-opt input:checked+span::before{border-color:var(--charcoal)}
+.dxpage .dx-opt input:focus-visible+span{outline:2px solid var(--charcoal);outline-offset:2px}
+.dxpage .dx-chip span,.dxpage .dx-chips label span{border-radius:999px}
+.dxpage .dx-nav{border-top:1px solid var(--ivory-2)}
+.dxpage .dx-nav .btn-primary[disabled]{background:var(--ivory-2);color:var(--ivory-ink);opacity:1}
+
+/* 결과 */
+.dxpage .dx-score{background:var(--charcoal);border:0;color:var(--ivory);border-radius:16px;padding:22px 24px}
+.dxpage .dx-score .v{color:var(--mango)}
+.dxpage .dx-score .l b{color:var(--ivory)}
+.dxpage .dx-score .l span{color:rgba(245,240,230,.72)}
+.dxpage .dx-score.pending{background:var(--ivory);color:var(--charcoal)}
+.dxpage .dx-score.pending .v{color:var(--charcoal)}
+.dxpage .dx-score.pending .l b{color:var(--charcoal)}
+.dxpage .dx-score.pending .l span{color:var(--ivory-ink)}
+.dxpage .dx-bar{border-color:rgba(22,22,22,.12);border-radius:12px}
+.dxpage .dx-bar:hover,.dxpage a.dx-bar:focus-visible{border-color:var(--charcoal);box-shadow:none;transform:none}
+.dxpage .dx-bar .track{background:var(--ivory)}
+.dxpage .dx-sec-t{font-size:17px;letter-spacing:-.03em}
+.dxpage .dx-rec,.dxpage .dx-plan,.dxpage .dx-co,.dxpage .dx-cocard{border-radius:14px;box-shadow:none}
+.dxpage .dx-plan.rec{border-color:var(--charcoal)}
+
+/* 정밀 리포트 미리보기(설문 기반) */
+.dxpage .dx-pr{border-radius:16px;box-shadow:none;border:1px solid rgba(22,22,22,.16)}
+.dxpage .dx-pr-h .tag{background:var(--ivory);color:var(--charcoal);border:1px solid var(--ivory-2)}
+
+/* 상담 신청 양식 */
+.dxpage .dx-field input,.dxpage .dx-field select,.dxpage .dx-field textarea{border:1.5px solid rgba(22,22,22,.2);border-radius:10px;min-height:48px}
+.dxpage .dx-field input:focus,.dxpage .dx-field select:focus,.dxpage .dx-field textarea:focus{outline:2px solid var(--charcoal);outline-offset:1px;border-color:var(--charcoal)}
+.dxpage .dx-consult-box{background:var(--ivory);border:0;border-radius:14px;color:var(--charcoal)}
+.dxpage .dx-consult-box p{color:var(--ivory-ink)}
+
+/* 하단 고정 CTA */
+.dxpage .dx-sticky{background:rgba(245,240,230,.96);border-top:1px solid var(--ivory-2)}
+
+.dxpage .dx-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px}
+.dxpage .dx-works{display:block;width:100%}
+.dxpage .dx-works figure{margin:0;border:0;border-radius:24px;box-shadow:none}
+.dxpage .dx-works img{display:block;width:100%;height:auto;aspect-ratio:10/9;object-fit:cover;object-position:center}
+.dx-module-connect h2{font-size:clamp(26px,3vw,40px);margin-bottom:14px}
+.dx-module-connect .dx-svcs{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px}
+.dx-module-connect .dx-svcs a{display:flex;align-items:center;justify-content:space-between;padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--ivory);font-weight:700}
+@media(max-width:900px){.dxpage .dx-hero-grid{grid-template-columns:1fr}.dxpage .dx-works img{aspect-ratio:10/7}.dx-module-connect .dx-svcs{grid-template-columns:repeat(2,minmax(0,1fr))}}
