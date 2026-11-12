@@ -442,6 +442,6 @@ body.mdl-lock{overflow:hidden}
 #workflow .wf-shot{position:relative}
 #workflow .wf-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 @media(max-width:760px){#workflow .wf-shot img{position:static;height:auto}}
-/* workflow 1·2번: 이미지 비율(960:792)과 같은 칸으로 가로·세로를 꽉 채움(잘림 없음) */
-#workflow .wf-step:nth-child(-n+2) .wf-shot{aspect-ratio:960/792}
-#workflow .wf-step:nth-child(-n+2) .wf-shot img{object-fit:cover}
+/* workflow 1·2번: 3·4번과 같은 16:10 칸 높이, 가로를 꽉 채우고 위 기준으로 놓아 아래만 잘림 */
+#workflow .wf-step:nth-child(-n+2) .wf-shot img{object-fit:cover;object-position:center top}
+@media(max-width:760px){#workflow .wf-step:nth-child(-n+2) .wf-shot{aspect-ratio:16/10}#workflow .wf-step:nth-child(-n+2) .wf-shot img{position:absolute;height:100%}}
