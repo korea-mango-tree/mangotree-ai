@@ -475,3 +475,9 @@ body.mdl-lock{overflow:hidden}
 /* 플랫폼 채널 로고: 흰 라운드 박스 없이 로고만, 100×100px(원형으로 잘라 흰 모서리 제거) */
 .x-logos li{background:none;border-radius:0;padding:0;height:auto}
 .x-logos img{width:100px;height:100px;max-height:none;border-radius:50%;clip-path:circle(47%)}
+/* 활용사례 WORKS 그리드 정렬: 넓은 카드는 3칸 폭을 꽉 채우고, 「더보기」 작업물(x-work)도 위 카드(x-hw)와 같은 흰 4:5 액자·여백·캡션으로 통일 */
+.x-hworks .x-hw.wide .x-hw-frame{max-width:none}
+.x-hworks>.x-work figure{margin:0;padding:0;overflow:visible;background:none;border-radius:0}
+.x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{aspect-ratio:4/5;object-fit:cover;object-position:top;background:#fff;padding:16px;border-radius:16px;box-sizing:border-box}
+.x-hworks>.x-work figcaption{margin-top:16px}
+@media(max-width:760px){.x-hworks>.x-work img{padding:12px}.x-hworks>.x-work figcaption{margin-top:12px}}
