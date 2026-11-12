@@ -445,3 +445,12 @@ body.mdl-lock{overflow:hidden}
 /* workflow 1·2번: 3·4번과 같은 16:10 칸 높이, 가로를 꽉 채우고 위 기준으로 놓아 아래만 잘림 */
 #workflow .wf-step:nth-child(-n+2) .wf-shot img{object-fit:cover;object-position:center top}
 @media(max-width:760px){#workflow .wf-step:nth-child(-n+2) .wf-shot{aspect-ratio:16/10}#workflow .wf-step:nth-child(-n+2) .wf-shot img{position:absolute;height:100%}}
+/* AI 모듈 분류 카드 배치: 1행 제목(mod-cat-head) / 2행 참고 화면(mod-ref, 1열) + 모듈 목록(mod-grid, 2열·2칸씩) */
+@media(min-width:961px){
+.sub .mod-cat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"head head" "ref grid";gap:0 32px;align-items:start}
+.sub .mod-cat>.mod-cat-head{grid-area:head}
+.sub .mod-cat>.mod-ref{grid-area:ref;margin:0;grid-template-columns:1fr}
+.sub .mod-cat>.mod-ref.tall{grid-template-columns:1fr}
+.sub .mod-cat>.mod-ref.tall .mod-ref-frame{max-width:none}
+.sub .mod-cat>.mod-grid{grid-area:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+}

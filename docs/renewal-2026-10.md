@@ -1681,3 +1681,17 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 3번째 작은 사진 클릭 → 큰 사진 「AI 활용 마케팅 교육」
   - 첫 작은 사진에서 Enter → 「2025 강원더몰 2차」
   - 오류 0
+
+## 86. AI 모듈 분류 카드(mod-cat) 배치 변경 (2026-11-12)
+
+- **사용자 요청**: x-mods의 mod-cat 배치를 1행 mod-cat-head, 2행 mod-ref(1열) + mod-grid(2열, 모듈 2칸씩)로 바꾼다.
+- `assets/sub.css`
+  - 961px 이상에서 `.mod-cat`을 2열 그리드로 했다(grid-template-areas: "head head" / "ref grid", 열 간격 32px).
+  - mod-ref: 왼쪽 열. 칸 폭에 맞게 내부 1열이며, 세로 화면(tall)의 max-width 제한을 풀었다.
+  - mod-grid: 오른쪽 열. 모듈 카드를 2개씩(2열 × 3행) 놓는다.
+  - 960px 이하는 기존처럼 제목 → 참고 화면 → 모듈 목록 세로 순서다(모듈 2열, 600px 이하 1열).
+- **검증**
+  - 1440: 6개 분류 모두 head 1296px, ref 632px(x72), grid 632px(x736, 2열)
+  - 1024: 464px / 464px
+  - 768·390: 세로 배치
+  - 가로 스크롤 없음, 오류 0
