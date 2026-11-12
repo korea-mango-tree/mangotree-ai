@@ -120,6 +120,9 @@
 /* 개념 카드 안의 기능 태그는 카드 상단선을 물려받지 않음 */
 .x-concepts .x-feats{margin-top:16px}
 .x-concepts .x-feats li{border-top:0;padding:8px 12px}
+/* 영역별 활용 방식: 기능 태그를 라운드 박스 + # 표기 */
+[aria-labelledby="xUse"] .x-concepts .x-feats li{background:#fff;border:1px solid rgba(22,22,22,.14);border-radius:999px;font-size:16px;line-height:1.4;padding:8px 16px}
+[aria-labelledby="xUse"] .x-concepts .x-feats li::before{content:"#";margin-right:2px;color:var(--ivory-ink,#5A554C);font-weight:700}
 
 /* ===== 활용사례·포트폴리오 (usecase.html, portfolio.html) ===== */
 [hidden]{display:none!important}
