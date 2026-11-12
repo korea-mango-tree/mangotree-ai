@@ -472,3 +472,7 @@ body.mdl-lock{overflow:hidden}
 
 /* 플랫폼 첫 화면 브라우저: AI 모듈 에디터 데모(pme-hero, 최대 1240px)와 같은 폭, 가운데 정렬 */
 .x-browser.x-screen.x-screen-wide{max-width:1240px;margin-left:auto;margin-right:auto}
+/* 플랫폼 채널 로고: 흰 라운드 박스 없이 로고만, 크기 한 단계 키움(40→48px, 모바일 32→40px) */
+.x-logos li{background:none;border-radius:0;padding:0}
+.x-logos img{max-height:48px;border-radius:50%;clip-path:circle(47%)}
+@media(max-width:560px){.x-logos img{max-height:40px}}
