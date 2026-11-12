@@ -218,3 +218,6 @@
 .hero-ai-now.is-paused .hero-ai-dot{animation:none;background:#bbb}
 @media(max-width:560px){.hero-ai-now{font-size:12px;padding:4px 8px}}
 @media(prefers-reduced-motion:reduce){.hero-ai-dot{animation:none}}
+/* 플랫폼 목록: 세로 화면(오늘밤엔·망고티켓)도 가로 썸네일과 같은 168px(모바일 128px) 칸 가운데에 놓아 썸네일 칸과 글 시작 x를 맞춤 */
+.h-plat-list a>img{margin-inline:28px}
+@media(max-width:560px){.h-plat-list a>img{margin-inline:24px}}
