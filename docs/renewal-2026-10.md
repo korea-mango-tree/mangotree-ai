@@ -1859,3 +1859,24 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 상세페이지 카드 클릭: 새 창 0개, 모달 열림, 400×6158 원본이 560px 폭으로 표시되고 2000px 스크롤됨
   - Esc·바깥 클릭으로 닫힘, 영상 카드는 모달 대상 아님, 오류 0
 - 정적 카드 중 일부(assets/inline/ 340×460)는 원래 썸네일만 있다. 모달에서도 그 이미지만 보인다.
+- **추가 (같은 날): 게시판 읽기 페이지 내용 영역의 이미지만 가져와 보여 주고, 세로 스크롤바 표시**
+  - 새 `api/post-images.js`(Vercel 서버 함수)
+    - `GET /api/post-images?url=`로 mangotree.co.kr의 `bbs/board.php`(게시판 읽기)·`shop/item.php`(상품) 주소만 받는다. 다른 호스트·경로는 400.
+    - 서버에서 HTML을 읽어 내용 영역의 `<img>`만 고른다. 내용 영역 id는 그누보드 `#bo_v_con` 본문·`#bo_v_img` 첨부, 영카트 `#sit_inf_explan`·`#sit_inf`다.
+    - 업로드 이미지(`/data/` 경로)만 남겨 스킨 아이콘을 뺐다. `data-src`도 읽는다.
+    - 썸네일·원본이 같이 있으면 원본 기준으로 중복을 없앤다. 최대 60장, 1시간 캐시.
+    - 브라우저가 다른 출처를 직접 읽으면 막히므로 같은 출처 API가 대신 읽는다.
+  - `assets/portfolio-pages.js` 모달
+    - 카드 링크가 게시판·상품 페이지면 API에서 이미지 목록을 받아 위아래로 이어 붙여 보여 준다. 그동안 「불러오는 중…」을 표시한다.
+    - 실패하거나 이미지가 없으면 카드 이미지로 대신 보여 준다.
+    - 링크가 없는 카드(촬영 정적 카드 등)는 카드 이미지를 보여 준다.
+  - `assets/sub.css`
+    - 모달 본문 `overflow-y:scroll`로 세로 스크롤바를 늘 표시한다. 흰 반투명 막대이며, Firefox `scrollbar-color`, Chrome·Safari `::-webkit-scrollbar` 12px다.
+    - 이미지 묶음(`.pf-modal-stack`)은 최대 560px, 둥근 모서리·그림자다.
+  - **검증** (로컬은 정적 서버라 API 응답을 Playwright로 흉내 냈다)
+    - 상품 링크 카드 → API에 해당 주소 요청 → 이미지 2장이 560px로 이어져 표시, 높이 19,437px를 끝까지 스크롤
+    - API 실패 → 카드 이미지로 대신 표시
+    - 촬영 카드 → API 호출 없이 카드 이미지, 오류 0
+  - **제약**
+    - 이 작업 환경에서는 mangotree.co.kr 접속이 막혀 실제 게시판 HTML 구조는 확인하지 못했다. 그누보드·영카트 기본 id 기준이다.
+    - Apache 배포(mangotreeai.mangotree.co.kr)에서는 /api가 막혀(.htaccess) 카드 이미지로 대신 보인다. Vercel 배포에서만 게시물 이미지가 나온다.

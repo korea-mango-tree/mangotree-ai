@@ -500,8 +500,14 @@ body.mdl-lock{overflow:hidden}
 .pf-card:not(.pf-video) .x-wlink,.pf-card:not(.pf-video) figure>img[role=button]{cursor:zoom-in}
 .pf-modal{padding:0;border:0;background:transparent;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;overflow:hidden}
 .pf-modal::backdrop{background:rgba(10,10,10,.86)}
-.pf-modal-body{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;display:flex;justify-content:center;align-items:flex-start;padding:64px 16px 32px}
-.pf-modal-body img{display:block;width:min(100%,560px);max-width:100%;height:auto;margin:auto 0;border-radius:8px;background:#fff;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.pf-modal-body{position:absolute;inset:0;overflow-y:scroll;overscroll-behavior:contain;padding:64px 16px 32px;scrollbar-width:auto;scrollbar-color:rgba(255,255,255,.55) rgba(255,255,255,.08)}
+.pf-modal-body::-webkit-scrollbar{width:12px}
+.pf-modal-body::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}
+.pf-modal-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.55);border-radius:999px;border:3px solid transparent;background-clip:padding-box}
+.pf-modal-stack{display:flex;flex-direction:column;align-items:center;gap:0;width:min(100%,560px);margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.pf-modal-stack img{display:block;width:100%;max-width:100%;height:auto;background:#fff}
+.pf-modal-status{margin:16px 0 0;text-align:center;color:#fff;font-size:16px}
+.pf-modal-status:empty{display:none}
 .pf-modal-close{position:fixed;top:16px;right:16px;z-index:2;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:32px;line-height:1;cursor:pointer;display:grid;place-items:center}
 .pf-modal-close:hover{background:rgba(255,255,255,.3)}
 .pf-modal-close:focus-visible{outline:3px solid #FEE500;outline-offset:2px}
