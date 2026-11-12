@@ -467,3 +467,5 @@ body.mdl-lock{overflow:hidden}
 }
 @keyframes modRefScroll{0%,12%{transform:translateY(0)}50%,62%{transform:translateY(var(--dist,0px))}100%{transform:translateY(0)}}
 @media(min-width:961px) and (prefers-reduced-motion:reduce){.sub .mod-cat>.mod-ref .mod-ref-frame{overflow-y:auto}.sub .mod-cat>.mod-ref .mod-ref-frame img.is-tall{position:static;animation:none}}
+/* AI CREATIVE(#mod-1) 참고 화면: 스크롤 없이 가로를 채우고 세로 가운데 기준으로 보여 줌 */
+@media(min-width:961px){.sub #mod-1>.mod-ref .mod-ref-frame img{height:100%;object-fit:cover;object-position:center center;animation:none}}

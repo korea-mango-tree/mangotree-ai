@@ -1,7 +1,8 @@
 /* AI 모듈 참고 화면: 이미지가 칸보다 길면 칸 안에서 위→아래로 천천히 움직여 끝까지 보여 줌(맨 위·맨 아래에서 잠시 멈춤, 반복) */
 (()=>{
 const mq=matchMedia('(min-width:961px)'),reduce=matchMedia('(prefers-reduced-motion: reduce)');
-const imgs=[...document.querySelectorAll('.mod-cat>.mod-ref .mod-ref-frame img')];if(!imgs.length)return;
+// #mod-1(AI CREATIVE)은 움직이지 않고 세로 가운데 정렬로 고정(사용자 요청)
+const imgs=[...document.querySelectorAll('.mod-cat:not(#mod-1)>.mod-ref .mod-ref-frame img')];if(!imgs.length)return;
 function measure(img){
   const frame=img.parentElement;img.classList.remove('is-run','is-tall');img.style.removeProperty('--dist');
   if(!mq.matches||!img.naturalWidth)return;

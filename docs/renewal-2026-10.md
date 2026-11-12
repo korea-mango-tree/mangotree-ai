@@ -1709,3 +1709,7 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
     - 1440: 6개 분류 모두 mod-ref 높이 = mod-grid 높이(400/376px)
     - 자동 스크롤 대상: CREATIVE 43px, INSIGHT 174px, FLOW 43px, GROWTH 345px
     - 1024에서도 높이가 같다. 390은 세로 배치다. 오류 0.
+- **보정: 2번 분류(AI CREATIVE, #mod-1) 참고 화면은 스크롤 없이 세로 가운데 정렬**
+  - 사용자 요청에 따라 `mod-ref-scroll.js` 대상에서 #mod-1을 뺐다.
+  - CSS로 cover + object-position center center를 줘 칸을 채우고, 위아래가 같은 양만큼 잘리게 했다.
+  - 다른 분류(INSIGHT·FLOW·GROWTH)의 자동 스크롤은 그대로다.
