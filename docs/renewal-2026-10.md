@@ -1713,3 +1713,17 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 사용자 요청에 따라 `mod-ref-scroll.js` 대상에서 #mod-1을 뺐다.
   - CSS로 cover + object-position center center를 줘 칸을 채우고, 위아래가 같은 양만큼 잘리게 했다.
   - 다른 분류(INSIGHT·FLOW·GROWTH)의 자동 스크롤은 그대로다.
+
+## 87. 플랫폼 첫 화면 브라우저(x-browser)를 AI 모듈 pme-hero와 같은 폭·가운데 정렬로 (2026-11-12)
+
+- **사용자 요청**: platforms.html x-hero의 x-browser를 AI 모듈 pme-hero와 같은 가로 크기로, x는 가운데 정렬한다.
+- platforms.html figure에 `x-screen-wide` 클래스를 붙였다.
+- `assets/sub.css`의 `.x-browser.x-screen.x-screen-wide`
+  - 최대 폭 1240px(pme-hero와 같음), 좌우 margin auto
+  - 활용사례(usecase.html)의 같은 x-screen은 960px 그대로다.
+- **검증 (pme-hero와 x-browser의 left·width 비교)**
+  - 1920: 340/1240
+  - 1440: 100/1240
+  - 1024: 32/960
+  - 390: 24/342
+  - 네 폭 모두 같다. 활용사례 72/960 유지, 오류 0.
