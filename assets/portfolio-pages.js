@@ -14,7 +14,7 @@ function buildCard(it){
   const img=el('img');img.src=thumb;img.alt='';img.width=400;img.height=541;img.loading='lazy';img.decoding='async';a.append(img);
   if(video){const p=el('span','video-play','▶');p.setAttribute('aria-hidden','true');a.append(p);}
   const name=el('span','x-wname',title);
-  const sr=' — '+catName+' 작업물'+(link?(video?', 유튜브에서 재생 (새 창)':', 망고트리 작업 페이지에서 보기 (새 창)'):'');
+  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):', 크게 보기');
   name.append(el('span','sr-only',sr));a.append(name);
   const cap=el('figcaption');cap.append(el('span','x-wcat',catName));
   fig.append(a,cap);li.append(fig);return li;
@@ -67,4 +67,34 @@ masonry();
 // API 카드로 교체되면 같은 상태(탭·해시)로 다시 렌더한다. 실패 시 정적 카드 유지.
 const refresh=initGallery();
 loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
+
+// 작업물 크게 보기: 영상이 아닌 카드(x-wlink·이미지)를 누르면 새 창 대신 모달에 게시물 이미지만 보여 준다.
+// 긴 상세페이지 이미지는 모달 안에서 세로 스크롤. 닫기 버튼·Esc·바깥 클릭으로 닫고, 닫으면 누른 카드로 포커스 복귀.
+(()=>{
+  if(!list)return;
+  const dlg=el('dialog','pf-modal');dlg.setAttribute('aria-label','작업물 이미지 크게 보기');
+  const close=el('button','pf-modal-close','×');close.type='button';close.setAttribute('aria-label','닫기');
+  const body=el('div','pf-modal-body'),img=el('img');img.alt='';body.append(img);dlg.append(close,body);document.body.append(dlg);
+  // 작은 원본(예: 340px 썸네일)은 1.5배까지만 키워 흐려지지 않게, 최대 560px
+  img.addEventListener('load',()=>{img.style.width=Math.min(560,Math.round(img.naturalWidth*1.5))+'px';});
+  let opener=null;
+  const fullSrc=src=>String(src||'').replace('/portfolio/thumbs/','/portfolio/');
+  const isVideo=c=>c.classList.contains('pf-video');
+  function target(card){return card.querySelector('.x-wlink')||card.querySelector('figure img');}
+  function prep(){list.querySelectorAll('.pf-card').forEach(c=>{if(isVideo(c))return;const t=target(c);if(!t||t.dataset.pfModal)return;t.dataset.pfModal='1';
+    if(t.tagName!=='A'){t.tabIndex=0;t.setAttribute('role','button');}
+    const name=(c.querySelector('.x-wname')?.firstChild?.textContent||c.querySelector('img')?.alt||'작업물').trim();
+    if(!c.querySelector('.x-wlink .sr-only'))t.setAttribute('aria-label',name+' 크게 보기');
+    else c.querySelector('.x-wlink .sr-only').textContent=' — 크게 보기';});}
+  function open(card){const i=card.querySelector('img');if(!i)return;opener=target(card);
+    img.src=fullSrc(i.currentSrc||i.src);img.alt=(card.querySelector('.x-wname')?.firstChild?.textContent||i.alt||'').trim();
+    body.scrollTop=0;if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');document.documentElement.style.overflow='hidden';close.focus();}
+  function shut(){if(dlg.open)dlg.close();}
+  dlg.addEventListener('close',()=>{document.documentElement.style.overflow='';img.removeAttribute('src');if(opener)opener.focus();});
+  close.addEventListener('click',shut);
+  dlg.addEventListener('click',e=>{if(e.target===dlg||e.target===body)shut();});
+  list.addEventListener('click',e=>{const card=e.target.closest('.pf-card');if(!card||isVideo(card))return;const t=target(card);if(!t||!t.contains(e.target))return;e.preventDefault();open(card);});
+  list.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target;if(!t.dataset||!t.dataset.pfModal||t.tagName==='A'&&e.key===' ')return;e.preventDefault();open(t.closest('.pf-card'));});
+  prep();new MutationObserver(prep).observe(list,{childList:true});
+})();
 })();

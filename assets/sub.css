@@ -496,3 +496,12 @@ body.mdl-lock{overflow:hidden}
 @media(max-width:760px){.x-works.is-masonry{--mgap:14px;column-gap:6px}}
 /* 포트폴리오: 카드 figure의 투명 안쪽 여백(12px, 모바일 8px)이 눈에 보이는 간격을 키우고 있어 제거 → 이미지 사이 실제 간격 = 위 gap 값 */
 .x-works.is-masonry>.x-work figure{padding:0}
+/* 포트폴리오 작업물 크게 보기 모달(portfolio-pages.js) */
+.pf-card:not(.pf-video) .x-wlink,.pf-card:not(.pf-video) figure>img[role=button]{cursor:zoom-in}
+.pf-modal{padding:0;border:0;background:transparent;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;overflow:hidden}
+.pf-modal::backdrop{background:rgba(10,10,10,.86)}
+.pf-modal-body{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;display:flex;justify-content:center;align-items:flex-start;padding:64px 16px 32px}
+.pf-modal-body img{display:block;width:min(100%,560px);max-width:100%;height:auto;margin:auto 0;border-radius:8px;background:#fff;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.pf-modal-close{position:fixed;top:16px;right:16px;z-index:2;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:32px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.pf-modal-close:hover{background:rgba(255,255,255,.3)}
+.pf-modal-close:focus-visible{outline:3px solid #FEE500;outline-offset:2px}
