@@ -1490,3 +1490,22 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - **검수 보정**: 70절은 표시용 메일 CTA 삭제와 푸터 사업자 정보 추가가 범위였다. 실제 접수 경로는 사용자가 따로 요청하지 않으면 바꾸지 않는다.
 - diagnosis.html의 상담 신청 메일 수신 주소 `LEAD_EMAIL`만 직전 값(mtree712@gmail.com)으로 되돌렸다.
 - **유지한 것**: 개인정보 안내의 문의 표시 주소(naver), 공통 푸터 naver 주소, 요금제 상담 버튼의 카카오 연결
+
+## 72. font-size·padding·margin을 4px 척도로 통일 (2026-11-12)
+
+- **사용자 요청**: font-size, padding, margin을 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 56 / 64 / 72 / 80 기준으로 맞춘다.
+- **대상**
+  - 9개 페이지가 불러오는 CSS 16개: base, site, sub, home, about, usecase, interactions, company-footer, site-search, diagnosis, dx-theme, education, hiring-visual, development-cases, remote-support, pm-editor/editor
+  - HTML의 style 속성
+- **규칙** (`tools/snap_spacing.py`)
+  - font-size, padding(-*), margin(-*) 값 안의 px 숫자를 가장 가까운 척도 값으로 바꿨다. 거리가 같으면 큰 쪽이다(예: 14→16, 20→24, 10→12, 6→8).
+  - clamp()·단축 속성 안의 px도 같은 방식이다.
+  - 음수 margin은 크기만 맞추고 부호는 유지했다.
+  - **유지**: 0~2px(헤어라인·미세 보정), 80px 초과 값(섹션 여백·큰 제목 등 50여 곳, 척도 밖), em·rem·%·vw 등 상대 단위, gap, line-height, font 단축 속성
+- **변경 수**: font-size 505, padding 359, margin 207 (CSS) + style 속성 margin 6
+- **함께 고친 것**
+  - diagnosis 360px에서 히어로 그리드 열이 최소 내용 폭으로 늘어나 입력창이 오른쪽으로 잘리던 기존 문제
+  - `.dx-hero-grid` 1열을 `minmax(0,1fr)`로 바꿨다(diagnosis.css, dx-theme.css).
+- **검증 (9페이지 × 1440·390·360)**
+  - 가로 스크롤 없음, 헤더 높이 76px 유지, 오류 0
+  - 포트폴리오 탭은 원래 가로 스크롤 탭이다.

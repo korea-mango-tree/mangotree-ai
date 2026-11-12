@@ -501,7 +501,7 @@ function renderResult(){
   var who=I.company||'우리 기업',purpose=purposeLabel(I);
   title.textContent='진단 결과';setProg(1);
   track('result_view',{rule_version:RULE_VERSION});
-  var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2>'+(I.meta&&!shared&&(I.meta.category||I.meta.address)?'<p class="dx-lead" style="margin:0 0 6px">'+esc([I.meta.category,I.meta.address].filter(Boolean).join(' · '))+'</p>':'')+'<p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
+  var h='<div class="dx-rhead"><div class="who">'+esc(who)+' · 진단 목적: '+esc(purpose)+(shared?'':' · 결과 버전 '+lastResult.version)+'</div><h2>'+esc(who)+'의 진단 결과</h2>'+(I.meta&&!shared&&(I.meta.category||I.meta.address)?'<p class="dx-lead" style="margin:0 0 8px">'+esc([I.meta.category,I.meta.address].filter(Boolean).join(' · '))+'</p>':'')+'<p class="dx-lead" style="margin:0">입력하신 답변을 바탕으로 정리한 개선 방향입니다. 실제 제작 범위는 자료 확인과 상담을 통해 구체화합니다.</p></div>';
   if(R.status!==null)h+='<div class="dx-score"><div class="v">'+rnd(R.status)+'<small>점</small></div><div class="l"><b>판매 기반 현황점수</b><span>높을수록 판매 기반이 잘 갖춰진 상태예요. 응답에 따른 내부 지표이며 기업 간 공식 평가가 아닙니다.</span></div></div>';
   else h+='<div class="dx-score pending"><div class="v">추가 확인 필요</div><div class="l"><b>판매 기반 현황점수</b><span>답하지 않았거나 ‘잘 모르겠음’을 고른 영역이 있어 종합점수를 계산하지 않았어요.</span></div></div>';
   h+='<div class="dx-sec-t">영역별 개선 필요도<small>높을수록 개선이 필요해요 · 누르면 관련 작업 사례를 볼 수 있어요</small></div><div class="dx-bars">';
@@ -590,7 +590,7 @@ function renderConsult(){
   h+='<div class="dx-field" id="l-name"><label for="lName">담당자명<span class="req" aria-hidden="true">*</span></label><input type="text" id="lName" name="name" maxlength="30" required aria-describedby="le-name" autocomplete="name"><div class="dx-err" id="le-name">담당자명을 입력해주세요.</div></div></div>';
   h+='<div class="dx-grid2"><div class="dx-field" id="l-phone"><label for="lPhone">전화번호</label><input type="tel" id="lPhone" name="phone" maxlength="20" placeholder="010-0000-0000" aria-describedby="le-phone" autocomplete="tel"><div class="dx-err" id="le-phone">전화번호를 확인해주세요.</div></div>';
   h+='<div class="dx-field" id="l-email"><label for="lEmail">이메일</label><input type="email" id="lEmail" name="email" maxlength="100" placeholder="you@example.com" aria-describedby="le-email" autocomplete="email"><div class="dx-err" id="le-email">이메일 형식을 확인해주세요.</div></div></div>';
-  h+='<p class="dx-help" style="margin:-10px 0 18px">전화번호와 이메일 중 하나 이상 입력해주세요.</p>';
+  h+='<p class="dx-help" style="margin:-12px 0 16px">전화번호와 이메일 중 하나 이상 입력해주세요.</p>';
   h+='<fieldset class="dx-field" id="l-interests"><legend>관심 서비스<span class="req" aria-hidden="true">*</span><span class="opt">복수 선택</span></legend><div class="dx-chips">'+DOMS.map(function(d){return chip('interests','checkbox',d,N[d],sel.indexOf(d)>-1);}).join('')+chip('interests','checkbox','report','정밀 진단 리포트',sel.indexOf('report')>-1)+chip('interests','checkbox','etc','기타',sel.indexOf('etc')>-1)+'</div><div class="dx-err" id="le-interests">관심 서비스를 1개 이상 선택해주세요.</div></fieldset>';
   h+='<div class="dx-grid2"><div class="dx-field"><label for="lSchedule">희망 일정</label><select id="lSchedule" name="schedule">'+opts(SCHEDULES,'미정')+'</select></div>';
   h+='<div class="dx-field"><label for="lBudget">예산 구간<span class="opt">선택</span></label><select id="lBudget" name="budget">'+opts(BUDGETS,'','선택 안 함')+'</select></div></div>';
