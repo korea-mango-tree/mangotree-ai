@@ -1770,3 +1770,11 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - 1440: 5칸 모두 칸 안에 맞음
   - 390: 칸 안에 맞음(scen-1 268/242, scen-3 397/363·402/368, scen-4 308/274)
   - 가로 스크롤 없음, 오류 0
+
+## 91. 활용사례 workflow(x-flowmap) 4번 「실적 확인」 이미지 교체 (2026-11-12)
+
+- **사용자 요청**: usecase.html x-flowmap 4번 wf-step의 wf-shot 이미지를 바꾼다.
+- 영어 Metabase 대시보드(`assets/workflows/ecommerce-statistics-wide.jpg`)를 한국어 판매 실적 예시 화면(`assets/screens/flow-step4-poster.jpg`, 960×600, 「예시 데이터」 표시)으로 바꿨다.
+  - 메인 흐름 04, AI 컨설팅 workflow 4번, 활용사례 04 After와 같은 화면이다.
+- **검증**: 1440에서 4칸 모두 306×172. 390 정상, 오류 0.
+- `ecommerce-statistics*`는 이제 페이지에서 쓰지 않지만 파일은 남겨 두었다.
