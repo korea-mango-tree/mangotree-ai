@@ -323,3 +323,11 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 @media(max-width:760px){.foot-biz dl{flex-direction:column;gap:6px}.foot-biz dt{min-width:92px}}
 /* 헤더 「무료 AI 진단」 버튼 높이를 「AI 기획」 버튼(44px)과 같게: 위아래 padding 대신 고정 높이 */
 #header .nav-cta{box-sizing:border-box;height:44px;min-height:44px;padding:0 24px}
+
+/* ===== 한글 줄바꿈: 맥락(어절) 단위 (2026-11) =====
+   모든 요소에 어절 단위 줄바꿈(keep-all)을 상속시켜 b·strong·dd·dt·a·button 등도 단어 중간에서 끊기지 않게 하고,
+   한 줄에 다 안 들어가는 긴 영문·URL만 예외로 끊는다. 짧은 제목·캡션은 줄 길이를 고르게(balance),
+   본문은 마지막 줄에 한두 글자만 남지 않게(pretty) 한다. */
+html{word-break:keep-all;overflow-wrap:break-word;line-break:strict}
+h3,h4,h5,h6,dt,figcaption,caption,legend,blockquote{text-wrap:balance}
+li,dd,td,th,small,label,summary{text-wrap:pretty}
