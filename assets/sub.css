@@ -511,3 +511,9 @@ body.mdl-lock{overflow:hidden}
 .pf-modal-close{position:fixed;top:16px;right:16px;z-index:2;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:32px;line-height:1;cursor:pointer;display:grid;place-items:center}
 .pf-modal-close:hover{background:rgba(255,255,255,.3)}
 .pf-modal-close:focus-visible{outline:3px solid #FEE500;outline-offset:2px}
+/* AI 컨설팅 「영역별 활용 방식」: 설명 길이가 달라도 x-feats(태그) 줄 시작 위치를 같게 — 카드 안 행을 subgrid로 공유 */
+@media(min-width:861px){
+[aria-labelledby="xUse"] .x-concepts{grid-template-rows:auto auto auto auto;row-gap:0}
+[aria-labelledby="xUse"] .x-concepts>li{display:grid;grid-row:span 4;grid-template-rows:subgrid;align-content:start}
+[aria-labelledby="xUse"] .x-concepts>li>.x-feats{align-self:start}
+}
