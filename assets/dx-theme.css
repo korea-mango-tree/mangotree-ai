@@ -132,8 +132,6 @@
 .dxpage .dx-faq{gap:0;border-top:1.5px solid #161616}
 .dxpage .dx-faq details{border:0;border-bottom:1px solid rgba(22,22,22,.16);border-radius:0;background:none;padding:0 8px}
 .dxpage .dx-faq summary{padding:24px 0;font-size:16px}
-.dxpage .dx-faq summary:hover{color:#5A554C}
+.dxpage .dx-faq summary:hover{text-decoration:underline;text-underline-offset:4px}
 .dxpage .dx-faq summary::after{display:inline-block;color:#161616;font-size:24px;line-height:1;font-weight:400;text-decoration:none}
 .dxpage .dx-faq details p{padding:0 0 24px}
-/* FAQ 질문 글자 한 단계 키움(16→24px) */
-.dxpage .dx-faq summary{font-size:24px;letter-spacing:-.03em;line-height:1.4;align-items:center}
