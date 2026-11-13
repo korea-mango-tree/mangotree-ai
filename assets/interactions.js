@@ -1,6 +1,8 @@
 /* Progressive visual feedback; navigation works without jQuery. */
 (function($){if(!$)return;$(function(){
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
+// 자동 재생 화면 영상(data-motion-video): 움직임 줄이기 설정이면 멈추고 첫 화면(poster)만 보인다
+const motionVideos=()=>document.querySelectorAll('video[data-motion-video]').forEach(v=>{if(motion.matches){v.pause();v.removeAttribute('autoplay');try{v.currentTime=0;}catch(_){}}else v.play().catch(()=>{});});motionVideos();motion.addEventListener('change',motionVideos);
 // Preserve emphasis and explicit line breaks while revealing each grapheme.
 $('main h1,.h-hero-title,.dx-hero h1').each(function(){
 const title=this;if(title.dataset.maskTitle)return;title.dataset.maskTitle='true';

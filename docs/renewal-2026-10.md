@@ -1984,3 +1984,16 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - `assets/site.css`: `html{word-break:keep-all;overflow-wrap:break-word;line-break:strict}`로 모든 요소가 어절 단위로 줄바꿈되게 상속(한 줄에 안 들어가는 긴 영문·URL만 예외로 끊음). 짧은 제목·캡션(h3~h6·dt·figcaption 등)은 `text-wrap:balance`로 줄 길이를 고르게, 목록·설명(li·dd·td·small·label·summary)은 `text-wrap:pretty`로 마지막 줄에 한두 글자만 남지 않게.
   - 9개 HTML 본문 텍스트(스크립트·스타일 제외)의 ` · ` 144곳을 `&nbsp;· `로 바꿔 가운뎃점이 앞 단어에 붙어 줄 맨 앞에 오지 않게 함. 「6번길&nbsp;13-1」, 「마케팅&nbsp;요금제」도 묶음. 보이는 문구는 그대로.
 - 확인: 같은 측정에서 단어 중간 줄바꿈 0건(전 페이지·전 폭). 남은 "마지막 줄 짧음" 항목은 태그·제목이 원래 다른 줄인 카드 구조(예: 「AI 영상 / 피자만들기」)라 의도된 배치. 390/320px 가로 넘침은 수정 전과 동일(새로 생긴 넘침 없음).
+
+## 105. 플랫폼 첫 화면(x-browser) 스크린샷 화질 개선 (2026-11-13)
+
+- 요청: 플랫폼 > x-hero > x-browser 안 스크린샷 화질 개선.
+- 원인: 화면 틀은 PC에서 최대 1240px로 보이는데(레티나 기준 약 2480px 필요), 들어 있던 애니메이션 WebP는 960×600이고 손실 압축이라 글자가 흐렸다.
+- 수정
+  - 페이지메이커(12장)·오늘밤엔(18장)을 Playwright로 1280×800, 2배 해상도(2560×1600)로 다시 녹화했다. 페이지메이커는 첫 로딩 화면이 사라진 뒤부터 담았다.
+  - 티글(30장)은 이 환경에서 tigl.kr 접속이 막혀 다시 녹화하지 못했다. 기존 960×600 프레임을 그대로 쓴다. 페이지커넥트(22장)는 남아 있던 1280×800 원본 프레임을 쓴다(pageconnect.co.kr도 접속 막힘). 네트워크 설정은 바꾸지 않았다.
+  - 82장, 초당 8장(이전과 같은 순서·속도)을 1920×1200 영상으로 인코딩: `assets/screens/platforms-flow.webm`(VP9, 1.5MB), `platforms-flow.mp4`(H.264, 2.2MB). 이전 `platforms-flow.webp`(960×600, 1.6MB)는 삭제.
+  - `platforms.html`: `<picture>` → `<video autoplay muted loop playsinline poster>`. 정지 화면 `platforms-flow-poster.jpg`도 1920×1200으로 교체.
+  - 움직임 줄이기 설정: `assets/interactions.js`에서 `video[data-motion-video]`를 멈추고 첫 화면만 보이게 함(이전 `<picture>` 방식과 같은 동작).
+- 확인: 1440px(2배) 틀 1238×774에서 webm 재생, 390px 재생, 움직임 줄이기에서 정지(0초), 가로 넘침·스크립트 오류 없음. 같은 위치 확대 비교에서 페이지메이커 제목·설명 글자가 선명해짐.
+- 남은 점: 티글·페이지커넥트 구간은 원본 해상도 한계로 페이지메이커·오늘밤엔 구간보다 덜 선명하다. 두 사이트 접속이 허용되면 같은 방식으로 다시 녹화하면 된다.

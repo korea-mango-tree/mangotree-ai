@@ -517,3 +517,5 @@ body.mdl-lock{overflow:hidden}
 [aria-labelledby="xUse"] .x-concepts>li{display:grid;grid-row:span 4;grid-template-rows:subgrid;align-content:start}
 [aria-labelledby="xUse"] .x-concepts>li>.x-feats{align-self:start}
 }
+/* 플랫폼 첫 화면 자동 진행 화면: 1920×1200 영상(이전 960×600 애니메이션 WebP) */
+.x-browser .x-screen-video{display:block;width:100%;height:auto;aspect-ratio:16/10;background:#fff}
