@@ -321,3 +321,5 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 .foot-biz a:hover{color:var(--ink,#161616)}
 .foot-biz+.foot-bottom{margin-top:24px}
 @media(max-width:760px){.foot-biz dl{flex-direction:column;gap:6px}.foot-biz dt{min-width:92px}}
+/* 헤더 「무료 AI 진단」 버튼 높이를 「AI 기획」 버튼(44px)과 같게: 위아래 padding 대신 고정 높이 */
+#header .nav-cta{box-sizing:border-box;height:44px;min-height:44px;padding:0 24px}

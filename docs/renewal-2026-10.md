@@ -1885,3 +1885,11 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
     - 배포본에서 실제 페이지로 확인했다: 상품(it_id=1791434755) 이미지 2장, 게시판(gallery wr_id=2824) 본문 이미지 1장(원본 주소로 변환).
     - 확인용 임시 debug 응답은 커밋 8bdca2c에 넣었다가 다음 커밋에서 지웠다.
     - Apache 배포(mangotreeai.mangotree.co.kr)에서는 /api가 막혀(.htaccess) 카드 이미지로 대신 보인다. Vercel 배포에서만 게시물 이미지가 나온다.
+
+## 97. 헤더 「무료 AI 진단」 버튼 높이를 「AI 기획」과 같게 (2026-11-13)
+
+- **사용자 요청**: #header nav-act의 무료 AI 진단 버튼 높이를 AI 기획 버튼과 똑같이 보이게 한다.
+- **이전**: 「AI 기획」은 44px(min-height, 위아래 padding 0)이었다. 「무료 AI 진단」은 위아래 padding 12px + 줄 높이 때문에 52px로 8px 더 컸다.
+- **수정** (`assets/site.css`): `#header .nav-cta{box-sizing:border-box;height:44px;min-height:44px;padding:0 24px}`
+  - diagnosis.css의 padding 규칙보다 우선 적용된다.
+- **검증**: 9개 페이지(1440)에서 두 버튼 모두 top 16px, 높이 44px로 같다.
