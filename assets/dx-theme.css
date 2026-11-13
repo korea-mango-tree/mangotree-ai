@@ -99,22 +99,28 @@
 .dxpage .dx-sample li{display:flex;flex-direction:column;gap:8px}
 .dxpage .dx-sample li small{margin-top:0;line-height:1.6}
 }
-/* 「진단 다음에는 제작까지 함께합니다」: 기획→카피→디자인→촬영→개발 단계(step) UI */
-.dxpage .dx-mksteps{list-style:none;margin:0 0 40px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;counter-reset:none}
-.dxpage .dx-mksteps li{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:0 8px}
-.dxpage .dx-mkstep-n{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid #161616;color:#161616;font-size:16px;font-weight:800;letter-spacing:-.02em}
-.dxpage .dx-mksteps li:first-child .dx-mkstep-n{background:#FEE500;border-color:#161616}
-/* 단계 사이 연결선과 화살표 */
-.dxpage .dx-mksteps li:not(:last-child)::after{content:"";position:absolute;top:28px;left:calc(50% + 36px);right:calc(-50% + 28px);height:2px;background:#161616}
-.dxpage .dx-mksteps li:not(:last-child)::before{content:"";position:absolute;top:23px;right:calc(-50% + 24px);width:10px;height:10px;border-top:2px solid #161616;border-right:2px solid #161616;transform:rotate(45deg)}
-.dxpage .dx-mksteps b{margin-top:8px;font-size:24px;font-weight:800;letter-spacing:-.03em}
-.dxpage .dx-mksteps small{font-size:16px;color:var(--gray,#5A554C);line-height:1.5;word-break:keep-all}
+/* 「진단 다음에는 제작까지 함께합니다」: 기획→카피→디자인→촬영→개발 단계(step) UI, 아이콘 + STEP 번호 */
+.dxpage .dx-mksteps{list-style:none;margin:0 0 40px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.dxpage .dx-mksteps li{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px}
+.dxpage .dx-mkstep-ic{position:relative;z-index:1;display:grid;place-items:center;width:80px;height:80px;border-radius:24px;background:#fff;border:1px solid rgba(22,22,22,.14);color:#161616;box-shadow:0 12px 24px -16px rgba(22,22,22,.35);transition:transform .2s,background .2s}
+.dxpage .dx-mkstep-ic .ico{width:32px;height:32px;stroke-width:1.6}
+.dxpage .dx-mksteps li:first-child .dx-mkstep-ic{background:#FEE500;border-color:#FEE500}
+.dxpage .dx-mksteps li:hover .dx-mkstep-ic{transform:translateY(-4px)}
+.dxpage .dx-mkstep-k{margin-top:16px;font-size:12px;font-weight:800;letter-spacing:.12em;color:#8a857c}
+.dxpage .dx-mksteps b{margin-top:4px;font-size:24px;font-weight:800;letter-spacing:-.03em}
+.dxpage .dx-mksteps small{margin-top:8px;font-size:16px;color:var(--gray,#5A554C);line-height:1.5;word-break:keep-all}
+/* 단계 사이: 점선 연결선 + 화살표 */
+.dxpage .dx-mksteps li:not(:last-child)::after{content:"";position:absolute;top:40px;left:calc(50% + 48px);right:calc(-50% + 48px);border-top:2px dashed rgba(22,22,22,.35)}
+.dxpage .dx-mksteps li:not(:last-child)::before{content:"";position:absolute;top:35px;right:calc(-50% + 46px);width:10px;height:10px;border-top:2px solid #161616;border-right:2px solid #161616;transform:rotate(45deg)}
+@media(prefers-reduced-motion:reduce){.dxpage .dx-mksteps li:hover .dx-mkstep-ic{transform:none}}
 @media(max-width:760px){
 .dxpage .dx-mksteps{grid-template-columns:1fr;gap:0;margin-bottom:32px}
-.dxpage .dx-mksteps li{display:grid;grid-template-columns:48px 1fr;grid-template-rows:auto auto;column-gap:16px;align-items:center;text-align:left;padding:0 0 24px}
-.dxpage .dx-mkstep-n{grid-row:1/3;width:48px;height:48px;align-self:start}
+.dxpage .dx-mksteps li{display:grid;grid-template-columns:56px 1fr;column-gap:16px;align-items:start;text-align:left;padding:0 0 24px}
+.dxpage .dx-mkstep-ic{grid-row:1/4;width:56px;height:56px;border-radius:16px}
+.dxpage .dx-mkstep-ic .ico{width:24px;height:24px}
+.dxpage .dx-mkstep-k{margin-top:4px}
 .dxpage .dx-mksteps b{margin-top:0;font-size:16px}
-.dxpage .dx-mksteps small{font-size:12px}
-.dxpage .dx-mksteps li:not(:last-child)::after{top:48px;bottom:0;left:23px;right:auto;width:2px;height:auto}
+.dxpage .dx-mksteps small{margin-top:2px;font-size:12px}
+.dxpage .dx-mksteps li:not(:last-child)::after{top:64px;bottom:8px;left:27px;right:auto;border-top:0;border-left:2px dashed rgba(22,22,22,.35)}
 .dxpage .dx-mksteps li:not(:last-child)::before{display:none}
 }
