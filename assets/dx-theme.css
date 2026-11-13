@@ -124,3 +124,7 @@
 .dxpage .dx-mksteps li:not(:last-child)::after{top:64px;bottom:8px;left:27px;right:auto;border-top:0;border-left:2px dashed rgba(22,22,22,.35)}
 .dxpage .dx-mksteps li:not(:last-child)::before{display:none}
 }
+/* 「시작 전에 궁금한 점」 FAQ: 760px 제한을 풀어 제목과 같은 본문 폭 전체 사용(오른쪽 빈 공간 제거) */
+.dxpage .dx-faq{max-width:none;width:100%;margin:0}
+.dxpage .dx-faq summary{font-size:16px;padding:24px 0}
+.dxpage .dx-faq details p{max-width:880px;padding-bottom:24px;line-height:1.75}
