@@ -1893,3 +1893,17 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
 - **수정** (`assets/site.css`): `#header .nav-cta{box-sizing:border-box;height:44px;min-height:44px;padding:0 24px}`
   - diagnosis.css의 padding 규칙보다 우선 적용된다.
 - **검증**: 9개 페이지(1440)에서 두 버튼 모두 top 16px, 높이 44px로 같다.
+
+## 98. 페이지 제목 줄바꿈을 단어 단위(keep-all)로 (2026-11-13)
+
+- **사용자 요청**: 무료 AI 진단 dx-hero h1의 줄바꿈을 keep-all로 한다.
+- **원인**
+  - h1에는 이미 `word-break:keep-all`이 걸려 있었다.
+  - 하지만 제목 등장 애니메이션(`assets/interactions.js`)이 글자마다 inline-block span으로 나누고 있었다. 그래서 단어 안에서도 줄이 바뀌었다(예: 「가장 필요한 것은 무 / 엇일까요」, 모바일 「…무엇일 / 까요」).
+- **수정**
+  - `assets/interactions.js`: 띄어쓰기 단위로 글자 span들을 `.title-word`로 묶는다.
+  - `assets/interactions.css`: `.title-word{white-space:nowrap}`. 애니메이션은 그대로다.
+- 같은 스크립트를 쓰는 9개 페이지 제목 모두에 적용된다. 회사소개 모바일 제목의 「가 / 치를」 단어 중간 끊김도 함께 고쳐졌다.
+- **검증 (1440·390·360)**
+  - 진단: 「우리 회사에 지금 / 가장 필요한 것은 / 무엇일까요」
+  - 9개 페이지 모두 단어 경계에서만 줄바꿈, 가로 넘침 없음, 오류 0
