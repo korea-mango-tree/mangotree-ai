@@ -23,7 +23,7 @@
 
 /* 첫 화면 */
 .x-hero{background:var(--ivory);color:var(--charcoal);padding:152px 0 72px;border-bottom:1px solid var(--ivory-2)}
-.x-hero h1{font-size:clamp(40px,6.4vw,96px);line-height:1.1;letter-spacing:-.06em}
+.x-hero h1{font-size:clamp(40px,6.4vw,80px);line-height:1.1;letter-spacing:-.06em}
 .x-hero h1 em{font-style:normal;background:linear-gradient(to top,var(--mango) 30%,transparent 30%);padding:0 .04em}
 .x-hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:20px 40px;flex-wrap:wrap;margin-top:40px;padding-top:32px;border-top:1px solid rgba(22,22,22,.2)}
 .x-hero-foot p{font-size:clamp(16px,1.5vw,16px);color:var(--ivory-ink);max-width:560px;line-height:1.75}
