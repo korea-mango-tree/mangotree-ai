@@ -1,0 +1,22 @@
+# 사용자 생성 때 자동으로 만들어진 VirtualHost 로 서빙할 때 쓰는 규칙
+# (deploy/apache-mangotree-ai.conf 를 직접 넣는 경우엔 그 파일이 같은 규칙을 갖고 있어 이 파일은 무시됨)
+# AllowOverride 가 FileInfo 이상이어야 적용된다 — 적용 확인: curl -I https://<도메인>/docs/ 가 404
+
+# 공개하면 안 되는 것: git 이력, 내부 문서·리뷰 캡처, Vercel 전용 함수, 배포 파일, 원본 HTML
+RedirectMatch 404 "^/(\.git|\.claude|docs|api|deploy)(/|$)"
+RedirectMatch 404 "^/(\.gitignore|\.gitattributes|\.nojekyll|deploy\.sh|index\.source\.html|.*\.md)$"
+
+# 캐시: CSS/JS 는 파일명에 버전이 없어서 매번 재검증(갱신 즉시 반영), 이미지·영상·폰트는 30일
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|css|js)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+    <FilesMatch "\.(jpe?g|png|webp|gif|svg|ico|mp4|webm|woff2?)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json
+</IfModule>

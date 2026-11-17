@@ -1,6 +1,8 @@
 /* Progressive visual feedback; navigation works without jQuery. */
 (function($){if(!$)return;$(function(){
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
+// 자동 재생 화면 영상(data-motion-video): 움직임 줄이기 설정이면 멈추고 첫 화면(poster)만 보인다
+const motionVideos=()=>document.querySelectorAll('video[data-motion-video]').forEach(v=>{if(motion.matches){v.pause();v.removeAttribute('autoplay');try{v.currentTime=0;}catch(_){}}else v.play().catch(()=>{});});motionVideos();motion.addEventListener('change',motionVideos);
 // Preserve emphasis and explicit line breaks while revealing each grapheme.
 $('main h1,.h-hero-title,.dx-hero h1').each(function(){
 const title=this;if(title.dataset.maskTitle)return;title.dataset.maskTitle='true';
@@ -9,7 +11,8 @@ const walker=document.createTreeWalker(title,NodeFilter.SHOW_TEXT),nodes=[];let 
 while((node=walker.nextNode()))nodes.push(node);
 const segmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter('ko',{granularity:'grapheme'}):null;
 nodes.forEach(text=>{const fragment=document.createDocumentFragment();const chars=segmenter?Array.from(segmenter.segment(text.textContent),s=>s.segment):Array.from(text.textContent);
-chars.forEach(char=>{if(/\s/.test(char)){fragment.append(document.createTextNode(char));return;}const mask=document.createElement('span'),letter=document.createElement('span');mask.className='title-mask';mask.setAttribute('aria-hidden','true');letter.className='title-letter';letter.textContent=char;letter.style.setProperty('--letter-delay',Math.min(index++,45)*27+'ms');mask.append(letter);fragment.append(mask);});text.replaceWith(fragment);});
+// 글자마다 span 으로 나누면 단어 안에서도 줄이 바뀌므로(keep-all 무시), 띄어쓰기 단위로 줄바꿈 없는 묶음(title-word)에 넣는다
+let word=null;chars.forEach(char=>{if(/\s/.test(char)){word=null;fragment.append(document.createTextNode(char));return;}if(!word){word=document.createElement('span');word.className='title-word';fragment.append(word);}const mask=document.createElement('span'),letter=document.createElement('span');mask.className='title-mask';mask.setAttribute('aria-hidden','true');letter.className='title-letter';letter.textContent=char;letter.style.setProperty('--letter-delay',Math.min(index++,45)*27+'ms');mask.append(letter);word.append(mask);});text.replaceWith(fragment);});
 if(!motion.matches&&'IntersectionObserver' in window){
 const titleIO=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){title.classList.add('title-mask-play');titleIO.disconnect();}},{threshold:.15});titleIO.observe(title);
 }
