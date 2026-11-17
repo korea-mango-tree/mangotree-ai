@@ -1,6 +1,6 @@
 /* 페이지메이커 「AI와 대화하며 완성하는 상세페이지 에디터」 데모 — 참고 아티팩트 원본(#editor)을 .pme 범위로 옮김 */
-.pme{--primary:#2066ff; --primary-hover:#1855e0; --cyan:#00c6ff;
-  --fg:#0b1220; --muted:#64748b; --muted-2:#94a3b8; --border:#e5e7eb; --border-2:#f1f5f9;
+.pme{--primary:#1a5ae6; --primary-hover:#1855e0; --cyan:#00c6ff;
+  --fg:#0b1220; --muted:#64748b; --muted-2:#64748b; --border:#e5e7eb; --border-2:#f1f5f9;
   --bg-soft:#f8fafc; --dark:#05070d;
   --grad:linear-gradient(135deg,#2066ff,#00c6ff);
   --shadow:0 12px 40px rgba(0,0,0,.06); --shadow-lg:0 30px 80px rgba(15,23,42,.12);;font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo",sans-serif;color:var(--fg);line-height:1.6;letter-spacing:-.01em;word-break:keep-all;text-align:left}

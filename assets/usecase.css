@@ -160,7 +160,7 @@
 .mk-inbox li{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;padding:8px 16px;font-size:12px;border-bottom:1px dashed #E3E0D8}
 .mk-inbox li b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mk-inbox li em{font-style:normal;font-weight:700;text-align:center;padding:2px 0;border-radius:4px;font-size:12px}
-.mk-inbox .c-k{background:#FEE500;color:#3C1E1E}.mk-inbox .c-n{background:#03C75A;color:#fff}.mk-inbox .c-b{background:#E3E0D8;color:#3B3832}.mk-inbox .c-p{background:#5A554C;color:#fff}
+.mk-inbox .c-k{background:#FEE500;color:#3C1E1E}.mk-inbox .c-n{background:#00843D;color:#fff}.mk-inbox .c-b{background:#E3E0D8;color:#3B3832}.mk-inbox .c-p{background:#5A554C;color:#fff}
 .mk-inbox li i{font-style:normal;font-weight:700;color:#B4462E}
 .mk-agent{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#ECEAE4;font-size:12px}
 .mk-av{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#5A554C;color:#fff;font-weight:800}
@@ -176,7 +176,7 @@
 .mk-tag{justify-self:center;font-size:12px;font-weight:700;color:#5A554C;padding:2px 8px;border-radius:999px;background:#ECE5D6}
 .mk-bot{justify-self:start;max-width:92%;padding:12px;border-radius:14px 14px 14px 4px;background:#fff;border:1px solid #E3E0D8;font-size:12px;line-height:1.55}
 .mk-track{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
-.mk-track span{font-size:12px;text-align:center;padding:4px 0;border-top:3px solid #E3E0D8;color:#8a857c;font-weight:600}
+.mk-track span{font-size:12px;text-align:center;padding:4px 0;border-top:3px solid #E3E0D8;color:#6B6458;font-weight:600}
 .mk-track span.on{border-color:#161616;color:#161616}
 .mk-quick{display:flex;flex-wrap:wrap;gap:4px}
 .mk-quick span{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:#fff;border:1px solid #161616}
