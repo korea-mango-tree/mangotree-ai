@@ -243,3 +243,8 @@
   .h-pfcat-list{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -20px;padding:0 20px 8px;scrollbar-width:thin}
   .h-pfcat-list li{flex:0 0 44%;scroll-snap-align:start}
 }
+/* 메인 포트폴리오: 숏폼 영상 줄(세로 9:16 썸네일, 재생 표시) */
+.h-pf-thumb{position:relative;display:block}
+.h-pfcat-short .h-pfcat-list img{aspect-ratio:9/16;object-position:center;background:#111}
+.h-pf-play{position:absolute;left:10px;bottom:10px;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(15,15,15,.72);color:#fff;font-size:13px;padding-left:2px;pointer-events:none;transition:background .2s}
+.h-pfcat-short a:hover .h-pf-play{background:var(--mango);color:var(--charcoal)}
