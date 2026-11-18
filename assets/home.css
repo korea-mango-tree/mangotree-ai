@@ -232,7 +232,7 @@
 .h-pfcat-head h3{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.04em;line-height:1.2}
 .h-pfcat-head p{font-size:15.5px;color:var(--ivory-ink);margin-top:6px}
 .h-pfcat-list{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin:0;padding:0}
-.h-pfcat-list a{display:block;color:inherit}
+.h-pfcat-list a{position:relative;display:block;color:inherit}
 .h-pfcat-list img{display:block;width:100%;height:auto;aspect-ratio:340/460;object-fit:cover;object-position:top;border-radius:12px;background:var(--ivory)}
 .h-pfcat-list span{display:block;margin-top:10px;font-size:14px;font-weight:700;letter-spacing:-.02em;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .h-pfcat-list a:hover span{text-decoration:underline;text-underline-offset:4px}
