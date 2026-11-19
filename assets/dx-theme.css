@@ -106,9 +106,9 @@
 .dxpage .dx-mkstep-ic .ico{width:32px;height:32px;stroke-width:1.6}
 .dxpage .dx-mksteps li:first-child .dx-mkstep-ic{background:#FEE500;border-color:#FEE500}
 .dxpage .dx-mksteps li:hover .dx-mkstep-ic{transform:translateY(-4px)}
-.dxpage .dx-mkstep-k{margin-top:16px;font-size:12px;font-weight:800;letter-spacing:.12em;color:#8a857c}
+.dxpage .dx-mkstep-k{margin-top:16px;font-size:12px;font-weight:800;letter-spacing:.12em;color:#6B6458}
 .dxpage .dx-mksteps b{margin-top:4px;font-size:24px;font-weight:800;letter-spacing:-.03em}
-.dxpage .dx-mksteps small{margin-top:8px;font-size:16px;color:var(--gray,#5A554C);line-height:1.5;word-break:keep-all}
+.dxpage .dx-mksteps small{margin-top:8px;font-size:16px;color:#5A554C;line-height:1.5;word-break:keep-all}
 /* 단계 사이: 점선 연결선 + 화살표 */
 .dxpage .dx-mksteps li:not(:last-child)::after{content:"";position:absolute;top:40px;left:calc(50% + 48px);right:calc(-50% + 48px);border-top:2px dashed rgba(22,22,22,.35)}
 .dxpage .dx-mksteps li:not(:last-child)::before{content:"";position:absolute;top:35px;right:calc(-50% + 46px);width:10px;height:10px;border-top:2px solid #161616;border-right:2px solid #161616;transform:rotate(45deg)}

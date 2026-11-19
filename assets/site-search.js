@@ -12,9 +12,9 @@ const data=[
 ['AI 컨설팅','AI 제품 상세페이지 콘텐츠 제작 상담 데이터 업무 자동화','products.html'],
 ['AI CREATIVE · 콘텐츠 제작','촬영 합성 이미지 영상 상세페이지','products.html#creative'],
 ['AI COMMERCE · 커머스','상품 추천 매출 쇼핑몰','products.html#commerce'],
-['AI AGENT · 고객 상담','챗봇 문의 고객 응대','products.html#agent-ai'],
+
 ['AI INSIGHT · 데이터 분석','통계 리포트 매출 분석','products.html#insight'],
-['AI FLOW · 업무 자동화','반복 업무 프로세스','products.html#flow'],
+['AI FLOW · 업무 자동화·에이전트','반복 업무 프로세스 상담 영업 에이전트 챗봇 문의 고객 응대','products.html#flow'],
 ['AI GROWTH · 마케팅','광고 성장 마케팅','products.html#growth'],
 ['AI 모듈','기능 검색 인공지능 모듈','modules.html'],
 ['페이지메이커','상세페이지 자동 제작 pagemaker','platforms.html#pagemaker'],

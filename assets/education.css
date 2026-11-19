@@ -6,7 +6,7 @@
 .edu-lead{font-size:16px;line-height:1.8;color:var(--ink-2,#4A4740);margin-top:16px;max-width:560px}
 .edu-topics{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .edu-topics li{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--ivory,#F5F0E6);font-size:16px;font-weight:700}
-.edu-topics b{font-size:12px;color:#8a7f5a}
+.edu-topics b{font-size:12px;color:#6B6250}
 .edu-profile{margin-top:24px;padding:24px 24px;border-radius:18px;border:1px solid rgba(22,22,22,.12)}
 .edu-profile h3{font-size:16px;letter-spacing:-.02em}
 .edu-profile ul{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
