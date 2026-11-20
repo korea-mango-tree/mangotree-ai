@@ -12,7 +12,7 @@ function buildCard(it){
   const fig=el('figure'),a=el(link?'a':'span','x-wlink');
   if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
   const img=el('img');img.src=thumb;img.alt='';img.width=400;img.height=541;img.loading='lazy';img.decoding='async';a.append(img);
-  if(video){const p=el('span','video-play','▶');p.setAttribute('aria-hidden','true');a.append(p);}
+  if(video){const p=el('span','video-play');p.setAttribute('aria-hidden','true');a.append(p);}
   const name=el('span','x-wname',title);
   const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):', 크게 보기');
   name.append(el('span','sr-only',sr));a.append(name);
@@ -30,7 +30,11 @@ async function loadFromApi(){
     const json=await res.json(),items=json&&json.status==='success'&&json.data&&Array.isArray(json.data.items)?json.data.items:[];
     const cards=items.map(buildCard).filter(Boolean);
     if(!cards.length)throw new Error('빈 응답');
-    list.replaceChildren(...cards);
+    // API에는 AI 영상(유튜브)이 없으므로 HTML의 영상 카드를 남겨, API 카드 4개마다 1개씩 섞어 넣는다(AI 영상 탭이 비지 않게).
+    const videos=[...list.querySelectorAll('.pf-video')],mixed=[];
+    cards.forEach((c,i)=>{mixed.push(c);if(i%4===3&&videos.length)mixed.push(videos.shift());});
+    mixed.push(...videos);
+    list.replaceChildren(...mixed);
     return true;
   }catch(e){
     console.warn('[portfolio] API 로드 실패, 정적 카드 사용:',e&&e.name==='AbortError'?'타임아웃':e);
