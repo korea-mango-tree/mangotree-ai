@@ -357,3 +357,4 @@ li,dd,td,th,small,label,summary{text-wrap:pretty}
 .cf-submit{min-width:140px;justify-content:center}
 .cf-submit:disabled{opacity:.6;cursor:wait}
 @media(max-width:560px){.cf-form{padding:24px 20px 20px}.cf-actions .cf-submit{width:100%}}
+.cf-field small{font-weight:500;color:#5F5F5F}
