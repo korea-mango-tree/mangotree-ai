@@ -538,3 +538,11 @@ body.mdl-lock{overflow:hidden}
 @media(max-width:760px){.x-hworks.is-masonry>li{margin-bottom:24px}}
 .x-hworks>.x-hw.wide{--masonry-full:1}
 @media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:0}}
+/* 포트폴리오 썸네일 전체: 가로폭에 맞춤(원본 비율, 좌우 잘림 없음). 앞의 상세페이지 3:5·1:2 틀 규칙을 덮어쓴다.
+   단, 정적 긴 상세페이지 원본(assets/portfolio/detail-*, 400×6000px 이상)은 가로폭에 맞추고 1:2에서 아래만 자른다. */
+.x-works .x-work img,.x-works .x-work[data-cat] img[src]{aspect-ratio:auto;height:auto;object-fit:contain}
+.x-works .x-work[data-cat="detail"] img[src^="assets/portfolio/detail-"]{aspect-ratio:1/2;object-fit:cover;object-position:center top}
+.x-hworks>.x-hw:not(.wide) .x-hw-frame,.x-hworks>.x-hw[data-cat] .x-hw-frame{aspect-ratio:auto}
+.x-hworks>.x-hw:not(.wide) .x-hw-frame img{height:auto;object-fit:contain}
+.x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{aspect-ratio:auto;height:auto;object-fit:contain}
+@media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:1}.x-hworks .x-hw.wide .x-hw-frame{aspect-ratio:1200/625}.x-hworks .x-hw.wide .x-hw-frame img{object-position:center top}}
