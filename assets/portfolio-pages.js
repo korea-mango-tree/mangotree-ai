@@ -4,17 +4,22 @@ const list=document.querySelector('ul.x-works');
 
 // DB 값은 textContent·속성으로만 넣는다(innerHTML 금지). URL 은 http(s)만 허용.
 function safeUrl(v){try{const u=new URL(String(v),location.href);return /^https?:$/.test(u.protocol)?u.href:'';}catch(e){return '';}}
+// 고객사 홈페이지 주소: 관리자 입력값이라 공백·http:// 누락("malin.mangotree.co.kr")이 섞여 온다.
+// 앞뒤 공백 제거, 스킴 없는 도메인은 http:// 를 붙이고, 상대경로로는 해석하지 않는다(절대 http(s) 주소만).
+function siteUrl(v){const s=String(v||'').trim();if(!s)return '';const w=/^[a-z][a-z0-9+.-]*:/i.test(s)?s:(/^[a-z0-9-]+(\.[a-z0-9-]+)+(:\d+)?([/?#]|$)/i.test(s)?'http://'+s:'');
+  try{const u=new URL(w);return /^https?:$/.test(u.protocol)&&u.hostname?u.href:'';}catch(e){return '';}}
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
 function buildCard(it){
-  const cat=String(it.cat||''),catName=String(it.catName||''),title=String(it.title||''),link=safeUrl(it.link),thumb=safeUrl(it.thumb),video=!!it.youtubeId;
+  // homepage_link(실제 고객사 홈페이지 주소)가 있으면 카드를 그 주소로 새 창 열기 — 크게 보기 모달 대상에서 빠진다.
+  const cat=String(it.cat||''),catName=String(it.catName||''),title=String(it.title||''),site=siteUrl(it.homepage_link),link=site||safeUrl(it.link),thumb=safeUrl(it.thumb),video=!!it.youtubeId;
   if(!cat||!title||!thumb)return null;
-  const li=el('li','x-work pf-card'+(video?' pf-video':''));li.dataset.cat=cat;
+  const li=el('li','x-work pf-card'+(video?' pf-video':''));li.dataset.cat=cat;if(site)li.dataset.site='1';
   const fig=el('figure'),a=el(link?'a':'span','x-wlink');
   if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
   const img=el('img');img.src=thumb;img.alt='';img.width=400;img.height=541;img.loading='lazy';img.decoding='async';a.append(img);
   if(video){const p=el('span','video-play','▶');p.setAttribute('aria-hidden','true');a.append(p);}
   const name=el('span','x-wname',title);
-  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):', 크게 보기');
+  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):site?', 홈페이지 바로가기 (새 창)':', 크게 보기');
   name.append(el('span','sr-only',sr));a.append(name);
   const cap=el('figcaption');cap.append(el('span','x-wcat',catName));
   fig.append(a,cap);li.append(fig);return li;
@@ -95,7 +100,8 @@ loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
   }
   let opener=null;
   const fullSrc=src=>String(src||'').replace('/portfolio/thumbs/','/portfolio/');
-  const isVideo=c=>c.classList.contains('pf-video');
+  // 영상·홈페이지 주소가 있는 카드는 모달 대신 원래 링크(새 창)로 연다
+  const isVideo=c=>c.classList.contains('pf-video')||c.dataset.site==='1';
   function target(card){return card.querySelector('.x-wlink')||card.querySelector('figure img');}
   function prep(){list.querySelectorAll('.pf-card').forEach(c=>{if(isVideo(c))return;const t=target(c);if(!t||t.dataset.pfModal)return;t.dataset.pfModal='1';
     if(t.tagName!=='A'){t.tabIndex=0;t.setAttribute('role','button');}
