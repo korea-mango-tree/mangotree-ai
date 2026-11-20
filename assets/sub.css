@@ -529,3 +529,12 @@ body.mdl-lock{overflow:hidden}
 .x-hworks>.x-work[data-cat="detail"] img[src]{aspect-ratio:3/5}
 .x-hworks>.x-work[data-cat="home"] img[src]{aspect-ratio:auto;object-fit:contain}
 .x-hworks{align-items:start}
+/* 상세페이지 썸네일 더 길게(1:2, 위 기준·좌우 잘림) + 지그재그(masonry) 배치(assets/masonry.js) */
+.x-work[data-cat="detail"] img[src^="http"]{aspect-ratio:1/2}
+.x-hworks>.x-hw[data-cat="detail"] .x-hw-frame{aspect-ratio:1/2}
+.x-hworks>.x-work[data-cat="detail"] img[src]{aspect-ratio:1/2}
+.x-hworks.is-masonry{grid-auto-rows:2px;row-gap:0;align-items:start}
+.x-hworks.is-masonry>li{margin-bottom:40px}
+@media(max-width:760px){.x-hworks.is-masonry>li{margin-bottom:24px}}
+.x-hworks>.x-hw.wide{--masonry-full:1}
+@media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:0}}
