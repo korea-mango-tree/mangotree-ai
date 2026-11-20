@@ -332,3 +332,28 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus{outline:
 html{word-break:keep-all;overflow-wrap:break-word;line-break:strict}
 h3,h4,h5,h6,dt,figcaption,caption,legend,blockquote{text-wrap:balance}
 li,dd,td,th,small,label,summary{text-wrap:pretty}
+/* 하단 「제작문의」 간단 접수 폼 (assets/contact-form.js) */
+.cf-dialog{margin:auto;width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:20px;background:#fff;color:#161616;box-shadow:0 24px 64px rgba(0,0,0,.24);overflow:auto}
+.cf-dialog::backdrop{background:rgba(10,10,10,.6)}
+.cf-form{display:grid;gap:16px;padding:28px 28px 24px}
+.cf-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.cf-head h2{font-size:24px;letter-spacing:-.03em;margin:0}
+.cf-x{width:44px;height:44px;margin:-8px -8px -8px 0;border:0;border-radius:50%;background:transparent;font-size:28px;line-height:1;color:#161616;cursor:pointer}
+.cf-x:hover{background:#f2f0e9}
+.cf-lead{margin:0;font-size:15px;color:#4a453c;line-height:1.6}
+.cf-field{display:grid;gap:8px;font-size:14px;font-weight:700}
+.cf-field b,.cf-agree b{color:#B42318}
+.cf-field input,.cf-field textarea{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #CFCAC0;border-radius:12px;font:inherit;font-size:16px;font-weight:400;color:#161616;background:#fff}
+.cf-field textarea{resize:vertical;min-height:104px;line-height:1.6}
+.cf-field input:focus-visible,.cf-field textarea:focus-visible,.cf-agree input:focus-visible{outline:3px solid #ffc200;outline-offset:2px;border-color:#161616}
+.cf-agree{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:600;line-height:1.5;cursor:pointer}
+.cf-agree input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:#161616}
+.cf-note{margin:-8px 0 0 30px;font-size:12px;line-height:1.6;color:#5F5F5F}
+.cf-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.cf-msg{margin:0;min-height:1.5em;font-size:14px;font-weight:600;line-height:1.5}
+.cf-msg.is-ok{color:#166534}
+.cf-msg.is-err{color:#B42318}
+.cf-actions{display:flex;justify-content:flex-end}
+.cf-submit{min-width:140px;justify-content:center}
+.cf-submit:disabled{opacity:.6;cursor:wait}
+@media(max-width:560px){.cf-form{padding:24px 20px 20px}.cf-actions .cf-submit{width:100%}}
