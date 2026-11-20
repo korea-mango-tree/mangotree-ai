@@ -20,7 +20,7 @@
   function card(it) {
     var title = cleanTitle(it.title), catName = String(it.catName || ''), link = safeUrl(it.link), thumb = safeUrl(it.thumb), date = fmtDate(it.date);
     if (!title || !thumb) return null;
-    var li = el('li', 'x-hw'), fig = el('figure'), a = el(link ? 'a' : 'span', 'x-hw-frame');
+    var li = el('li', 'x-hw'); li.dataset.cat = String(it.cat || ''); var fig = el('figure'), a = el(link ? 'a' : 'span', 'x-hw-frame');
     if (link) { a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
     var img = el('img'); img.src = thumb; img.alt = ''; img.width = 400; img.height = 541; img.loading = 'lazy'; img.decoding = 'async';
     a.appendChild(img);
