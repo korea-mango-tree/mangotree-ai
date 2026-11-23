@@ -369,3 +369,4 @@ li,dd,td,th,small,label,summary{text-wrap:pretty}
 @media(prefers-reduced-motion:reduce){.video-play,.h-pf-play{transition:none}a:hover>.video-play{transform:translate(-50%,-50%)}a:hover .h-pf-play{transform:none}}
 /* 포트폴리오 영상 카드: 제목이 링크 안(이미지 아래)에 있으므로 재생 버튼을 이미지(480×360) 중심에 맞춘다. margin-top %는 너비 기준 → 이미지 높이의 절반 = 너비의 37.5% */
 .pf-video .video-play{top:0;margin-top:37.5%}
+.foot-biz .foot-nowrap{white-space:nowrap}
