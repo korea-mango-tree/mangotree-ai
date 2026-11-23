@@ -17,7 +17,7 @@ function buildCard(it){
   const fig=el('figure'),a=el(link?'a':'span','x-wlink');
   if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
   const img=el('img');img.src=thumb;img.alt='';img.width=400;img.height=541;img.loading='lazy';img.decoding='async';a.append(img);
-  if(video){const p=el('span','video-play','▶');p.setAttribute('aria-hidden','true');a.append(p);}
+  if(video){const p=el('span','video-play');p.setAttribute('aria-hidden','true');a.append(p);}
   const name=el('span','x-wname',title);
   const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):site?', 홈페이지 바로가기 (새 창)':', 크게 보기');
   name.append(el('span','sr-only',sr));a.append(name);
@@ -35,7 +35,11 @@ async function loadFromApi(){
     const json=await res.json(),items=json&&json.status==='success'&&json.data&&Array.isArray(json.data.items)?json.data.items:[];
     const cards=items.map(buildCard).filter(Boolean);
     if(!cards.length)throw new Error('빈 응답');
-    list.replaceChildren(...cards);
+    // API에는 AI 영상(유튜브)이 없으므로 HTML의 영상 카드를 남겨, API 카드 4개마다 1개씩 섞어 넣는다(AI 영상 탭이 비지 않게).
+    const videos=[...list.querySelectorAll('.pf-video')],mixed=[];
+    cards.forEach((c,i)=>{mixed.push(c);if(i%4===3&&videos.length)mixed.push(videos.shift());});
+    mixed.push(...videos);
+    list.replaceChildren(...mixed);
     return true;
   }catch(e){
     console.warn('[portfolio] API 로드 실패, 정적 카드 사용:',e&&e.name==='AbortError'?'타임아웃':e);
@@ -58,15 +62,8 @@ return ()=>{cards=[...document.querySelectorAll('.pf-card')];page=1;render(false
 
 // 퍼즐(masonry) 배치: 카드마다 실제 높이에 맞춰 grid-row-end:span N 을 준다(행 단위 2px, CSS .is-masonry).
 // ResizeObserver 로 이미지 로드·창 크기·탭 전환(숨김 해제) 때마다 다시 계산. 가로 순서는 그대로라 페이지 순서 유지.
-const masonry=(()=>{
-  if(!list||!window.ResizeObserver)return ()=>{};
-  const UNIT=2;
-  const fit=c=>{if(c.hidden)return;const h=c.getBoundingClientRect().height+parseFloat(getComputedStyle(c).marginBottom||0);c.style.gridRowEnd='span '+Math.max(1,Math.ceil(h/UNIT));};
-  const ro=new ResizeObserver(es=>es.forEach(e=>fit(e.target)));
-  list.classList.add('is-masonry');
-  return ()=>{ro.disconnect();list.querySelectorAll('.x-work').forEach(c=>{fit(c);ro.observe(c);});};
-})();
-masonry();
+const masonryApi=window.mtMasonry?window.mtMasonry(list,'.x-work'):{relayout(){}};
+const masonry=()=>masonryApi.relayout();
 
 // 정적 카드로 먼저 탭·페이지를 띄워 두고(로딩 중 61개 전부 노출 방지),
 // API 카드로 교체되면 같은 상태(탭·해시)로 다시 렌더한다. 실패 시 정적 카드 유지.

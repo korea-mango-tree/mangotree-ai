@@ -377,8 +377,8 @@ body.mdl-lock{overflow:hidden}
 /* Detailed-page work gets a tall, top-aligned preview without image distortion. */
 .x-work[data-cat="detail"] img{aspect-ratio:1/2.4;object-fit:cover;object-position:center top}
 .x-work[data-cat="detail"] img[src^="assets/inline/"]{aspect-ratio:340/460;object-fit:contain}
-/* API 썸네일(400x541)은 세로로 늘리면 좌우가 잘리므로 원본 비율 유지 */
-.x-work[data-cat="detail"] img[src^="http"]{aspect-ratio:400/541}
+/* API 썸네일(400x541): 사용자 요청으로 상세페이지는 세로로 긴 3:5 틀(위 기준, 좌우 일부 잘림) */
+.x-work[data-cat="detail"] img[src^="http"]{aspect-ratio:3/5;object-fit:cover;object-position:center top}
 /* Masonry: portfolio-pages.js 가 카드 높이만큼 grid-row-end:span N 을 지정해 빈칸 없이 쌓는다.
    (JS 미동작 시 is-masonry 가 붙지 않아 기존 그리드 그대로). 세로 간격은 row-gap 대신 margin 으로. */
 .x-works.is-masonry{--mgap:40px;grid-auto-rows:2px;row-gap:0;align-items:start}
@@ -522,3 +522,27 @@ body.mdl-lock{overflow:hidden}
 }
 /* 플랫폼 첫 화면 자동 진행 화면: 1920×1200 영상(이전 960×600 애니메이션 WebP) */
 .x-browser .x-screen-video{display:block;width:100%;height:auto;aspect-ratio:16/10;background:#fff}
+
+/* 활용사례 작업물: 상세페이지는 세로로 긴 3:5 틀, 홈페이지는 썸네일 원본 비율(400:541)로 가로폭에 맞춰 잘림 없이 */
+.x-hworks>.x-hw[data-cat="detail"] .x-hw-frame{aspect-ratio:3/5}
+.x-hworks>.x-hw[data-cat="home"] .x-hw-frame{aspect-ratio:400/541}
+.x-hworks>.x-work[data-cat="detail"] img[src]{aspect-ratio:3/5}
+.x-hworks>.x-work[data-cat="home"] img[src]{aspect-ratio:auto;object-fit:contain}
+.x-hworks{align-items:start}
+/* 상세페이지 썸네일 더 길게(1:2, 위 기준·좌우 잘림) + 지그재그(masonry) 배치(assets/masonry.js) */
+.x-work[data-cat="detail"] img[src^="http"]{aspect-ratio:1/2}
+.x-hworks>.x-hw[data-cat="detail"] .x-hw-frame{aspect-ratio:1/2}
+.x-hworks>.x-work[data-cat="detail"] img[src]{aspect-ratio:1/2}
+.x-hworks.is-masonry{grid-auto-rows:2px;row-gap:0;align-items:start}
+.x-hworks.is-masonry>li{margin-bottom:40px}
+@media(max-width:760px){.x-hworks.is-masonry>li{margin-bottom:24px}}
+.x-hworks>.x-hw.wide{--masonry-full:1}
+@media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:0}}
+/* 포트폴리오 썸네일 전체: 가로폭에 맞춤(원본 비율, 좌우 잘림 없음). 앞의 상세페이지 3:5·1:2 틀 규칙을 덮어쓴다.
+   단, 정적 긴 상세페이지 원본(assets/portfolio/detail-*, 400×6000px 이상)은 가로폭에 맞추고 1:2에서 아래만 자른다. */
+.x-works .x-work img,.x-works .x-work[data-cat] img[src]{aspect-ratio:auto;height:auto;object-fit:contain}
+.x-works .x-work[data-cat="detail"] img[src^="assets/portfolio/detail-"]{aspect-ratio:1/2;object-fit:cover;object-position:center top}
+.x-hworks>.x-hw:not(.wide) .x-hw-frame,.x-hworks>.x-hw[data-cat] .x-hw-frame{aspect-ratio:auto}
+.x-hworks>.x-hw:not(.wide) .x-hw-frame img{height:auto;object-fit:contain}
+.x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{aspect-ratio:auto;height:auto;object-fit:contain}
+@media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:1}.x-hworks .x-hw.wide .x-hw-frame{aspect-ratio:1200/625}.x-hworks .x-hw.wide .x-hw-frame img{object-position:center top}}
