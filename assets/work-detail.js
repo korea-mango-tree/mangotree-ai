@@ -12,7 +12,7 @@
   var itId = /^\d+$/.test(q.get('it_id') || '') ? q.get('it_id') : '';
   var bo = /^[\w-]+$/.test(q.get('bo') || '') ? q.get('bo') : '', wr = /^\d+$/.test(q.get('wr') || '') ? q.get('wr') : '';
   var $ = function (id) { return document.getElementById(id); };
-  var title = $('wdTitle'), cat = $('wdCat'), catLink = $('wdCatLink'), site = $('wdSite'), origin = $('wdOrigin'), status = $('wdStatus'), box = $('wdImages');
+  var title = $('wdTitle'), cat = $('wdCat'), catLink = $('wdCatLink'), site = $('wdSite'), status = $('wdStatus'), box = $('wdImages');
   if (!title || !box) return;
 
   var link = itId ? 'https://mangotree.co.kr/shop/item.php?it_id=' + itId : (bo && wr ? 'https://mangotree.co.kr/bbs/board.php?bo_table=' + bo + '&wr_id=' + wr : '');
@@ -20,10 +20,8 @@
     title.textContent = '작업물을 찾을 수 없습니다';
     status.textContent = '';
     box.appendChild(Object.assign(document.createElement('p'), { className: 'wd-empty', textContent: '주소가 올바르지 않습니다. 포트폴리오 목록에서 다시 골라 주세요.' }));
-    origin.hidden = true;
     return;
   }
-  origin.href = link;
 
   function safe(v) { try { var u = new URL(String(v), location.href); return /^https?:$/.test(u.protocol) ? u.href : ''; } catch (e) { return ''; } }
   function siteUrl(v) { var s = String(v || '').trim(); if (!s) return ''; if (!/^[a-z][a-z0-9+.-]*:/i.test(s)) s = /^[a-z0-9-]+(\.[a-z0-9-]+)+/i.test(s) ? 'http://' + s : ''; return safe(s); }
@@ -89,5 +87,5 @@
       });
       if (more.length) ul.closest('section').hidden = false;
     })
-    .catch(function () { if (waitMeta) { status.textContent = ''; box.appendChild(Object.assign(document.createElement('p'), { className: 'wd-empty', textContent: '이미지를 불러오지 못했습니다. 망고트리 원본 게시물에서 확인해 주세요.' })); } })
+    .catch(function () { if (waitMeta) { status.textContent = ''; box.appendChild(Object.assign(document.createElement('p'), { className: 'wd-empty', textContent: '이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.' })); } })
 })();
