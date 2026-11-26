@@ -18,10 +18,9 @@
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   // "[D392]스마트카드태그 상세페이지 제작" → "스마트카드태그"
   function cleanTitle(t) { return String(t || '').replace(/^\s*\[[A-Za-z]*\d+\]\s*/, '').replace(/\s*(상세페이지|홈페이지)\s*제작\s*$/, '').trim(); }
-  function fmtDate(d) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d || '')); return m ? m[1] + '.' + m[2] + '.' + m[3] : ''; }
 
   function card(it) {
-    var title = cleanTitle(it.title), catName = String(it.catName || ''), link = safeUrl(it.link), thumb = safeUrl(it.thumb), date = fmtDate(it.date);
+    var title = cleanTitle(it.title), catName = String(it.catName || ''), link = safeUrl(it.link), thumb = safeUrl(it.thumb);
     if (!title || !thumb) return null;
     var li = el('li', 'x-hw'); li.dataset.cat = String(it.cat || ''); var site = safeUrl(String(it.homepage_link || '').trim().replace(/^(?![a-z][a-z0-9+.-]*:)(?=[a-z0-9-]+\.)/i, 'http://')); if (site) li.dataset.siteUrl = site; var fig = el('figure'), a = el(link ? 'a' : 'span', 'x-hw-frame');
     if (link) { a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
@@ -35,7 +34,6 @@
     var cap = el('figcaption');
     cap.appendChild(el('span', 'x-wcat', catName));
     cap.appendChild(el('span', 'x-wname', title));
-    if (date) { var t = el('time', 'x-wsrc', date); t.dateTime = String(it.date).slice(0, 10); cap.appendChild(t); }
     fig.appendChild(a); fig.appendChild(cap); li.appendChild(fig);
     return li;
   }
