@@ -1,5 +1,6 @@
 (()=>{
-const API='https://mangotree.co.kr/api/portfolio.php?cat=all&limit=30',TIMEOUT=6000;
+// 분야별 최대 100개(서버 상한). 카드는 12개씩 페이지로 나눠 보여 주고 이미지는 지연 로딩한다.
+const API='https://mangotree.co.kr/api/portfolio.php?cat=all&limit=100',TIMEOUT=8000;
 const list=document.querySelector('ul.x-works');
 
 // DB 값은 textContent·속성으로만 넣는다(innerHTML 금지). URL 은 http(s)만 허용.
@@ -10,16 +11,20 @@ function siteUrl(v){const s=String(v||'').trim();if(!s)return '';const w=/^[a-z]
   try{const u=new URL(w);return /^https?:$/.test(u.protocol)&&u.hostname?u.href:'';}catch(e){return '';}}
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
 function buildCard(it){
-  // homepage_link(실제 고객사 홈페이지 주소)가 있으면 카드를 그 주소로 새 창 열기 — 크게 보기 모달 대상에서 빠진다.
-  const cat=String(it.cat||''),catName=String(it.catName||''),title=String(it.title||''),site=siteUrl(it.homepage_link),link=site||safeUrl(it.link),thumb=safeUrl(it.thumb),video=!!it.youtubeId;
+  // homepage_link(실제 고객사 홈페이지·쇼핑몰 주소)는 카드에 data-site-url 로 두고, 크게 보기 모달 안의 「사이트 방문」 버튼으로 연다.
+  const cat=String(it.cat||''),catName=String(it.catName||''),title=String(it.title||''),site=siteUrl(it.homepage_link),link=safeUrl(it.link)||site,thumb=safeUrl(it.thumb),video=!!it.youtubeId;
   if(!cat||!title||!thumb)return null;
-  const li=el('li','x-work pf-card'+(video?' pf-video':''));li.dataset.cat=cat;if(site)li.dataset.site='1';
+  const li=el('li','x-work pf-card'+(video?' pf-video':''));li.dataset.cat=cat;if(site)li.dataset.siteUrl=site;
   const fig=el('figure'),a=el(link?'a':'span','x-wlink');
   if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
-  const img=el('img');img.src=thumb;img.alt='';img.width=400;img.height=541;img.loading='lazy';img.decoding='async';a.append(img);
+  // 상세페이지는 긴 썸네일(400×800, tools/make_tall_thumbs.py)이 있으면 그것을 쓴다. 없거나 못 불러오면 API 썸네일.
+  const iid=(/[?&]it_id=(\d+)/.exec(String(it.link||''))||[])[1],tall=cat==='detail'&&iid&&window.MT_TALL&&window.MT_TALL[iid];
+  const img=el('img');img.alt='';img.width=400;img.height=tall?800:541;img.loading='lazy';img.decoding='async';
+  if(tall){img.src='assets/portfolio/tall/'+iid+'.webp';img.addEventListener('error',()=>{img.height=541;img.src=thumb;},{once:true});}else img.src=thumb;
+  a.append(img);
   if(video){const p=el('span','video-play');p.setAttribute('aria-hidden','true');a.append(p);}
   const name=el('span','x-wname',title);
-  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):site?', 홈페이지 바로가기 (새 창)':', 크게 보기');
+  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):', 크게 보기');
   name.append(el('span','sr-only',sr));a.append(name);
   const cap=el('figcaption');cap.append(el('span','x-wcat',catName));
   fig.append(a,cap);li.append(fig);return li;
@@ -54,7 +59,7 @@ const tabs=[...document.querySelectorAll('.pf-tab')],nav=document.querySelector(
 const count=document.querySelector('[data-pf-count]'),empty=document.querySelector('[data-pf-empty]'),works=document.getElementById('works');let category=tabs.some(t=>t.dataset.f===location.hash.slice(1))?location.hash.slice(1):'all',page=1;const size=12;
 function render(focus){const filtered=cards.filter(c=>category==='all'||c.dataset.cat===category),pages=Math.max(1,Math.ceil(filtered.length/size));page=Math.max(1,Math.min(page,pages));cards.forEach(c=>c.hidden=true);filtered.slice((page-1)*size,page*size).forEach(c=>c.hidden=false);tabs.forEach(t=>{const on=t.dataset.f===category;t.classList.toggle('on',on);t.setAttribute('aria-pressed',String(on));});count.textContent=filtered.length+'개 작업 · '+page+' / '+pages+' 페이지';empty.hidden=filtered.length>0;nav.replaceChildren();
 function add(label,n,disabled,current){const b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;b.dataset.page=n;b.setAttribute('aria-label',/^\d+$/.test(label)?label+'페이지':label+' 페이지');if(current)b.setAttribute('aria-current','page');nav.append(b);}
-add('이전',page-1,page===1,false);for(let i=1;i<=pages;i++)add(String(i),i,false,i===page);add('다음',page+1,page===pages,false);
+add('이전',page-1,page===1,false);/* 페이지가 많으면 1·마지막과 현재 앞뒤 2쪽만 보이고 사이는 … 로 줄인다 */const show=new Set([1,pages]);for(let i=page-2;i<=page+2;i++)if(i>=1&&i<=pages)show.add(i);let prev=0;[...show].sort((x,y)=>x-y).forEach(i=>{if(i-prev>1){const g=document.createElement('span');g.className='pf-gap';g.textContent='…';g.setAttribute('aria-hidden','true');nav.append(g);}add(String(i),i,false,i===page);prev=i;});add('다음',page+1,page===pages,false);
 if(focus){works.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});const heading=document.getElementById('xGal');heading.tabIndex=-1;heading.focus({preventScroll:true});}}
 tabs.forEach(t=>t.addEventListener('click',()=>{category=t.dataset.f;page=1;history.replaceState(null,'',category==='all'?location.pathname:('#'+category));render(false);}));nav.addEventListener('click',e=>{const b=e.target.closest('button[data-page]');if(b){page=Number(b.dataset.page);render(true);}});document.querySelectorAll('[data-f-reset]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();category='all';page=1;render(true);}));render(false);if(category!=='all')works.scrollIntoView();
 return ()=>{cards=[...document.querySelectorAll('.pf-card')];page=1;render(false);};
@@ -88,9 +93,12 @@ loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
     i.addEventListener('load',()=>{i.style.width=Math.min(560,Math.round(i.naturalWidth*1.5))+'px';});stack.append(i);}
   async function loadPost(link,fallback,alt,my){
     status.textContent='게시물 이미지를 불러오는 중…';
-    try{const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),9000);
+    try{let list,fb;
+      // 공통 로더(assets/work-modal.js): 실제 사이트(mangotree.co.kr)에서는 게시물을 직접 읽고, 그 밖에서는 /api/post-images
+      if(window.mtPostImages){const j=await window.mtPostImages(link);list=j.images;fb=j.fallbacks;}
+      else{const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),9000);
       const r=await fetch(POST_API+encodeURIComponent(link),{signal:ctrl.signal,headers:{Accept:'application/json'}});clearTimeout(t);
-      const j=r.ok?await r.json():null,list=j&&Array.isArray(j.images)?j.images.map(safeUrl):[],fb=j&&Array.isArray(j.fallbacks)?j.fallbacks.map(safeUrl):[];
+      const j=r.ok?await r.json():null;list=j&&Array.isArray(j.images)?j.images.map(safeUrl):[];fb=j&&Array.isArray(j.fallbacks)?j.fallbacks.map(safeUrl):[];}
       if(my!==seq)return;if(!list.filter(Boolean).length)throw new Error('이미지 없음');
       stack.replaceChildren();list.forEach((src,k)=>{if(src)addImg(src,k?'':alt,fb[k]);});status.textContent='';
     }catch(e){if(my!==seq)return;stack.replaceChildren();addImg(fallback,alt);status.textContent='';}
@@ -98,14 +106,17 @@ loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
   let opener=null;
   const fullSrc=src=>String(src||'').replace('/portfolio/thumbs/','/portfolio/');
   // 영상·홈페이지 주소가 있는 카드는 모달 대신 원래 링크(새 창)로 연다
-  const isVideo=c=>c.classList.contains('pf-video')||c.dataset.site==='1';
+  const isVideo=c=>c.classList.contains('pf-video');
   function target(card){return card.querySelector('.x-wlink')||card.querySelector('figure img');}
   function prep(){list.querySelectorAll('.pf-card').forEach(c=>{if(isVideo(c))return;const t=target(c);if(!t||t.dataset.pfModal)return;t.dataset.pfModal='1';
     if(t.tagName!=='A'){t.tabIndex=0;t.setAttribute('role','button');}
     const name=(c.querySelector('.x-wname')?.firstChild?.textContent||c.querySelector('img')?.alt||'작업물').trim();
     if(!c.querySelector('.x-wlink .sr-only'))t.setAttribute('aria-label',name+' 크게 보기');
     else c.querySelector('.x-wlink .sr-only').textContent=' — 크게 보기';});}
-  function open(card){const i=card.querySelector('img');if(!i)return;opener=target(card);const my=++seq;
+  function open(card){const i=card.querySelector('img');if(!i)return;
+    // 공통 모달(assets/work-modal.js)이 있으면 그것으로 연다: 로딩 표시·홈페이지 「사이트 방문」 버튼 포함
+    if(window.mtWorkModal){const a=card.querySelector('a.x-wlink');window.mtWorkModal.open({link:a?a.href:'',fallback:fullSrc(i.currentSrc||i.src),alt:(card.querySelector('.x-wname')?.firstChild?.textContent||i.alt||'').trim(),opener:target(card),site:card.dataset.siteUrl||''});return;}
+    opener=target(card);const my=++seq;
     const fallback=fullSrc(i.currentSrc||i.src),alt=(card.querySelector('.x-wname')?.firstChild?.textContent||i.alt||'').trim();
     const a=card.querySelector('a.x-wlink'),link=a?a.href:'';stack.replaceChildren();status.textContent='';
     if(link&&isPost(link))loadPost(link,fallback,alt,my);else addImg(fallback,alt);
