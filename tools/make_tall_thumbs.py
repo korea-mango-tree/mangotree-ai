@@ -29,8 +29,9 @@ Image.MAX_IMAGE_PIXELS = None
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'assets', 'portfolio', 'tall')
-API = 'https://mangotree.co.kr/api/portfolio.php?cat=all&limit=30'
-CATS = {'detail', 'home'}
+API = 'https://mangotree.co.kr/api/portfolio.php?cat=all&limit=100'
+# 분야별 만들 개수(최신순): 상세페이지는 포트폴리오 갤러리 전체(서버 상한 100), 홈페이지는 활용사례에 쓰는 최근 30개
+CATS = {'detail': 100, 'home': 30}
 W, H = 400, 800
 RANGES = (2_500_000, 10_000_000, None)  # 앞부분만 받아 보고, 아래가 비면(잘린 파일) 더 받는다
 
@@ -78,9 +79,12 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     items = json.loads(get(API))['data']['items']
     done = {}
+    count = {}
     for it in items:
-        if it.get('cat') not in CATS:
+        c = it.get('cat')
+        if c not in CATS or count.get(c, 0) >= CATS[c]:
             continue
+        count[c] = count.get(c, 0) + 1
         q = parse_qs(urlparse(it.get('link') or '').query)
         iid = (q.get('it_id') or [''])[0]
         if not iid.isdigit():

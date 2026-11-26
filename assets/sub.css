@@ -547,3 +547,15 @@ body.mdl-lock{overflow:hidden}
 .x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{aspect-ratio:auto;height:auto;object-fit:contain}
 @media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:1}.x-hworks .x-hw.wide .x-hw-frame{aspect-ratio:1200/625}.x-hworks .x-hw.wide .x-hw-frame img{object-position:center top}}
 .pf-gap{display:inline-flex;align-items:center;justify-content:center;min-width:24px;color:#5F5F5F;font-weight:700}
+/* 모달 불러오는 중: 글자 대신 작은 원형 로딩 표시. 글자는 화면 낭독기용으로만 남긴다(role=status). */
+.pf-modal-status:not(:empty){position:fixed;left:50%;top:50%;margin:-20px 0 0 -20px;width:40px;height:40px;padding:0;overflow:hidden;color:transparent;font-size:0;line-height:0;white-space:nowrap}
+.pf-modal-status:not(:empty)::before{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:var(--mango,#FFE500);animation:pfSpin .8s linear infinite}
+@keyframes pfSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.pf-modal-status:not(:empty)::before{animation-duration:2.4s}}
+/* 모달: 홈페이지·쇼핑몰 작업물의 「사이트 방문하기」 버튼(새 창). 화면 아래 가운데에 떠 있어 긴 이미지를 내려도 보인다. */
+.pf-modal-site{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2;display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 24px;border-radius:999px;background:var(--mango,#FFE500);color:#161616;font-size:16px;font-weight:800;text-decoration:none;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.pf-modal-site[hidden]{display:none}
+.pf-modal-site:hover{background:#fff}
+.pf-modal-site:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.pf-modal:has(.pf-modal-site:not([hidden])) .pf-modal-body{padding-bottom:96px}
+@media(max-width:560px){.pf-modal-site{bottom:16px;font-size:15px;padding:0 20px}}
