@@ -30,3 +30,5 @@
 .dev-site a:hover .dev-site-url{color:#191919}
 .dev-site a:focus-visible{outline:3px solid #d1ac00;outline-offset:4px;border-radius:4px}
 .dev-site+.dev-detail{margin-top:0}
+.dev-site{padding:8px 0 8px}
+.dev-site a{min-height:44px;align-items:center}

@@ -1,4 +1,8 @@
 (()=>{
+// 링크 기준 주소: 이 스크립트가 있는 사이트 폴더(…/assets/site-search.js 의 한 단계 위). 실제 사이트 메인(mangotree.co.kr/)처럼
+// 페이지 주소와 사이트 폴더(/ai/)가 다를 때도 검색 결과가 항상 올바른 페이지로 가도록 전체 주소로 만든다.
+const SITE_BASE=(()=>{try{return new URL('../',document.currentScript&&document.currentScript.src||location.href).href;}catch(e){return location.href;}})();
+const abs=h=>{try{return new URL(h,SITE_BASE).href;}catch(e){return h;}};
 const nav=document.querySelector('.nav-act');if(!nav)return;
 const icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>';
 const top=document.createElement('button');top.type='button';top.className='site-search-toggle';top.setAttribute('aria-label','사이트 검색 열기');top.innerHTML=icon;nav.insertBefore(top,nav.querySelector('.burger'));
@@ -43,7 +47,7 @@ function loadPosts(){if(postsState!=='idle'||!window.fetch)return;postsState='lo
 function detailUrl(link){try{const u=new URL(link),q=u.searchParams;if(!/(^|\.)mangotree\.co\.kr$/.test(u.hostname))return '';
   if(/\/shop\/item\.php$/.test(u.pathname)&&/^\d+$/.test(q.get('it_id')||''))return 'work.html?it_id='+q.get('it_id');
   if(/\/bbs\/board\.php$/.test(u.pathname)&&/^[\w-]+$/.test(q.get('bo_table')||'')&&/^\d+$/.test(q.get('wr_id')||''))return 'work.html?bo='+q.get('bo_table')+'&wr='+q.get('wr_id');}catch(e){}return '';}
-function item(title,desc,href,onClick,tag){const li=document.createElement('li'),a=document.createElement('a'),t=document.createElement('strong'),d=document.createElement('span');a.href=href;t.textContent=title;d.textContent=desc;
+function item(title,desc,href,onClick,tag){const li=document.createElement('li'),a=document.createElement('a'),t=document.createElement('strong'),d=document.createElement('span');a.href=abs(href);t.textContent=title;d.textContent=desc;
   if(tag){const b=document.createElement('em');b.className='search-tag';b.textContent=tag;t.prepend(b);}
   a.append(t,d);if(onClick){a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',onClick);}li.append(a);return li;}
 function render(){const words=input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);const found=data.filter(d=>words.every(w=>(d[0]+' '+d[1]).toLowerCase().includes(w)));
