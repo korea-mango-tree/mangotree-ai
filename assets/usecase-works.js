@@ -23,14 +23,15 @@
     var title = cleanTitle(it.title), catName = String(it.catName || ''), link = safeUrl(it.link), thumb = safeUrl(it.thumb);
     if (!title || !thumb) return null;
     var li = el('li', 'x-hw'); li.dataset.cat = String(it.cat || ''); var site = safeUrl(String(it.homepage_link || '').trim().replace(/^(?![a-z][a-z0-9+.-]*:)(?=[a-z0-9-]+\.)/i, 'http://')); if (site) li.dataset.siteUrl = site; var fig = el('figure'), a = el(link ? 'a' : 'span', 'x-hw-frame');
-    if (link) { a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    var detail = window.mtDetailUrl ? window.mtDetailUrl(link) : '';
+    if (detail) a.href = detail; else if (link) { a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
     // 긴 썸네일(400×800, tools/make_tall_thumbs.py)이 있는 상세페이지·홈페이지 글은 그것을 쓴다. 없거나 못 불러오면 API 썸네일.
     var iid = (/[?&]it_id=(\d+)/.exec(link) || [])[1], tall = iid && window.MT_TALL && window.MT_TALL[iid];
     var img = el('img'); img.alt = ''; img.width = 400; img.height = tall ? 800 : 541; img.loading = 'lazy'; img.decoding = 'async';
     if (tall) { img.src = 'assets/portfolio/tall/' + iid + '.webp'; img.onerror = function () { img.onerror = null; img.height = 541; img.src = thumb; }; }
     else img.src = thumb;
     a.appendChild(img);
-    a.appendChild(el('span', 'sr-only', title + ' ' + catName + ' 작업물' + (link ? ' — 망고트리 원본 작업 페이지 (새 창)' : '')));
+    a.appendChild(el('span', 'sr-only', title + ' ' + catName + ' 작업물' + (link ? ' — 상세 보기' : '')));
     var cap = el('figcaption');
     cap.appendChild(el('span', 'x-wcat', catName));
     cap.appendChild(el('span', 'x-wname', title));
@@ -87,18 +88,14 @@
     .catch(function (e) { console.warn('[usecase] 최근 작업물 로드 실패, 정적 카드 사용:', e && e.name === 'AbortError' ? '타임아웃' : e); })
     .then(function () { clearTimeout(timer); list.removeAttribute('aria-busy'); });
 
-  // 작업물 썸네일을 누르면 새 창 대신 모달로 게시물 이미지를 크게 보여 준다(assets/work-modal.js). 정적 카드·불러온 카드 모두.
-  function cardLink(t) { return t.closest('#works .x-hworks > li a.x-hw-frame, #works .x-hworks > li a.x-wlink'); }
-  list.addEventListener('click', function (e) {
-    var a = cardLink(e.target);
-    if (!a || !window.mtWorkModal || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    e.preventDefault();
-    var li = a.closest('li'), img = li.querySelector('img'), name = li.querySelector('.x-wname');
-    window.mtWorkModal.open({ link: a.href, fallback: img ? (img.currentSrc || img.src) : '', alt: name ? name.firstChild.textContent.trim() : '', opener: a, site: li.dataset.siteUrl || '' });
-  });
-  function relabel() {
-    [].forEach.call(list.querySelectorAll('a.x-hw-frame .sr-only, a.x-wlink .sr-only'), function (s) { s.textContent = s.textContent.replace(/ ?— ?망고트리 (원본 )?작업 페이지(에서 보기)? \(새 창\)|,? ?망고트리 작업 페이지에서 보기 \(새 창\)/, ' — 크게 보기'); });
-    [].forEach.call(list.querySelectorAll('a.x-hw-frame, a.x-wlink'), function (a) { a.removeAttribute('target'); a.setAttribute('aria-haspopup', 'dialog'); });
+  // 작업물 상세 페이지 연결: 정적 카드(HTML)의 망고트리 게시물 링크도 work.html 로 바꾼다.
+  function toDetail() {
+    if (!window.mtDetailUrl) return;
+    [].forEach.call(list.querySelectorAll('a.x-hw-frame[target], a.x-wlink[target]'), function (a) {
+      var d = window.mtDetailUrl(a.href); if (!d) return;
+      a.href = d; a.removeAttribute('target'); a.removeAttribute('rel');
+      var sr = a.querySelector('.sr-only'); if (sr) sr.textContent = sr.textContent.replace(/ ?— ?망고트리 (원본 )?작업 페이지(에서 보기)? \(새 창\)|,? ?망고트리 작업 페이지에서 보기 \(새 창\)/, ' — 상세 보기');
+    });
   }
-  relabel(); new MutationObserver(relabel).observe(list, { childList: true });
+  toDetail(); new MutationObserver(toDetail).observe(list, { childList: true });
 })();

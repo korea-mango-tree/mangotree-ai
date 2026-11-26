@@ -16,7 +16,9 @@ function buildCard(it){
   if(!cat||!title||!thumb)return null;
   const li=el('li','x-work pf-card'+(video?' pf-video':''));li.dataset.cat=cat;if(site)li.dataset.siteUrl=site;
   const fig=el('figure'),a=el(link?'a':'span','x-wlink');
-  if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
+  // 망고트리 게시물은 작업물 상세 페이지(work.html)로, 영상·외부 주소는 새 창으로
+  const detail=window.mtDetailUrl?window.mtDetailUrl(link):'';
+  if(detail)a.href=detail;else if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
   // 상세페이지는 긴 썸네일(400×800, tools/make_tall_thumbs.py)이 있으면 그것을 쓴다. 없거나 못 불러오면 API 썸네일.
   const iid=(/[?&]it_id=(\d+)/.exec(String(it.link||''))||[])[1],tall=cat==='detail'&&iid&&window.MT_TALL&&window.MT_TALL[iid];
   const img=el('img');img.alt='';img.width=400;img.height=tall?800:541;img.loading='lazy';img.decoding='async';
@@ -24,7 +26,7 @@ function buildCard(it){
   a.append(img);
   if(video){const p=el('span','video-play');p.setAttribute('aria-hidden','true');a.append(p);}
   const name=el('span','x-wname',title);
-  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):', 크게 보기');
+  const sr=' — '+catName+' 작업물'+(video?(link?', 유튜브에서 재생 (새 창)':''):', 상세 보기');
   name.append(el('span','sr-only',sr));a.append(name);
   const cap=el('figcaption');cap.append(el('span','x-wcat',catName));
   fig.append(a,cap);li.append(fig);return li;
@@ -37,7 +39,8 @@ async function loadFromApi(){
   try{
     const res=await fetch(API,{signal:ctrl.signal,headers:{Accept:'application/json'}});
     if(!res.ok)throw new Error('HTTP '+res.status);
-    const json=await res.json(),items=json&&json.status==='success'&&json.data&&Array.isArray(json.data.items)?json.data.items:[];
+    const json=await res.json();try{sessionStorage.setItem('mt_pf_api',JSON.stringify(json));}catch(e){}
+    const items=json&&json.status==='success'&&json.data&&Array.isArray(json.data.items)?json.data.items:[];
     const cards=items.map(buildCard).filter(Boolean);
     if(!cards.length)throw new Error('빈 응답');
     // API에는 AI 영상(유튜브)이 없으므로 HTML의 영상 카드를 남겨, API 카드 4개마다 1개씩 섞어 넣는다(AI 영상 탭이 비지 않게).
@@ -75,58 +78,7 @@ const masonry=()=>masonryApi.relayout();
 const refresh=initGallery();
 loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
 
-// 작업물 크게 보기: 영상이 아닌 카드(x-wlink·이미지)를 누르면 새 창 대신 모달에 게시물 이미지만 보여 준다.
-// 긴 상세페이지 이미지는 모달 안에서 세로 스크롤. 닫기 버튼·Esc·바깥 클릭으로 닫고, 닫으면 누른 카드로 포커스 복귀.
-(()=>{
-  if(!list)return;
-  const dlg=el('dialog','pf-modal');dlg.setAttribute('aria-label','작업물 이미지 크게 보기');
-  const close=el('button','pf-modal-close','×');close.type='button';close.setAttribute('aria-label','닫기');
-  const body=el('div','pf-modal-body'),stack=el('div','pf-modal-stack'),status=el('p','pf-modal-status');status.setAttribute('role','status');
-  body.append(stack,status);dlg.append(close,body);document.body.append(dlg);
-  // 게시판 읽기·상품 페이지의 내용 영역 이미지(같은 출처 /api/post-images 가 대신 읽음). 실패하면 카드 이미지로 대신 보여 준다.
-  const POST_API='/api/post-images?url=';
-  const isPost=u=>{try{const x=new URL(u);return /(^|\.)mangotree\.co\.kr$/.test(x.hostname)&&/^\/(bbs\/board|shop\/item)\.php$/.test(x.pathname);}catch(e){return false;}};
-  let seq=0;
-  function addImg(src,alt,alt2){const i=el('img');i.alt=alt;i.decoding='async';i.src=src;
-    if(alt2&&alt2!==src)i.addEventListener('error',()=>{i.src=alt2;},{once:true});
-    // 작은 원본(예: 340px 썸네일)은 1.5배까지만 키워 흐려지지 않게, 최대 560px
-    i.addEventListener('load',()=>{i.style.width=Math.min(560,Math.round(i.naturalWidth*1.5))+'px';});stack.append(i);}
-  async function loadPost(link,fallback,alt,my){
-    status.textContent='게시물 이미지를 불러오는 중…';
-    try{let list,fb;
-      // 공통 로더(assets/work-modal.js): 실제 사이트(mangotree.co.kr)에서는 게시물을 직접 읽고, 그 밖에서는 /api/post-images
-      if(window.mtPostImages){const j=await window.mtPostImages(link);list=j.images;fb=j.fallbacks;}
-      else{const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),9000);
-      const r=await fetch(POST_API+encodeURIComponent(link),{signal:ctrl.signal,headers:{Accept:'application/json'}});clearTimeout(t);
-      const j=r.ok?await r.json():null;list=j&&Array.isArray(j.images)?j.images.map(safeUrl):[];fb=j&&Array.isArray(j.fallbacks)?j.fallbacks.map(safeUrl):[];}
-      if(my!==seq)return;if(!list.filter(Boolean).length)throw new Error('이미지 없음');
-      stack.replaceChildren();list.forEach((src,k)=>{if(src)addImg(src,k?'':alt,fb[k]);});status.textContent='';
-    }catch(e){if(my!==seq)return;stack.replaceChildren();addImg(fallback,alt);status.textContent='';}
-  }
-  let opener=null;
-  const fullSrc=src=>String(src||'').replace('/portfolio/thumbs/','/portfolio/');
-  // 영상·홈페이지 주소가 있는 카드는 모달 대신 원래 링크(새 창)로 연다
-  const isVideo=c=>c.classList.contains('pf-video');
-  function target(card){return card.querySelector('.x-wlink')||card.querySelector('figure img');}
-  function prep(){list.querySelectorAll('.pf-card').forEach(c=>{if(isVideo(c))return;const t=target(c);if(!t||t.dataset.pfModal)return;t.dataset.pfModal='1';
-    if(t.tagName!=='A'){t.tabIndex=0;t.setAttribute('role','button');}
-    const name=(c.querySelector('.x-wname')?.firstChild?.textContent||c.querySelector('img')?.alt||'작업물').trim();
-    if(!c.querySelector('.x-wlink .sr-only'))t.setAttribute('aria-label',name+' 크게 보기');
-    else c.querySelector('.x-wlink .sr-only').textContent=' — 크게 보기';});}
-  function open(card){const i=card.querySelector('img');if(!i)return;
-    // 공통 모달(assets/work-modal.js)이 있으면 그것으로 연다: 로딩 표시·홈페이지 「사이트 방문」 버튼 포함
-    if(window.mtWorkModal){const a=card.querySelector('a.x-wlink');window.mtWorkModal.open({link:a?a.href:'',fallback:fullSrc(i.currentSrc||i.src),alt:(card.querySelector('.x-wname')?.firstChild?.textContent||i.alt||'').trim(),opener:target(card),site:card.dataset.siteUrl||''});return;}
-    opener=target(card);const my=++seq;
-    const fallback=fullSrc(i.currentSrc||i.src),alt=(card.querySelector('.x-wname')?.firstChild?.textContent||i.alt||'').trim();
-    const a=card.querySelector('a.x-wlink'),link=a?a.href:'';stack.replaceChildren();status.textContent='';
-    if(link&&isPost(link))loadPost(link,fallback,alt,my);else addImg(fallback,alt);
-    body.scrollTop=0;if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');document.documentElement.style.overflow='hidden';close.focus();}
-  function shut(){if(dlg.open)dlg.close();}
-  dlg.addEventListener('close',()=>{seq++;document.documentElement.style.overflow='';stack.replaceChildren();status.textContent='';if(opener)opener.focus();});
-  close.addEventListener('click',shut);
-  dlg.addEventListener('click',e=>{if(e.target===dlg||e.target===body||e.target===stack)shut();});
-  list.addEventListener('click',e=>{const card=e.target.closest('.pf-card');if(!card||isVideo(card))return;const t=target(card);if(!t||!t.contains(e.target))return;e.preventDefault();open(card);});
-  list.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target;if(!t.dataset||!t.dataset.pfModal||t.tagName==='A'&&e.key===' ')return;e.preventDefault();open(t.closest('.pf-card'));});
-  prep();new MutationObserver(prep).observe(list,{childList:true});
-})();
+// 작업물 상세 페이지 연결: 정적 카드(HTML)의 망고트리 게시물 링크도 work.html 로 바꾼다(API 카드는 buildCard 에서 처리).
+(()=>{if(!list||!window.mtDetailUrl)return;const fix=()=>list.querySelectorAll('.pf-card:not(.pf-video) a.x-wlink[target]').forEach(a=>{const d=window.mtDetailUrl(a.href);if(!d)return;a.href=d;a.removeAttribute('target');a.removeAttribute('rel');const sr=a.querySelector('.sr-only');if(sr)sr.textContent=sr.textContent.replace(/,? ?망고트리 작업 페이지에서 보기 \(새 창\)/,', 상세 보기');});
+fix();new MutationObserver(fix).observe(list,{childList:true});})();
 })();

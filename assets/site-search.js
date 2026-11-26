@@ -35,15 +35,14 @@ const POSTS_API='https://mangotree.co.kr/api/portfolio.php?cat=all&limit=100';le
 function cleanTitle(t){return String(t||'').replace(/^\s*\[[A-Za-z]*\d+\]\s*/,'').replace(/\s*(상세페이지|홈페이지)\s*제작\s*$/,'').trim();}
 function safeUrl(v){try{const u=new URL(String(v),location.href);return /^https?:$/.test(u.protocol)?u.href:'';}catch(e){return '';}}
 function loadPosts(){if(postsState!=='idle'||!window.fetch)return;postsState='loading';const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),8000);
-  fetch(POSTS_API,{signal:ctrl.signal,headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(j=>{
+  let cached=null;try{cached=JSON.parse(sessionStorage.getItem('mt_pf_api')||'null');}catch(e){}
+  (cached?Promise.resolve(cached):fetch(POSTS_API,{signal:ctrl.signal,headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(j=>{try{sessionStorage.setItem('mt_pf_api',JSON.stringify(j));}catch(e){}return j;})).then(j=>{
     const items=j&&j.status==='success'&&j.data&&Array.isArray(j.data.items)?j.data.items:[];
     posts=items.map(it=>({title:cleanTitle(it.title),raw:String(it.title||''),cat:String(it.catName||''),link:safeUrl(it.link),thumb:safeUrl(it.thumb),site:String(it.homepage_link||'').trim()})).filter(p=>p.title&&p.link);
     postsState='done';}).catch(()=>{postsState='error';}).then(()=>{clearTimeout(t);if(dialog.open)render();});}
-function openPost(e,p){
-  // 포트폴리오·활용사례처럼 크게 보기 모달이 있는 페이지는 모달로, 그 밖의 페이지는 원본 게시물을 새 창으로
-  if(!window.mtWorkModal||e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();dialog.close();
-  let site='';if(p.site){const w=/^[a-z][a-z0-9+.-]*:/i.test(p.site)?p.site:'http://'+p.site;site=safeUrl(w);}
-  window.mtWorkModal.open({link:p.link,fallback:p.thumb,alt:p.title,opener:opener,site:site});}
+function detailUrl(link){try{const u=new URL(link),q=u.searchParams;if(!/(^|\.)mangotree\.co\.kr$/.test(u.hostname))return '';
+  if(/\/shop\/item\.php$/.test(u.pathname)&&/^\d+$/.test(q.get('it_id')||''))return 'work.html?it_id='+q.get('it_id');
+  if(/\/bbs\/board\.php$/.test(u.pathname)&&/^[\w-]+$/.test(q.get('bo_table')||'')&&/^\d+$/.test(q.get('wr_id')||''))return 'work.html?bo='+q.get('bo_table')+'&wr='+q.get('wr_id');}catch(e){}return '';}
 function item(title,desc,href,onClick,tag){const li=document.createElement('li'),a=document.createElement('a'),t=document.createElement('strong'),d=document.createElement('span');a.href=href;t.textContent=title;d.textContent=desc;
   if(tag){const b=document.createElement('em');b.className='search-tag';b.textContent=tag;t.prepend(b);}
   a.append(t,d);if(onClick){a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',onClick);}li.append(a);return li;}
@@ -51,7 +50,8 @@ function render(){const words=input.value.trim().toLowerCase().split(/\s+/).filt
   const foundPosts=words.length&&posts?posts.filter(p=>words.every(w=>(p.raw+' '+p.cat).toLowerCase().includes(w))).slice(0,30):[];
   list.replaceChildren();
   (words.length?found:data.filter((_,i)=>[0,9,10,15,16,17].includes(i))).forEach(d=>list.append(item(d[0],d[1],d[2])));
-  foundPosts.forEach(p=>list.append(item(p.title,p.cat+' 작업물 · '+(window.mtWorkModal?'크게 보기':'망고트리 원본 게시물 (새 창)'),p.link,e=>openPost(e,p),'포트폴리오')));
+  // 게시물은 작업물 상세 페이지(work.html)로 연결한다(망고트리 글이 아니면 원본을 새 창으로)
+  foundPosts.forEach(p=>{const d=detailUrl(p.link);list.append(item(p.title,p.cat+' 작업물 · '+(d?'상세 보기':'망고트리 원본 게시물 (새 창)'),d||p.link,d?null:()=>{},'포트폴리오'));});
   const n=found.length+foundPosts.length;
   status.textContent=!words.length?'자주 찾는 서비스':n?n+'개의 검색 결과'+(postsState==='loading'?' · 포트폴리오 게시물 불러오는 중…':''):(postsState==='loading'?'포트폴리오 게시물을 불러오는 중입니다…':'검색 결과가 없습니다. 다른 키워드로 검색하거나 AI 기획을 이용해 주세요.');}
 function open(e){opener=e.currentTarget;loadPosts();render();dialog.showModal();input.focus();}
