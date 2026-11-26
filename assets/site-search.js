@@ -28,10 +28,33 @@ const data=[
 ['요금제 · AI 고용 비용 비교','가격 플랜 월금액 절감 비용','pricing.html'],
 ['무료 AI 진단','추천 업무 진단 테스트','diagnosis.html'],
 ['회사소개','망고트리 연혁 조직 위치 주소 연락처','about.html']];
-const dialog=document.createElement('dialog');dialog.className='site-search-dialog';dialog.setAttribute('aria-labelledby','searchTitle');dialog.innerHTML='<div class="search-heading"><h2 id="searchTitle">무엇을 찾으시나요?</h2><button type="button" aria-label="검색 닫기">×</button></div><label class="search-field">'+icon+'<input type="search" aria-label="검색어" placeholder="제품, 페이지메이커, 요금제 검색" autocomplete="off"></label><p class="search-status" role="status" aria-live="polite"></p><ul class="search-results"></ul><button class="search-ai" type="button">찾기 어렵다면, AI와 함께 기획하기 ↗</button>';document.body.append(dialog);
+const dialog=document.createElement('dialog');dialog.className='site-search-dialog';dialog.setAttribute('aria-labelledby','searchTitle');dialog.innerHTML='<div class="search-heading"><h2 id="searchTitle">무엇을 찾으시나요?</h2><button type="button" aria-label="검색 닫기">×</button></div><label class="search-field">'+icon+'<input type="search" aria-label="검색어" placeholder="제품, 요금제, 작업물(예: 김치, 홈페이지) 검색" autocomplete="off"></label><p class="search-status" role="status" aria-live="polite"></p><ul class="search-results"></ul><button class="search-ai" type="button">찾기 어렵다면, AI와 함께 기획하기 ↗</button>';document.body.append(dialog);
 const input=dialog.querySelector('input'),list=dialog.querySelector('ul'),status=dialog.querySelector('.search-status');let opener;
-function render(){const words=input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);const found=data.filter(d=>words.every(w=>(d[0]+' '+d[1]).toLowerCase().includes(w)));list.replaceChildren();status.textContent=words.length?found.length+'개의 검색 결과':'자주 찾는 서비스';(words.length?found:data.filter((_,i)=>[0,9,10,15,16,17].includes(i))).forEach(d=>{const li=document.createElement('li'),a=document.createElement('a'),title=document.createElement('strong'),desc=document.createElement('span');a.href=d[2];title.textContent=d[0];desc.textContent=d[1];a.append(title,desc);li.append(a);list.append(li);});if(!found.length)status.textContent='검색 결과가 없습니다. 다른 키워드로 검색하거나 AI 기획을 이용해 주세요.';}
-function open(e){opener=e.currentTarget;render();dialog.showModal();input.focus();}
+// 포트폴리오 게시물(망고트리 API, 분야별 최대 100개)도 검색한다. 검색창을 처음 열 때 한 번 불러와 둔다.
+const POSTS_API='https://mangotree.co.kr/api/portfolio.php?cat=all&limit=100';let posts=null,postsState='idle';
+function cleanTitle(t){return String(t||'').replace(/^\s*\[[A-Za-z]*\d+\]\s*/,'').replace(/\s*(상세페이지|홈페이지)\s*제작\s*$/,'').trim();}
+function safeUrl(v){try{const u=new URL(String(v),location.href);return /^https?:$/.test(u.protocol)?u.href:'';}catch(e){return '';}}
+function loadPosts(){if(postsState!=='idle'||!window.fetch)return;postsState='loading';const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),8000);
+  let cached=null;try{cached=JSON.parse(sessionStorage.getItem('mt_pf_api')||'null');}catch(e){}
+  (cached?Promise.resolve(cached):fetch(POSTS_API,{signal:ctrl.signal,headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(j=>{try{sessionStorage.setItem('mt_pf_api',JSON.stringify(j));}catch(e){}return j;})).then(j=>{
+    const items=j&&j.status==='success'&&j.data&&Array.isArray(j.data.items)?j.data.items:[];
+    posts=items.map(it=>({title:cleanTitle(it.title),raw:String(it.title||''),cat:String(it.catName||''),link:safeUrl(it.link),thumb:safeUrl(it.thumb),site:String(it.homepage_link||'').trim()})).filter(p=>p.title&&p.link);
+    postsState='done';}).catch(()=>{postsState='error';}).then(()=>{clearTimeout(t);if(dialog.open)render();});}
+function detailUrl(link){try{const u=new URL(link),q=u.searchParams;if(!/(^|\.)mangotree\.co\.kr$/.test(u.hostname))return '';
+  if(/\/shop\/item\.php$/.test(u.pathname)&&/^\d+$/.test(q.get('it_id')||''))return 'work.html?it_id='+q.get('it_id');
+  if(/\/bbs\/board\.php$/.test(u.pathname)&&/^[\w-]+$/.test(q.get('bo_table')||'')&&/^\d+$/.test(q.get('wr_id')||''))return 'work.html?bo='+q.get('bo_table')+'&wr='+q.get('wr_id');}catch(e){}return '';}
+function item(title,desc,href,onClick,tag){const li=document.createElement('li'),a=document.createElement('a'),t=document.createElement('strong'),d=document.createElement('span');a.href=href;t.textContent=title;d.textContent=desc;
+  if(tag){const b=document.createElement('em');b.className='search-tag';b.textContent=tag;t.prepend(b);}
+  a.append(t,d);if(onClick){a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',onClick);}li.append(a);return li;}
+function render(){const words=input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);const found=data.filter(d=>words.every(w=>(d[0]+' '+d[1]).toLowerCase().includes(w)));
+  const foundPosts=words.length&&posts?posts.filter(p=>words.every(w=>(p.raw+' '+p.cat).toLowerCase().includes(w))).slice(0,30):[];
+  list.replaceChildren();
+  (words.length?found:data.filter((_,i)=>[0,9,10,15,16,17].includes(i))).forEach(d=>list.append(item(d[0],d[1],d[2])));
+  // 게시물은 작업물 상세 페이지(work.html)로 연결한다(망고트리 글이 아니면 원본을 새 창으로)
+  foundPosts.forEach(p=>{const d=detailUrl(p.link);list.append(item(p.title,p.cat+' 작업물 · '+(d?'상세 보기':'망고트리 원본 게시물 (새 창)'),d||p.link,d?null:()=>{},'포트폴리오'));});
+  const n=found.length+foundPosts.length;
+  status.textContent=!words.length?'자주 찾는 서비스':n?n+'개의 검색 결과'+(postsState==='loading'?' · 포트폴리오 게시물 불러오는 중…':''):(postsState==='loading'?'포트폴리오 게시물을 불러오는 중입니다…':'검색 결과가 없습니다. 다른 키워드로 검색하거나 AI 기획을 이용해 주세요.');}
+function open(e){opener=e.currentTarget;loadPosts();render();dialog.showModal();input.focus();}
 top.onclick=open;dock.querySelector('.search-dock-open').onclick=open;input.oninput=render;
 dialog.querySelector('.search-heading button').onclick=()=>dialog.close();dialog.addEventListener('close',()=>opener?.focus());
 dialog.querySelector('.search-ai').onclick=()=>{dialog.close();document.querySelector('.nav-ai')?.click();};

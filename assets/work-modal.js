@@ -35,6 +35,14 @@
     return { images: images, fallbacks: fallbacks };
   }
 
+  // 작업물 상세 페이지(work.html) 주소: 상품 글은 ?it_id=, 게시판 글은 ?bo=&wr= . 망고트리 글이 아니면 '' .
+  window.mtDetailUrl = function (link) {
+    if (!isPost(link)) return '';
+    var u = new URL(link, location.href), q = u.searchParams;
+    if (/shop\/item\.php$/.test(u.pathname) && /^\d+$/.test(q.get('it_id') || '')) return 'work.html?it_id=' + q.get('it_id');
+    if (/bbs\/board\.php$/.test(u.pathname) && /^[\w-]+$/.test(q.get('bo_table') || '') && /^\d+$/.test(q.get('wr_id') || '')) return 'work.html?bo=' + q.get('bo_table') + '&wr=' + q.get('wr_id');
+    return '';
+  };
   window.mtPostImages = function (link) {
     if (!isPost(link)) return Promise.reject(new Error('not a post'));
     var ctrl = new AbortController(), t = setTimeout(function () { ctrl.abort(); }, 9000);

@@ -12,3 +12,4 @@
 
 /* 하단 검색 말풍선을 없앤 대신 상단 돋보기를 PC에서도 보인다 */
 .site-search-toggle{display:grid}
+.search-tag{display:inline-block;margin-right:8px;padding:2px 8px;border-radius:999px;background:#ffe500;color:#171717;font-size:12px;font-style:normal;font-weight:700;vertical-align:2px}

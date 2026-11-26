@@ -1,0 +1,31 @@
+/* 작업물 상세 페이지(work.html) */
+.wd{padding:120px 0 96px}
+.wd-crumb{font-size:14px;font-weight:600;color:var(--ivory-ink,#5F5F5F);margin-bottom:24px}
+.wd-crumb a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.wd-crumb a:hover{color:var(--charcoal,#161616)}
+.wd-head h1{font-size:clamp(32px,4.4vw,56px);letter-spacing:-.04em;line-height:1.15;margin-top:12px;word-break:keep-all}
+.wd-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.wd-actions .btn[hidden]{display:none}
+.wd-body{position:relative;max-width:900px;margin:56px auto 0;padding:0 20px;min-height:240px}
+.wd-images{display:grid;gap:0}
+.wd-images img{display:block;width:100%;height:auto;max-width:860px;margin:0 auto;background:#fff}
+.wd-empty{text-align:center;font-size:16px;color:#5F5F5F;padding:48px 0}
+/* 불러오는 중: 작은 원형 로딩(글자는 화면 낭독기용) */
+.wd-status:empty{display:none}
+.wd-status:not(:empty){position:absolute;left:50%;top:80px;margin:0 0 0 -20px;width:40px;height:40px;overflow:hidden;color:transparent;font-size:0;line-height:0}
+.wd-status:not(:empty)::before{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid rgba(22,22,22,.12);border-top-color:#161616;animation:wdSpin .8s linear infinite}
+@keyframes wdSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.wd-status:not(:empty)::before{animation-duration:2.4s}}
+.wd-more-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 16px;align-items:start}
+.wd-more-list a{display:block;color:inherit}
+.wd-more-list img{display:block;width:100%;height:auto;border-radius:12px;background:#fff}
+.wd-more-list span{display:block;margin-top:12px;font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:1.4}
+.wd-more-list a:hover span{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:860px){.wd{padding:96px 0 64px}.wd-more-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wd-actions .btn{flex:1 1 100%;justify-content:center}.wd-body{padding:0;margin-top:40px}}
+.wd-actions .btn{min-height:48px;padding:0 24px;border-radius:12px;font-weight:700}
+.wd-actions .btn-line{background:#fff;border:1.5px solid var(--charcoal,#161616);color:var(--charcoal,#161616)}
+.wd-actions .btn-line:hover{background:var(--charcoal,#161616);color:#fff}
+.wd-actions .btn-dark{background:var(--mango,#FFE500);color:#161616;border:1.5px solid var(--mango,#FFE500)}
+.wd-actions .btn-dark:hover{background:#161616;color:#fff;border-color:#161616}
+.wd-actions .btn:focus-visible{outline:3px solid #c9a500;outline-offset:3px}
