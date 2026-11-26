@@ -25,7 +25,11 @@
     if (!title || !thumb) return null;
     var li = el('li', 'x-hw'); li.dataset.cat = String(it.cat || ''); var fig = el('figure'), a = el(link ? 'a' : 'span', 'x-hw-frame');
     if (link) { a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
-    var img = el('img'); img.src = thumb; img.alt = ''; img.width = 400; img.height = 541; img.loading = 'lazy'; img.decoding = 'async';
+    // 긴 썸네일(400×800, tools/make_tall_thumbs.py)이 있는 상세페이지·홈페이지 글은 그것을 쓴다. 없거나 못 불러오면 API 썸네일.
+    var iid = (/[?&]it_id=(\d+)/.exec(link) || [])[1], tall = iid && window.MT_TALL && window.MT_TALL[iid];
+    var img = el('img'); img.alt = ''; img.width = 400; img.height = tall ? 800 : 541; img.loading = 'lazy'; img.decoding = 'async';
+    if (tall) { img.src = 'assets/portfolio/tall/' + iid + '.webp'; img.onerror = function () { img.onerror = null; img.height = 541; img.src = thumb; }; }
+    else img.src = thumb;
     a.appendChild(img);
     a.appendChild(el('span', 'sr-only', title + ' ' + catName + ' 작업물' + (link ? ' — 망고트리 원본 작업 페이지 (새 창)' : '')));
     var cap = el('figcaption');

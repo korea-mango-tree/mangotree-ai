@@ -546,3 +546,4 @@ body.mdl-lock{overflow:hidden}
 .x-hworks>.x-hw:not(.wide) .x-hw-frame img{height:auto;object-fit:contain}
 .x-hworks>.x-work img,.x-hworks>.x-work[data-cat] img[src]{aspect-ratio:auto;height:auto;object-fit:contain}
 @media(max-width:760px){.x-hworks>.x-hw.wide{--masonry-full:1}.x-hworks .x-hw.wide .x-hw-frame{aspect-ratio:1200/625}.x-hworks .x-hw.wide .x-hw-frame img{object-position:center top}}
+.pf-gap{display:inline-flex;align-items:center;justify-content:center;min-width:24px;color:#5F5F5F;font-weight:700}

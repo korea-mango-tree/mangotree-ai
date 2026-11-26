@@ -1,5 +1,6 @@
 (()=>{
-const API='https://mangotree.co.kr/api/portfolio.php?cat=all&limit=30',TIMEOUT=6000;
+// 분야별 최대 100개(서버 상한). 카드는 12개씩 페이지로 나눠 보여 주고 이미지는 지연 로딩한다.
+const API='https://mangotree.co.kr/api/portfolio.php?cat=all&limit=100',TIMEOUT=8000;
 const list=document.querySelector('ul.x-works');
 
 // DB 값은 textContent·속성으로만 넣는다(innerHTML 금지). URL 은 http(s)만 허용.
@@ -54,7 +55,7 @@ const tabs=[...document.querySelectorAll('.pf-tab')],nav=document.querySelector(
 const count=document.querySelector('[data-pf-count]'),empty=document.querySelector('[data-pf-empty]'),works=document.getElementById('works');let category=tabs.some(t=>t.dataset.f===location.hash.slice(1))?location.hash.slice(1):'all',page=1;const size=12;
 function render(focus){const filtered=cards.filter(c=>category==='all'||c.dataset.cat===category),pages=Math.max(1,Math.ceil(filtered.length/size));page=Math.max(1,Math.min(page,pages));cards.forEach(c=>c.hidden=true);filtered.slice((page-1)*size,page*size).forEach(c=>c.hidden=false);tabs.forEach(t=>{const on=t.dataset.f===category;t.classList.toggle('on',on);t.setAttribute('aria-pressed',String(on));});count.textContent=filtered.length+'개 작업 · '+page+' / '+pages+' 페이지';empty.hidden=filtered.length>0;nav.replaceChildren();
 function add(label,n,disabled,current){const b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;b.dataset.page=n;b.setAttribute('aria-label',/^\d+$/.test(label)?label+'페이지':label+' 페이지');if(current)b.setAttribute('aria-current','page');nav.append(b);}
-add('이전',page-1,page===1,false);for(let i=1;i<=pages;i++)add(String(i),i,false,i===page);add('다음',page+1,page===pages,false);
+add('이전',page-1,page===1,false);/* 페이지가 많으면 1·마지막과 현재 앞뒤 2쪽만 보이고 사이는 … 로 줄인다 */const show=new Set([1,pages]);for(let i=page-2;i<=page+2;i++)if(i>=1&&i<=pages)show.add(i);let prev=0;[...show].sort((x,y)=>x-y).forEach(i=>{if(i-prev>1){const g=document.createElement('span');g.className='pf-gap';g.textContent='…';g.setAttribute('aria-hidden','true');nav.append(g);}add(String(i),i,false,i===page);prev=i;});add('다음',page+1,page===pages,false);
 if(focus){works.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});const heading=document.getElementById('xGal');heading.tabIndex=-1;heading.focus({preventScroll:true});}}
 tabs.forEach(t=>t.addEventListener('click',()=>{category=t.dataset.f;page=1;history.replaceState(null,'',category==='all'?location.pathname:('#'+category));render(false);}));nav.addEventListener('click',e=>{const b=e.target.closest('button[data-page]');if(b){page=Number(b.dataset.page);render(true);}});document.querySelectorAll('[data-f-reset]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();category='all';page=1;render(true);}));render(false);if(category!=='all')works.scrollIntoView();
 return ()=>{cards=[...document.querySelectorAll('.pf-card')];page=1;render(false);};
