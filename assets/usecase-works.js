@@ -47,11 +47,12 @@
     var btn = old.cloneNode(true);
     old.parentNode.replaceChild(btn, old);
     var count = btn.querySelector('[data-usecase-more-count]'), shown = 0, total = 1 + shownBase + rest.length;
-    function update() { if (count) count.textContent = '(' + (1 + shownBase + shown) + ' / ' + total + ')'; btn.hidden = shown >= rest.length; }
+    function update() { if (count) count.textContent = '(' + (1 + shownBase + shown) + ' / ' + total + ')'; btn.hidden = shown >= rest.length; var gal = document.querySelector('[data-usecase-gallery]'); if (gal) gal.hidden = !btn.hidden; }
     btn.addEventListener('click', function () {
       var next = rest.slice(shown, shown + COUNT);
       next.forEach(function (li) { li.hidden = false; });
       shown += next.length; update(); masonry.relayout();
+      if (btn.hidden) { var g = document.querySelector('[data-usecase-gallery]'); if (g && !next[0]) g.focus(); }
       if (next[0]) { next[0].tabIndex = -1; next[0].focus({ preventScroll: true }); next[0].scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' }); }
     });
     update();
@@ -87,4 +88,19 @@
     })
     .catch(function (e) { console.warn('[usecase] 최근 작업물 로드 실패, 정적 카드 사용:', e && e.name === 'AbortError' ? '타임아웃' : e); })
     .then(function () { clearTimeout(timer); list.removeAttribute('aria-busy'); });
+
+  // 작업물 썸네일을 누르면 새 창 대신 모달로 게시물 이미지를 크게 보여 준다(assets/work-modal.js). 정적 카드·불러온 카드 모두.
+  function cardLink(t) { return t.closest('#works .x-hworks > li a.x-hw-frame, #works .x-hworks > li a.x-wlink'); }
+  list.addEventListener('click', function (e) {
+    var a = cardLink(e.target);
+    if (!a || !window.mtWorkModal || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    e.preventDefault();
+    var li = a.closest('li'), img = li.querySelector('img'), name = li.querySelector('.x-wname');
+    window.mtWorkModal.open({ link: a.href, fallback: img ? (img.currentSrc || img.src) : '', alt: name ? name.firstChild.textContent.trim() : '', opener: a });
+  });
+  function relabel() {
+    [].forEach.call(list.querySelectorAll('a.x-hw-frame .sr-only, a.x-wlink .sr-only'), function (s) { s.textContent = s.textContent.replace(/ ?— ?망고트리 (원본 )?작업 페이지(에서 보기)? \(새 창\)|,? ?망고트리 작업 페이지에서 보기 \(새 창\)/, ' — 크게 보기'); });
+    [].forEach.call(list.querySelectorAll('a.x-hw-frame, a.x-wlink'), function (a) { a.removeAttribute('target'); a.setAttribute('aria-haspopup', 'dialog'); });
+  }
+  relabel(); new MutationObserver(relabel).observe(list, { childList: true });
 })();

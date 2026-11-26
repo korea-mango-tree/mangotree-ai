@@ -89,9 +89,12 @@ loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
     i.addEventListener('load',()=>{i.style.width=Math.min(560,Math.round(i.naturalWidth*1.5))+'px';});stack.append(i);}
   async function loadPost(link,fallback,alt,my){
     status.textContent='게시물 이미지를 불러오는 중…';
-    try{const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),9000);
+    try{let list,fb;
+      // 공통 로더(assets/work-modal.js): 실제 사이트(mangotree.co.kr)에서는 게시물을 직접 읽고, 그 밖에서는 /api/post-images
+      if(window.mtPostImages){const j=await window.mtPostImages(link);list=j.images;fb=j.fallbacks;}
+      else{const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),9000);
       const r=await fetch(POST_API+encodeURIComponent(link),{signal:ctrl.signal,headers:{Accept:'application/json'}});clearTimeout(t);
-      const j=r.ok?await r.json():null,list=j&&Array.isArray(j.images)?j.images.map(safeUrl):[],fb=j&&Array.isArray(j.fallbacks)?j.fallbacks.map(safeUrl):[];
+      const j=r.ok?await r.json():null;list=j&&Array.isArray(j.images)?j.images.map(safeUrl):[];fb=j&&Array.isArray(j.fallbacks)?j.fallbacks.map(safeUrl):[];}
       if(my!==seq)return;if(!list.filter(Boolean).length)throw new Error('이미지 없음');
       stack.replaceChildren();list.forEach((src,k)=>{if(src)addImg(src,k?'':alt,fb[k]);});status.textContent='';
     }catch(e){if(my!==seq)return;stack.replaceChildren();addImg(fallback,alt);status.textContent='';}
