@@ -370,3 +370,9 @@ li,dd,td,th,small,label,summary{text-wrap:pretty}
 /* 포트폴리오 영상 카드: 제목이 링크 안(이미지 아래)에 있으므로 재생 버튼을 이미지(480×360) 중심에 맞춘다. margin-top %는 너비 기준 → 이미지 높이의 절반 = 너비의 37.5% */
 .pf-video .video-play{top:0;margin-top:37.5%}
 .foot-biz .foot-nowrap{white-space:nowrap}
+/* 로고: 「MANGOTREE」는 메인으로, 「AI+」는 바이브웍스 AI 녹음기(https://vibeworx.co.kr/recoder/)로 현재 창에서 이동 */
+.logo-home{display:inline-flex;align-items:center;min-height:44px}
+.logo a.plus{display:inline-flex;align-items:center;text-decoration:none;transition:background .2s,color .2s}
+.logo a.plus:hover{background:var(--charcoal,#161616);color:var(--yellow,#FFE500)}
+.logo a.plus:focus-visible,.logo-home:focus-visible{outline:3px solid #c9a500;outline-offset:3px;border-radius:6px}
+.logo a.plus{position:relative}.logo a.plus::after{content:"";position:absolute;inset:-12px -6px}
