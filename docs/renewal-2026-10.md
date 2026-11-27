@@ -2374,3 +2374,14 @@ Gemini가 처음 제시한 Fluence·Aeline URL은 철회되어 근거에서 제�
   - `https://mangotree.co.kr/products.html`은 404다. `www.mangotree.co.kr`은 이 환경에서 접속할 수 없어 직접 확인하지 못했다.
 - **수정:** `assets/site-search.js`가 자기 파일 위치(…/assets/site-search.js의 한 단계 위 = 사이트 폴더)를 기준으로 모든 검색 결과 링크를 전체 주소로 만든다. 자주 찾는 서비스, 페이지 결과, 포트폴리오 게시물(상세 페이지)이 모두 해당된다.
 - **점검:** 루트에서 base가 있는 경우와 없는 경우를 시뮬레이션했다. 둘 다 `https://mangotree.co.kr/ai/platforms.html#pageconnect`로 이동했다. 로컬 메인에서도 정상 이동했다.
+
+## 136. 로고 옆 「AI+」 → 바이브웍스 AI 녹음기(현재 창) (2026-11-27)
+
+- 사용자 요청: AI+를 누르면 https://vibeworx.co.kr/recoder/ 가 새 창이 아니라 현재 창으로 열리게 한다.
+- 기존에는 「AI+」가 로고 링크(`index.html`) 안의 표시라 누르면 메인으로 갔다.
+- 10개 페이지의 머리·꼬리 로고를 둘로 나눴다(`span.logo`).
+  - 「MANGOTREE」(`a.logo-home`) → 메인.
+  - 「AI+」(`a.plus`) → https://vibeworx.co.kr/recoder/ (target 없음 = 현재 창).
+  - 화면 낭독기용 이름은 「AI+ 바이브웍스 AI 녹음기」다.
+- AI+ 배지는 보이는 크기를 그대로 두고 누르는 영역만 위아래 12px 넓혔다. 마우스를 올리면 색이 반전되고, 키보드 포커스 표시가 있다. 360px 이하 머리에서는 기존처럼 숨긴다.
+- **점검(1440·390px):** AI+ 클릭 시 같은 창에서 vibeworx.co.kr/recoder/ 로 이동(새 창 0), 로고 클릭 시 메인. 머리 axe 위반 0건, 메인·포트폴리오·상세 페이지 390·360·320px 터치 영역·겹침 문제 0.
