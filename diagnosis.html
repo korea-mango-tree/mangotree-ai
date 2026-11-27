@@ -148,7 +148,9 @@
 /* ===== 설정 ===== */
 // 상담 접수 API 주소. 비워두면 메일 앱으로 신청 내용을 보냅니다.
 var LEAD_ENDPOINT='';
-var LEAD_EMAIL='mtree712@gmail.com';
+var LEAD_EMAIL='mtree712@naver.com';
+// 상담·기획안 신청 접수: FormSubmit(정적 사이트용 폼 메일)으로 관리자 메일(LEAD_EMAIL)에 바로 보낸다. 실패하면 메일 앱으로 보내기로 대체.
+var LEAD_FORMSUBMIT='https://formsubmit.co/ajax/'+LEAD_EMAIL;
 // 정밀 진단 리포트 결제. 결제 링크(토스페이먼츠 링크결제, 스마트스토어 상품 등)와 표시 가격을 넣으면 결제 버튼이 그 링크로 연결됩니다.
 // 비워두면 결제 대신 '정밀 리포트 신청' 상담으로 연결합니다.
 var REPORT_PAYMENT_URL='';
@@ -395,6 +397,7 @@ function renderInfo(){
   h+='<fieldset class="dx-field" id="f-detailNeed"><legend>상품·서비스별 상세 소개가 필요한가요?'+autoTag('detailNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('detailNeed','radio',c[0],c[1],I.detailNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 상세페이지 문항을 건너뜁니다.</div><div class="dx-err" id="e-detailNeed">필요 여부를 선택해주세요.</div></fieldset>';
   h+='<fieldset class="dx-field" id="f-photoNeed"><legend>판매·홍보에 사진과 영상이 필요한가요?'+autoTag('photoNeed')+'<span class="req" aria-hidden="true">*</span></legend><div class="dx-chips" role="radiogroup">'+NEEDS.map(function(c){return chip('photoNeed','radio',c[0],c[1]==='필요'?'필요':c[1],I.photoNeed===c[0]);}).join('')+'</div><div class="dx-help">불필요를 선택하면 촬영·SNS 영상 문항을 건너뜁니다.</div><div class="dx-err" id="e-photoNeed">필요 여부를 선택해주세요.</div></fieldset>';
   h+='<div class="dx-field"><label for="dxCompany">기업명<span class="opt">선택</span></label><input type="text" id="dxCompany" name="company" maxlength="50" value="'+esc(I.company)+'" placeholder="미입력 시 ‘우리 기업’으로 표시"></div>';
+  h+='<div class="dx-field dx-consent" id="f-infoConsent"><label><input type="checkbox" name="infoConsent" aria-describedby="e-infoConsent"'+(I.infoConsent?' checked':'')+'><span>[필수] 기업진단 진행을 위한 정보 수집·이용에 동의합니다.<span class="req" aria-hidden="true">*</span></span></label><details><summary>자세히 보기</summary><p>수집 항목: 기업명, 진단 목적, 업종, 진단 문항 응답(상담 신청 시 담당자명·연락처 추가)<br>이용 목적: 진단 결과 제공, 상담 신청 시 회신과 제작 범위 협의<br>보유 기간: 상담 종료 후 내부 기준에 따라 파기<br>동의하지 않으실 수 있으며, 이 경우 진단 진행이 제한됩니다.</p></details><div class="dx-err" id="e-infoConsent">기업진단을 진행하려면 개인정보 수집·이용에 동의해주세요.</div></div>';
   h+='</form>';
   body.innerHTML=h;
   setNav('<button type="button" class="btn btn-line" id="dxCancel">닫기</button><button type="button" class="btn btn-primary" id="dxNext">상세 설문 시작 →</button>');
@@ -415,7 +418,7 @@ function renderInfo(){
   $('#dxNext').addEventListener('click',function(){
     var fd=readInfo(form),bad=[];
     if(!fd.purpose.length)bad.push('purpose');if(!fd.industry.length)bad.push('industry');
-    if(detailAsked(fd)&&!fd.detailNeed)bad.push('detailNeed');if(!fd.photoNeed)bad.push('photoNeed');
+    if(detailAsked(fd)&&!fd.detailNeed)bad.push('detailNeed');if(!fd.photoNeed)bad.push('photoNeed');if(!fd.infoConsent)bad.push('infoConsent');
     $$('.dx-field',form).forEach(function(f){f.classList.remove('invalid');});
     if(bad.length){bad.forEach(function(k){$('#f-'+k).classList.add('invalid');});var f=$('#f-'+bad[0]);var el=f.querySelector('input,select');f.scrollIntoView({block:'center'});if(el)el.focus();live.textContent='필수 항목 '+bad.length+'개를 입력해주세요.';return;}
     Object.assign(S.info,fd);S._resume=null;
@@ -426,14 +429,14 @@ function renderInfo(){
     S.qi=first;S.screen='q';save();render();
   });
   if(saved){
-    $('#dxResume').addEventListener('click',function(){S.info=Object.assign(fresh().info,saved.info);S.info.purpose=toArr(S.info.purpose);S.info.industry=toArr(S.info.industry);S.answers=saved.answers||{};S.qi=saved.qi||0;S._resume=null;S.screen=saved.screen==='q'&&S.info.purpose.length?'q':'info';render();});
+    $('#dxResume').addEventListener('click',function(){S.info=Object.assign(fresh().info,saved.info);S.info.purpose=toArr(S.info.purpose);S.info.industry=toArr(S.info.industry);S.answers=saved.answers||{};S.qi=saved.qi||0;S._resume=null;S.screen=saved.screen==='q'&&S.info.purpose.length&&S.info.infoConsent?'q':'info';render();});
     $('#dxDiscard').addEventListener('click',function(){lsDel(STORE_KEY);S=fresh();render();});
   }
 }
 function readInfo(form){
   var g=function(n){var el=form.querySelector('[name='+n+']:checked');return el?el.value:'';};
   var all=function(n){return $$('input[name='+n+']:checked',form).map(function(x){return x.value;});};
-  return {purpose:all('purpose'),industry:all('industry'),company:form.company.value.trim().slice(0,50),detailNeed:g('detailNeed'),photoNeed:g('photoNeed')};
+  return {purpose:all('purpose'),industry:all('industry'),company:form.company.value.trim().slice(0,50),detailNeed:g('detailNeed'),photoNeed:g('photoNeed'),infoConsent:!!(form.infoConsent&&form.infoConsent.checked)};
 }
 
 /* S03 질문 */
@@ -645,8 +648,14 @@ function submitLead(f,btn){
       .then(function(res){if(!res.ok)throw new Error(res.status);ok(false);}).catch(fail);
   }else{
     var subject=(payload.request_type==='plan'?'[기획안 요청] ':'[기업진단 상담 신청] ')+v.company+' ('+no+')';
-    location.href='mailto:'+LEAD_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(mailBody(payload,labels));
-    setTimeout(function(){ok(true);},300);
+    var viaMailApp=function(){location.href='mailto:'+LEAD_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(mailBody(payload,labels));setTimeout(function(){ok(true);},300);};
+    var ctrl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctrl)ctrl.abort();},12000);
+    fetch(LEAD_FORMSUBMIT,{method:'POST',signal:ctrl&&ctrl.signal,headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({'접수번호':no,'구분':payload.request_type==='plan'?'기획안 요청':'기업진단 상담 신청','회사명':v.company,'담당자':v.name,'전화':v.phone||'-','이메일':v.email||'-',
+        '관심 서비스':labels.join(', '),'희망 일정':v.schedule,'예산 구간':v.budget||'선택 안 함','개인정보 동의':'동의 ('+CONSENT_VERSION+')','홍보 수신':v.marketing?'동의':'동의 안 함',
+        '신청 내용 전체':mailBody(payload,labels),_subject:subject,_template:'table',_captcha:'false',_replyto:v.email||undefined})})
+      .then(function(res){return res.json().catch(function(){return {};}).then(function(j){if(!res.ok||String(j.success)==='false')throw new Error('send failed');});})
+      .then(function(){clearTimeout(tm);ok(false);},function(){clearTimeout(tm);viaMailApp();});
   }
 }
 // 정밀 리포트 신청 메일에 붙는 딥리서치 요청문 (작성 가이드: docs/deep-research-report.md)

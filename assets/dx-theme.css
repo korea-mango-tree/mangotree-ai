@@ -135,3 +135,4 @@
 .dxpage .dx-faq summary:hover{text-decoration:underline;text-underline-offset:4px}
 .dxpage .dx-faq summary::after{display:inline-block;color:#161616;font-size:24px;line-height:1;font-weight:400;text-decoration:none}
 .dxpage .dx-faq details p{padding:0 0 24px}
+.dx-field .opt{color:#6B6B6B}
