@@ -67,7 +67,7 @@
     if (dlg) return;
     dlg = el('dialog', 'pf-modal'); dlg.setAttribute('aria-label', '작업물 이미지 크게 보기');
     closeBtn = el('button', 'pf-modal-close', '×'); closeBtn.type = 'button'; closeBtn.setAttribute('aria-label', '닫기');
-    body = el('div', 'pf-modal-body'); stack = el('div', 'pf-modal-stack'); status = el('p', 'pf-modal-status'); status.setAttribute('role', 'status');
+    body = el('div', 'pf-modal-body'); body.tabIndex = 0; body.setAttribute('aria-label', '작업물 이미지'); stack = el('div', 'pf-modal-stack'); status = el('p', 'pf-modal-status'); status.setAttribute('role', 'status');
     // 홈페이지·쇼핑몰 작업물: 실제 사이트로 가는 버튼(새 창). 주소가 없으면 숨김.
     siteBtn = el('a', 'pf-modal-site btn btn-mango'); siteBtn.target = '_blank'; siteBtn.rel = 'noopener noreferrer'; siteBtn.hidden = true;
     body.appendChild(stack); body.appendChild(status); dlg.appendChild(closeBtn); dlg.appendChild(siteBtn); dlg.appendChild(body); document.body.appendChild(dlg);
