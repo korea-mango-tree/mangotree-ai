@@ -18,6 +18,7 @@ function buildCard(it){
   const fig=el('figure'),a=el(link?'a':'span','x-wlink');
   // 망고트리 게시물은 작업물 상세 페이지(work.html)로, 영상·외부 주소는 새 창으로
   const detail=window.mtDetailUrl?window.mtDetailUrl(link):'';
+  if(link)a.dataset.post=link;
   if(detail)a.href=detail;else if(link){a.href=link;a.target='_blank';a.rel='noopener noreferrer';}
   // 상세페이지는 긴 썸네일(400×800, tools/make_tall_thumbs.py)이 있으면 그것을 쓴다. 없거나 못 불러오면 API 썸네일.
   const iid=(/[?&]it_id=(\d+)/.exec(String(it.link||''))||[])[1],tall=cat==='detail'&&iid&&window.MT_TALL&&window.MT_TALL[iid];
@@ -79,6 +80,18 @@ const refresh=initGallery();
 loadFromApi().then(replaced=>{if(replaced){refresh();masonry();}});
 
 // 작업물 상세 페이지 연결: 정적 카드(HTML)의 망고트리 게시물 링크도 work.html 로 바꾼다(API 카드는 buildCard 에서 처리).
-(()=>{if(!list||!window.mtDetailUrl)return;const fix=()=>list.querySelectorAll('.pf-card:not(.pf-video) a.x-wlink[target]').forEach(a=>{const d=window.mtDetailUrl(a.href);if(!d)return;a.href=d;a.removeAttribute('target');a.removeAttribute('rel');const sr=a.querySelector('.sr-only');if(sr)sr.textContent=sr.textContent.replace(/,? ?망고트리 작업 페이지에서 보기 \(새 창\)/,', 상세 보기');});
+(()=>{if(!list||!window.mtDetailUrl)return;const fix=()=>list.querySelectorAll('.pf-card:not(.pf-video) a.x-wlink[target]').forEach(a=>{const d=window.mtDetailUrl(a.href);if(!d)return;a.dataset.post=a.href;a.href=d;a.removeAttribute('target');a.removeAttribute('rel');const sr=a.querySelector('.sr-only');if(sr)sr.textContent=sr.textContent.replace(/,? ?망고트리 작업 페이지에서 보기 \(새 창\)/,', 상세 보기');});
 fix();new MutationObserver(fix).observe(list,{childList:true});})();
+// 제품 촬영(촬영·영상 분야, data-cat="shoot") 카드만 상세 페이지 대신 크게 보기 모달로 연다(assets/work-modal.js).
+// 게시물 원본 이미지를 불러오고, 없으면 카드 이미지를 크게 보여 준다. Ctrl·Cmd·Shift 클릭은 원래 링크(상세 페이지) 그대로.
+(()=>{if(!list)return;
+  const shootCard=t=>{const c=t.closest('.pf-card[data-cat="shoot"]:not(.pf-video)');return c&&list.contains(c)?c:null;};
+  const fullSrc=src=>String(src||'').replace('/portfolio/thumbs/','/portfolio/');
+  const label=()=>list.querySelectorAll('.pf-card[data-cat="shoot"]:not(.pf-video) .x-wlink').forEach(t=>{t.setAttribute('aria-haspopup','dialog');if(t.tagName!=='A'){t.tabIndex=0;t.setAttribute('role','button');}const sr=t.querySelector('.sr-only');if(sr)sr.textContent=sr.textContent.replace(/, 상세 보기$|, 크게 보기$/,'')+', 크게 보기';});
+  label();new MutationObserver(label).observe(list,{childList:true});
+  const open=(card,opener)=>{if(!window.mtWorkModal)return false;const i=card.querySelector('img');const a=card.querySelector('.x-wlink');
+    window.mtWorkModal.open({link:(a&&a.dataset.post)||'',fallback:fullSrc(i?(i.currentSrc||i.src):''),alt:(card.querySelector('.x-wname')?.firstChild?.textContent||'').trim(),opener:opener||a});return true;};
+  list.addEventListener('click',e=>{const c=shootCard(e.target);if(!c||e.ctrlKey||e.metaKey||e.shiftKey)return;const t=c.querySelector('.x-wlink');if(!t||!t.contains(e.target))return;if(open(c,t))e.preventDefault();});
+  list.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target;if(t.tagName==='A'||!t.classList||!t.classList.contains('x-wlink'))return;const c=shootCard(t);if(!c)return;e.preventDefault();open(c,t);});
+})();
 })();
